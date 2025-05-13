@@ -23,7 +23,7 @@ export const NavbarSection = () => {
   }, []);
 
   return (
-    <>
+    <nav className='container h-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-center z-10'>
       <PreNavbar isHomePage={isHomePage} scrolled={scrolled} />
       <Navbar 
         isHomePage={isHomePage} 
@@ -35,6 +35,6 @@ export const NavbarSection = () => {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />
-    </>
+    </nav>
   );
 };
