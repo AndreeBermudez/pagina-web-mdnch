@@ -50,8 +50,8 @@ export const HeroSection = () => {
       ></div>
       
       {/* Contenido */}
-      <div className="relative container h-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-20 flex items-center justify-center z-10">
-        <div className="absolute top-28 right-10">
+      <div className="container-municipalidad">
+        <div className="absolute top-28 right-8">
           <Weather />
         </div>
         <HeroSlider activeSlide={activeSlide} />

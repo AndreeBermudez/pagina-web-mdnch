@@ -1,6 +1,17 @@
 @import 'tailwindcss';
 
+@layer base {
+  .container-municipalidad {
+    @apply relative container h-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-20 flex items-center justify-center z-10;
+  }
+
+  .container-navbar {
+    @apply relative container h-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-center z-10;
+  }
+}
+
 @layer utilities {
+  /* Animaciones para el Hero y Sliders */
   .animation-slide-right {
     opacity: 0;
     animation: slideInRight 0.8s ease-out forwards;
