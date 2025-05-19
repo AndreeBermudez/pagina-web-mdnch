@@ -1,40 +1,74 @@
 @import 'tailwindcss';
 
+@layer base {
+	.container-municipalidad {
+		@apply relative container h-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-20 flex items-center justify-center z-10;
+	}
+
+	.container-navbar {
+		@apply relative container h-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-center z-10;
+	}
+}
+
 @layer utilities {
-  .animation-slide-right {
-    opacity: 0;
-    animation: slideInRight 0.8s ease-out forwards;
-  }
+	/* Animaciones para el Hero y Sliders */
+	.animation-slide-right {
+		opacity: 0;
+		animation: slideInRight 0.8s ease-out forwards;
+	}
 
-  .animation-slide-bottom {
-    opacity: 0;
-    animation: slideInBottom 0.6s ease-out forwards;
-  }
+	.animation-slide-bottom {
+		opacity: 0;
+		animation: slideInBottom 0.6s ease-out forwards;
+	}
 
-  .animation-slide-bottom-delayed {
-    opacity: 0;
-    animation: slideInBottom 0.9s ease-out forwards 0.3s;
-  }
+	.animation-slide-bottom-delayed {
+		opacity: 0;
+		animation: slideInBottom 0.9s ease-out forwards 0.3s;
+	}
+
+	/* Animación para la sección del alcalde */
+	.animate-float {
+		animation: float 8s ease-in-out infinite;
+	}
 }
 
 @keyframes slideInRight {
-  from {
-    transform: translateX(200px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+	from {
+		transform: translateX(200px);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
 }
 
 @keyframes slideInBottom {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+	from {
+		transform: translateY(30px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes float {
+	0% {
+		transform: translateX(0) translateY(0);
+	}
+	25% {
+		transform: translateX(15px) translateY(-20px);
+	}
+	50% {
+		transform: translateX(30px) translateY(0);
+	}
+	75% {
+		transform: translateX(15px) translateY(20px);
+	}
+	100% {
+		transform: translateX(0) translateY(0);
+	}
 }
