@@ -1,6 +1,6 @@
 import { CalendarEvent } from './CalendarEvent';
 import { EventHeader } from './EventHeader';
-import cityImage from '../../../../assets/imagen-plaza.webp';
+import cityImage from '../../../../../assets/imagen-plaza.webp';
 
 export const SectionEvent = () => {
 	return (
