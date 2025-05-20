@@ -10,7 +10,6 @@ interface NavLink {
 
 export const navLinks: NavLink[] = [
 	{ href: '/', label: 'Inicio' },
-	{ href: '/publicaciones', label: 'Publicaciones' },
 	{
 		href: '/nosotros',
 		label: 'Nosotros',

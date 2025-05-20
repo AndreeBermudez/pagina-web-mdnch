@@ -1,7 +1,7 @@
 import { MainNews } from './MainNews';
 import { NewsCard } from './NewsCard';
 import { TriangleDivider } from './TriangleDivider';
-import cityImage from '../../../../assets/imagen-plaza.webp';
+import cityImage from '../../../../../assets/imagen-plaza.webp';
 
 export const SectionNews = () => {
 	return (

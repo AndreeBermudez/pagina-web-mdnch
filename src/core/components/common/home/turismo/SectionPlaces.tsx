@@ -1,5 +1,5 @@
 import { CalendarClock, MapPin, MoveRight, Target } from 'lucide-react';
-import cityImage from '../../../../assets/imagen-plaza.webp';
+import cityImage from '../../../../../assets/imagen-plaza.webp';
 import { CardCollapse } from './CardCollapse';
 
 export const SectionPlaces = () => {
