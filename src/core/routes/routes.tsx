@@ -13,11 +13,6 @@ export const routes = [
         element: <HomePage/>
     },
     
-    // Publicaciones
-    { 
-        path: "/publicaciones", 
-        element: <p>Publicaciones</p>
-    },
     
     // Nosotros
     {
