@@ -1,5 +1,5 @@
 import { Award, Target, Users } from 'lucide-react';
-import { WaveDivider } from '../../../ui/WaveDivider'; 
+import { WaveDivider } from '../../../ui/WaveDivider';
 import alcaldeImage from '../../../../../assets/walter_soto.avif';
 
 export const AlcaldeSection = () => {
@@ -7,7 +7,7 @@ export const AlcaldeSection = () => {
 		<>
 			<section className='relative w-full overflow-hidden bg-[#0a2158] px-4 sm:px-6 lg:px-8'>
 				{/* Sección principal */}
-				<div className='container mx-auto max-w-7xl py-16 md:py-24 scroll-section'>
+				<div className='container-municipalidad scroll-section'>
 					<div className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center'>
 						<div className='space-y-6 md:space-y-8 order-2 lg:order-1 mt-8 lg:mt-0'>
 							<div className='space-y-4'>
