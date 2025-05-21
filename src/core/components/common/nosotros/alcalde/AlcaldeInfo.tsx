@@ -1,9 +1,9 @@
 
 import React from 'react';
-import AlcaldeImage from '../../assets/walterSoto.jpg';
+import AlcaldeImage from '../../../../../assets/walterSoto.jpg';
 import { FileSearch, Calendar, Target, Award, Users } from 'lucide-react';
 
-const AlcaldePage: React.FC = () => {
+const AlcaldeInfo: React.FC = () => {
   return (
     <section className="bg-gradient-to-br from-slate-100 to-slate-200 min-h-screen pt-20">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 lg:pt-20 pb-12 relative">
@@ -102,4 +102,4 @@ const AlcaldePage: React.FC = () => {
   );
 };
 
-export default AlcaldePage;
+export default AlcaldeInfo;

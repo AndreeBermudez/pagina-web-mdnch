@@ -2,6 +2,8 @@ import { Outlet } from 'react-router-dom';
 import { HomePage } from '../../pages/HomePage';
 import { AgendaPage } from '../../pages/nosotros/AgendaPage';
 import { PrivateGuard } from './guard/PrivateGuard';
+import { AlcaldePage } from '../../pages/nosotros/AlcaldePage';
+
 
 export const routes = [
 	// Ruta principal
@@ -33,7 +35,7 @@ export const routes = [
 			},
 			{
 				path: 'alcalde',
-				element: <p>Alcalde</p>,
+				element: <AlcaldePage/>,
 			},
 			{
 				path: 'consejoMunicipal',
