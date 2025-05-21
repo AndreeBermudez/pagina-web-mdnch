@@ -3,7 +3,13 @@ import { HomePage } from '../../pages/HomePage';
 import { AgendaPage } from '../../pages/nosotros/AgendaPage';
 import { PrivateGuard } from './guard/PrivateGuard';
 import { AlcaldePage } from '../../pages/nosotros/AlcaldePage';
-
+import { DirectorioPage } from '../../pages/nosotros/DirectorioPage';
+import ConsejoMunicipalPage from '../../pages/nosotros/ConsejoMunicipalPage';
+import OrganigramaPage from '../../pages/nosotros/OrganigramaPage';
+import MapaPage from '../../pages/nosotros/MapaPage';
+import TurismoPage from '../../pages/tuDistrito/TurismoPage';
+import MisionVisionPage from '../../pages/tuDistrito/MisionVisionPage';
+import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 
 export const routes = [
 	// Ruta principal
@@ -31,23 +37,23 @@ export const routes = [
 			},
 			{
 				path: 'directorio',
-				element: <p>Directorio de Funcionarios</p>,
+				element: <DirectorioPage />,
 			},
 			{
 				path: 'alcalde',
-				element: <AlcaldePage/>,
+				element: <AlcaldePage />,
 			},
 			{
 				path: 'consejoMunicipal',
-				element: <p>Consejo Municipal</p>,
+				element: <ConsejoMunicipalPage />,
 			},
 			{
 				path: 'organigrama',
-				element: <p>Organigrama</p>,
+				element: <OrganigramaPage />,
 			},
 			{
 				path: 'mapa',
-				element: <p>Mapa</p>,
+				element: <MapaPage />,
 			},
 		],
 	},
@@ -63,7 +69,7 @@ export const routes = [
 			},
 			{
 				path: 'turismo',
-				element: <p>Turismo</p>,
+				element: <TurismoPage />,
 			},
 			{
 				path: 'pdu',
@@ -71,11 +77,11 @@ export const routes = [
 			},
 			{
 				path: 'misionVision',
-				element: <p>Misión y Visión</p>,
+				element: <MisionVisionPage/>,
 			},
 			{
 				path: 'reseñaHistorica',
-				element: <p>Reseña Histórica</p>,
+				element: <ReseñaHistorica/>,
 			},
 			{
 				path: 'himno',
