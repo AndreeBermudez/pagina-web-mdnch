@@ -36,16 +36,27 @@ export const Navbar = ({ isHomePage, scrolled, mobileMenuOpen, setMobileMenuOpen
 						<div className='hidden md:flex items-center gap-6'>
 							{navLinks.map((link, index) => (
 								<div key={index} className='relative group'>
-									<Link
-										to={link.href}
-										className={`${textClasses} relative font-medium text-sm flex items-center gap-1 pb-1`}>
-										<span
-											className={`after:absolute after:content-[''] after:w-0 after:h-0.5 after:bg-amber-400 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300`}>
-											{link.label}
-										</span>
-										{link.hasDropdown && <ChevronDown size={16} />}
-									</Link>
-
+									{' '}
+									{link.href ? (
+										<Link
+											to={link.href}
+											className={`${textClasses} relative font-medium text-sm flex items-center gap-1 pb-1`}>
+											<span
+												className={`after:absolute after:content-[''] after:w-0 after:h-0.5 after:bg-amber-400 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300`}>
+												{link.label}
+											</span>
+											{link.hasDropdown && <ChevronDown size={16} />}
+										</Link>
+									) : (
+										<div
+											className={`${textClasses} relative font-medium text-sm flex items-center gap-1 pb-1 cursor-default`}>
+											<span
+												className={`after:absolute after:content-[''] after:w-0 after:h-0.5 after:bg-amber-400 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300`}>
+												{link.label}
+											</span>
+											{link.hasDropdown && <ChevronDown size={16} />}
+										</div>
+									)}
 									{link.hasDropdown && (
 										<div className='absolute left-0 top-full mt-2 w-64 bg-white rounded-md shadow-lg overflow-hidden z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all'>
 											<div className='py-2'>

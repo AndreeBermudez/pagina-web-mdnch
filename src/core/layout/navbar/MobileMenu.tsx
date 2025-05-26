@@ -56,7 +56,8 @@ export const MobileMenu = ({ isOpen, onClose }: MobileProps) => {
 				<nav className='p-4 space-y-2 text-white'>
 					{navLinks.map((link) => (
 						<div key={link.label}>
-							{!link.hasDropdown ? (
+							{' '}
+							{!link.hasDropdown && link.href ? (
 								<a href={link.href} onClick={onClose} className='block py-2 font-semibold hover:text-blue-300'>
 									{link.label}
 								</a>
