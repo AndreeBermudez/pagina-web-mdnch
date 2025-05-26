@@ -10,6 +10,9 @@ import MapaPage from '../../pages/nosotros/MapaPage';
 import TurismoPage from '../../pages/tuDistrito/TurismoPage';
 import MisionVisionPage from '../../pages/tuDistrito/MisionVisionPage';
 import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
+import HimnoPage from '../../pages/tuDistrito/HimnoPage';
+import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
+import PDUPage from '../../pages/tuDistrito/PDUPage';
 
 export const routes = [
 	// Ruta principal
@@ -73,7 +76,7 @@ export const routes = [
 			},
 			{
 				path: 'pdu',
-				element: <p>PDU</p>,
+				element: <PDUPage/>,
 			},
 			{
 				path: 'misionVision',
@@ -85,11 +88,10 @@ export const routes = [
 			},
 			{
 				path: 'himno',
-				element: <p>Himno</p>,
-			},
-			{
+				element: <HimnoPage />,
+			},			{
 				path: 'escudo',
-				element: <p>Escudo y bandera</p>,
+				element: <EscudoBanderaPage />,
 			},
 		],
 	},
