@@ -41,10 +41,7 @@ export const navLinks: NavLink[] = [
 		label: 'Servicios',
 		hasDropdown: true,
 		dropdownItems: [
-			{ href: '/servicios/plataforma', label: 'Plataforma Única del Estado Peruano' },
 			{ href: '/servicios/reclamaciones', label: 'Libro de Reclamaciones' },
-			{ href: '/servicios/salud', label: 'Salud' },
-			{ href: '/servicios/seguridad', label: 'Seguridad Ciudadana' },
 			{ href: '/servicios/presupuesto', label: 'Presupuesto Participativo' },
 			{ href: '/servicios/biblioteca', label: 'Biblioteca Municipal' },
 			{ href: '/servicios', label: 'Ver Todos los Servicios' },

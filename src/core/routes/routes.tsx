@@ -13,6 +13,7 @@ import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 import HimnoPage from '../../pages/tuDistrito/HimnoPage';
 import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
 import PDUPage from '../../pages/tuDistrito/PDUPage';
+import LibroReclamacionesPage from '../../pages/servicios/LibroReclamacionesPage';
 
 export const routes = [
 	// Ruta principal
@@ -105,22 +106,12 @@ export const routes = [
 				index: true,
 				element: <p>Ver Todos los Servicios</p>,
 			},
-			{
-				path: 'plataforma',
-				element: <p>Plataforma Única del Estado Peruano</p>,
-			},
+			
 			{
 				path: 'reclamaciones',
-				element: <p>Libro de Reclamaciones</p>,
+				element: <LibroReclamacionesPage />,
 			},
-			{
-				path: 'salud',
-				element: <p>Salud</p>,
-			},
-			{
-				path: 'seguridad',
-				element: <p>Seguridad Ciudadana</p>,
-			},
+			
 			{
 				path: 'presupuesto',
 				element: <p>Presupuesto Participativo</p>,
