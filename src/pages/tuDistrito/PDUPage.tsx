@@ -1,4 +1,4 @@
-import React from 'react';
+
 import PlanDesarrolloUrbano from '../../core/components/common/tuDistrito/pdu/PlanDesarrolloUrbano';
 import { Layout } from '../../core/layout/Layout';
 export default function PDUPage() {

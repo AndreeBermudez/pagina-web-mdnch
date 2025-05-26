@@ -1,4 +1,4 @@
-import React from 'react';
+
 import PresentacionDistrito from '../../core/components/common/tuDistrito/escudoBandera/PresentacionDistrito';
 import { Layout } from '../../core/layout/Layout';
 

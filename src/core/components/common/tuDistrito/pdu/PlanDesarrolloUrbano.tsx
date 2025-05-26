@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { documentos } from './documentos';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
 

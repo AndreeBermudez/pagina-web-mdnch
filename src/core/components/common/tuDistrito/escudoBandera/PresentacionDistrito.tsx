@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { info } from './info';
 
 export default function PresentacionDistrito() {
