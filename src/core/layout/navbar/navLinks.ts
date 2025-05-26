@@ -44,7 +44,6 @@ export const navLinks: NavLink[] = [
 			{ href: '/servicios/reclamaciones', label: 'Libro de Reclamaciones' },
 			{ href: '/servicios/presupuesto', label: 'Presupuesto Participativo' },
 			{ href: '/servicios/biblioteca', label: 'Biblioteca Municipal' },
-			{ href: '/servicios', label: 'Ver Todos los Servicios' },
 		],
 	},
 	{

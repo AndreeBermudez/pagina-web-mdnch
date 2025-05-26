@@ -1,11 +1,11 @@
-import { FileText, AlertTriangle, Clock, CheckCircle, MoveRight } from 'lucide-react';
+import { FileText, AlertTriangle, MoveRight } from 'lucide-react';
 
 export default function LibroReclamaciones() {
 	return (
 		<div className='bg-white'>
 			
 			{/* Main Content Section */}
-			<section className='py-16 px-4 bg-gray-50'>
+			<section className=' px-4 bg-gray-50'>
 				<div className='container mx-auto max-w-6xl'>
 					{/* Información del servicio */}
 					<div className='bg-white rounded-2xl shadow-lg p-8 md:p-12 mb-12'>
@@ -62,31 +62,6 @@ export default function LibroReclamaciones() {
 									<p className='text-blue-800 font-medium'>Plataforma oficial del gobierno peruano</p>
 								</div>
 							</div>
-						</div>
-					</div>
-
-					{/* Estadísticas */}
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-12'>
-						<div className='bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center'>
-							<div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-								<FileText className='w-6 h-6 text-blue-600' />
-							</div>
-							<div className='text-3xl font-bold text-gray-800 mb-2'>847</div>
-							<div className='text-gray-600'>Reclamos atendidos</div>
-						</div>
-						<div className='bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center'>
-							<div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-								<Clock className='w-6 h-6 text-blue-600' />
-							</div>
-							<div className='text-3xl font-bold text-gray-800 mb-2'>15</div>
-							<div className='text-gray-600'>Días promedio de respuesta</div>
-						</div>
-						<div className='bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center'>
-							<div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-								<CheckCircle className='w-6 h-6 text-blue-600' />
-							</div>
-							<div className='text-3xl font-bold text-gray-800 mb-2'>92%</div>
-							<div className='text-gray-600'>Casos resueltos</div>
 						</div>
 					</div>
 

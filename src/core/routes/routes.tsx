@@ -14,7 +14,8 @@ import HimnoPage from '../../pages/tuDistrito/HimnoPage';
 import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
 import PDUPage from '../../pages/tuDistrito/PDUPage';
 import LibroReclamacionesPage from '../../pages/servicios/LibroReclamacionesPage';
-
+import PresupuestoParticipativo from '../../pages/servicios/PresupuestoParticipativoPage';
+import Biblioteca from '../../pages/servicios/BibliotecaPage';
 export const routes = [
 	// Ruta principal
 	{
@@ -114,11 +115,11 @@ export const routes = [
 			
 			{
 				path: 'presupuesto',
-				element: <p>Presupuesto Participativo</p>,
+				element: <PresupuestoParticipativo/>,
 			},
 			{
 				path: 'biblioteca',
-				element: <p>Biblioteca Municipal</p>,
+				element: <Biblioteca/>,
 			},
 		],
 	},

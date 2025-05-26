@@ -2,14 +2,6 @@ import { ArrowUpRight, Clock, Facebook, Instagram, MapPin, Phone, Twitter, Youtu
 import logo from '../../../assets/logo.webp';
 
 export const Footer = () => {
-	const enlacesDirectos = [
-		'MPS GOB.PE',
-		'Chat En Línea',
-		'Mesa De Partes',
-		'Seguimiento De Trámites',
-		'Libro De Reclamaciones',
-		'Trabaja Con Nosotros',
-	];
 
 	const normasDocumentos = ['Documentos De Gestión', 'Normas Y Documentos Legales', 'Informes Y Publicaciones'];
 
@@ -123,25 +115,7 @@ export const Footer = () => {
 					</div>
 				</div>
 
-				{/* Enlaces directos */}
-				<div className='flex flex-col'>
-					<h3 className='text-xl font-bold text-white mb-6 pb-2 border-b border-blue-700 inline-block'>
-						Enlaces directos
-					</h3>
-
-					<ul className='space-y-3'>
-						{enlacesDirectos.map((item, index) => (
-							<li key={index}>
-								<a href='#' className='flex items-center group hover:text-white transition-colors duration-200'>
-									<span className='w-2 h-2 bg-yellow-500 rounded-full mr-3 group-hover:w-3 transition-all duration-200'></span>
-									{item}
-									<ArrowUpRight className='w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
-								</a>
-							</li>
-						))}
-					</ul>
-				</div>
-
+		
 				{/* Normas y documentos */}
 				<div className='flex flex-col'>
 					<h3 className='text-xl font-bold text-white mb-6 pb-2 border-b border-blue-700 inline-block'>
