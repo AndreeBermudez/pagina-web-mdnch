@@ -4,7 +4,7 @@ import { getColorClasses } from './colorUtils';
 
 const PresupuestoParticipativo = () => {
 	return (
-		<div className='bg-gray-100 min-h-screen'>
+		<div>
 			{/* Documents Grid */}
 			<section className=' px-4'>
 				<div className='container mx-auto max-w-6xl'>

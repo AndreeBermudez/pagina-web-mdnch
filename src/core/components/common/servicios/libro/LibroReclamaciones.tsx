@@ -2,10 +2,10 @@ import { FileText, AlertTriangle, MoveRight } from 'lucide-react';
 
 export default function LibroReclamaciones() {
 	return (
-		<div className='bg-white'>
+		<div className=''>
 			
 			{/* Main Content Section */}
-			<section className=' px-4 bg-gray-50'>
+			<section className=' px-4 '>
 				<div className='container mx-auto max-w-6xl'>
 					{/* Información del servicio */}
 					<div className='bg-white rounded-2xl shadow-lg p-8 md:p-12 mb-12'>

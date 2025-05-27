@@ -2,17 +2,17 @@ import PlanFamiliarEmergencia from '../../core/components/common/tramites/defens
 import { Layout } from '../../core/layout/Layout';
 
 export default function DefensaCivilPage() {
-	return (
-		<Layout>
-			<div className='container mx-auto px-15'>
-				<div className='text-center mt-20 mb-10'>
-					<h1 className='text-4xl font-bold text-gray-800'>DEFENSA CIVIL</h1>
-					<div className='w-24 h-1 bg-blue-500 mx-auto mt-4'></div>
+	return (		
+	<Layout>
+			<main className='bg-gradient-to-br from-slate-100 to-slate-200 min-h-[calc(100vh-4rem)]'>
+				<div className='container mx-auto px-15 pt-24 pb-12'>
+					<div className='text-center mb-10'>
+						<h1 className='text-4xl font-bold text-gray-800'>DEFENSA CIVIL</h1>
+						<div className='w-24 h-1 bg-blue-500 mx-auto mt-4'></div>
+					</div>
+					<PlanFamiliarEmergencia />
 				</div>
-			</div>
-			<div className='bg-gradient-to-br from-slate-100 to-slate-200 py-10'>
-				<PlanFamiliarEmergencia />
-			</div>
+			</main>
 		</Layout>
 	);
 }

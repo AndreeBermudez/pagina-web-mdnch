@@ -2,7 +2,7 @@ import { Target, Eye } from 'lucide-react';
 
 export default function MisionVision() {
 	return (
-		<div className='bg-white'>
+		<div >
 			<div className='max-w-7xl mx-auto'>
 				{/* Contenedor de tarjetas */}
 				<div className='grid md:grid-cols-2 gap-10 pb-20'>

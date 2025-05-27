@@ -14,10 +14,14 @@ import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 import HimnoPage from '../../pages/tuDistrito/HimnoPage';
 import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
 import PDUPage from '../../pages/tuDistrito/PDUPage';
+import DenunciaCorrupcionPage from '../../pages/tramites/DenunciaCorrupcionPage';
 import LibroReclamacionesPage from '../../pages/servicios/LibroReclamacionesPage';
 import PresupuestoParticipativo from '../../pages/servicios/PresupuestoParticipativoPage';
 import Biblioteca from '../../pages/servicios/BibliotecaPage';
 import DefensaCivilPage from '../../pages/tramites/DefensaCivilPage';
+import LicenciaFuncionamientoPage from '../../pages/tramites/LicenciaFuncionamientoPage';
+import LicenciaEdificacionPage from '../../pages/tramites/LicenciaEdificacionPage';
+
 export const routes = [
 	// Ruta principal
 	{
@@ -151,11 +155,11 @@ export const routes = [
 			},
 			{
 				path: 'licencia-funcionamiento',
-				element: <p>Licencia de Funcionamiento</p>,
+				element: <LicenciaFuncionamientoPage />,
 			},
 			{
 				path: 'licencia-edificacion',
-				element: <p>Licencia de Edificación</p>,
+				element: <LicenciaEdificacionPage />,
 			},
 			{
 				path: 'convocatorias',
@@ -163,7 +167,7 @@ export const routes = [
 			},
 			{
 				path: 'denuncia',
-				element: <p>DENUNCIA CONTRA LA CORRUPCION</p>,
+				element: <DenunciaCorrupcionPage />,
 			},
 		],
 	},

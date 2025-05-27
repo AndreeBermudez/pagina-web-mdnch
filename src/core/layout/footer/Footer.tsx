@@ -6,7 +6,7 @@ export const Footer = () => {
 	const normasDocumentos = ['Documentos De Gestión', 'Normas Y Documentos Legales', 'Informes Y Publicaciones'];
 
 	return (
-		<footer className='w-full bg-gray-900 text-gray-300 relative pt-16 pb-4 mt-20'>
+		<footer className='w-full bg-gray-900 text-gray-300 relative pt-16 pb-4'>
 			{/* Logo flotante en la parte superior */}
 			<div className='absolute left-1/2 transform -translate-x-1/2 -top-12'>
 				<div className='w-24 h-24 bg-gray-900 rounded-full p-2 border-4 border-gray-900 flex items-center justify-center'>
