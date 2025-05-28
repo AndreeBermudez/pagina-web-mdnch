@@ -3,7 +3,26 @@ import { FileText, AlertTriangle, Clock, CheckCircle, MoveRight } from 'lucide-r
 export default function LibroReclamaciones() {
 	return (
 		<div className='bg-white'>
-			
+			{/* Header Section */}
+			<section className='py-16 px-4 bg-white'>
+				<div className='container mx-auto text-center max-w-6xl'>
+					{/* Badge de Servicio Municipal */}
+					<div className='inline-block mb-8'>
+						<span className='bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wide shadow-lg'>
+							Municipalidad de Nuevo Chimbote
+						</span>
+					</div>
+
+					{/* Título principal siguiendo el formato */}
+					<h1 className='text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6'>
+						Libro de Reclamaciones
+					</h1>
+
+					{/* Línea decorativa azul como en la referencia */}
+					<div className='w-24 h-1 bg-blue-500 mx-auto mb-12'></div>
+				</div>
+			</section>
+
 			{/* Main Content Section */}
 			<section className='py-16 px-4 bg-gray-50'>
 				<div className='container mx-auto max-w-6xl'>
@@ -65,7 +84,30 @@ export default function LibroReclamaciones() {
 						</div>
 					</div>
 
-		
+					{/* Estadísticas */}
+					<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-12'>
+						<div className='bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center'>
+							<div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+								<FileText className='w-6 h-6 text-blue-600' />
+							</div>
+							<div className='text-3xl font-bold text-gray-800 mb-2'>847</div>
+							<div className='text-gray-600'>Reclamos atendidos</div>
+						</div>
+						<div className='bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center'>
+							<div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+								<Clock className='w-6 h-6 text-blue-600' />
+							</div>
+							<div className='text-3xl font-bold text-gray-800 mb-2'>15</div>
+							<div className='text-gray-600'>Días promedio de respuesta</div>
+						</div>
+						<div className='bg-white rounded-xl p-6 shadow-md border border-gray-100 text-center'>
+							<div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+								<CheckCircle className='w-6 h-6 text-blue-600' />
+							</div>
+							<div className='text-3xl font-bold text-gray-800 mb-2'>92%</div>
+							<div className='text-gray-600'>Casos resueltos</div>
+						</div>
+					</div>
 
 					{/* Call to Action */}
 					<div className='bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center'>
@@ -84,7 +126,7 @@ export default function LibroReclamaciones() {
 							</p>
 
 							<a
-								href='https://reclamos.servicios.gob.pe/?institution_id=1311'
+								href='https://www.gob.pe/libro-reclamaciones'
 								target='_blank'
 								rel='noopener noreferrer'
 								className='group inline-flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-lg'>
