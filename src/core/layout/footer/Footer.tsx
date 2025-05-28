@@ -2,19 +2,11 @@ import { ArrowUpRight, Clock, Facebook, Instagram, MapPin, Phone, Twitter, Youtu
 import logo from '../../../assets/logo.webp';
 
 export const Footer = () => {
-	const enlacesDirectos = [
-		'MPS GOB.PE',
-		'Chat En Línea',
-		'Mesa De Partes',
-		'Seguimiento De Trámites',
-		'Libro De Reclamaciones',
-		'Trabaja Con Nosotros',
-	];
 
 	const normasDocumentos = ['Documentos De Gestión', 'Normas Y Documentos Legales', 'Informes Y Publicaciones'];
 
 	return (
-		<footer className='w-full bg-gray-900 text-gray-300 relative pt-16 pb-4 mt-20'>
+		<footer className='w-full bg-gray-900 text-gray-300 relative pt-16 pb-4'>
 			{/* Logo flotante en la parte superior */}
 			<div className='absolute left-1/2 transform -translate-x-1/2 -top-12'>
 				<div className='w-24 h-24 bg-gray-900 rounded-full p-2 border-4 border-gray-900 flex items-center justify-center'>
@@ -123,25 +115,7 @@ export const Footer = () => {
 					</div>
 				</div>
 
-				{/* Enlaces directos */}
-				<div className='flex flex-col'>
-					<h3 className='text-xl font-bold text-white mb-6 pb-2 border-b border-blue-700 inline-block'>
-						Enlaces directos
-					</h3>
-
-					<ul className='space-y-3'>
-						{enlacesDirectos.map((item, index) => (
-							<li key={index}>
-								<a href='#' className='flex items-center group hover:text-white transition-colors duration-200'>
-									<span className='w-2 h-2 bg-yellow-500 rounded-full mr-3 group-hover:w-3 transition-all duration-200'></span>
-									{item}
-									<ArrowUpRight className='w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
-								</a>
-							</li>
-						))}
-					</ul>
-				</div>
-
+		
 				{/* Normas y documentos */}
 				<div className='flex flex-col'>
 					<h3 className='text-xl font-bold text-white mb-6 pb-2 border-b border-blue-700 inline-block'>

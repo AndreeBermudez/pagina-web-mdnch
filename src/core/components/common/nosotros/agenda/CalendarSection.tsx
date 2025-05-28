@@ -123,12 +123,7 @@ const CalendarSection = () => {
 	const diasCalendario = obtenerDiasDelCalendario();
 
 	return (
-		<div className='max-w-[1200px] mx-auto py-20'>
-			{/* Título */}
-			<div className='text-center mb-10'>
-				<h2 className='text-3xl font-bold text-gray-900'>Agenda</h2>
-				<div className='w-16 h-1 bg-blue-500 mx-auto my-4 rounded-full'></div>
-			</div>
+		<div className='max-w-[1200px] mx-auto '>
 			<div className='bg-gradient-to-br from-white to-blue-50 rounded-lg shadow border border-blue-100 overflow-hidden'>
 				{/* Cabecera */}
 				<CalendarioHeader

@@ -1,5 +1,5 @@
 interface NavLink {
-	href: string;
+	href?: string;
 	label: string;
 	hasDropdown?: boolean;
 	dropdownItems?: {
@@ -11,7 +11,6 @@ interface NavLink {
 export const navLinks: NavLink[] = [
 	{ href: '/', label: 'Inicio' },
 	{
-		href: '/nosotros',
 		label: 'Nosotros',
 		hasDropdown: true,
 		dropdownItems: [
@@ -24,7 +23,6 @@ export const navLinks: NavLink[] = [
 		],
 	},
 	{
-		href: '/tudistrito',
 		label: 'Tu Distrito',
 		hasDropdown: true,
 		dropdownItems: [
@@ -37,18 +35,15 @@ export const navLinks: NavLink[] = [
 		],
 	},
 	{
-		href: '/servicios',
 		label: 'Servicios',
 		hasDropdown: true,
 		dropdownItems: [
 			{ href: '/servicios/reclamaciones', label: 'Libro de Reclamaciones' },
 			{ href: '/servicios/presupuesto', label: 'Presupuesto Participativo' },
 			{ href: '/servicios/biblioteca', label: 'Biblioteca Municipal' },
-			{ href: '/servicios', label: 'Ver Todos los Servicios' },
 		],
 	},
 	{
-		href: '/tramites',
 		label: 'Trámites',
 		hasDropdown: true,
 		dropdownItems: [

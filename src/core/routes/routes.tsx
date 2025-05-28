@@ -3,6 +3,7 @@ import { HomePage } from '../../pages/HomePage';
 import { AgendaPage } from '../../pages/nosotros/AgendaPage';
 import { PrivateGuard } from './guard/PrivateGuard';
 import { AlcaldePage } from '../../pages/nosotros/AlcaldePage';
+import RegistroCivilPage from '../../pages/tramites/RegistroCivilPage';
 import { DirectorioPage } from '../../pages/nosotros/DirectorioPage';
 import ConsejoMunicipalPage from '../../pages/nosotros/ConsejoMunicipalPage';
 import OrganigramaPage from '../../pages/nosotros/OrganigramaPage';
@@ -13,7 +14,13 @@ import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 import HimnoPage from '../../pages/tuDistrito/HimnoPage';
 import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
 import PDUPage from '../../pages/tuDistrito/PDUPage';
+import DenunciaCorrupcionPage from '../../pages/tramites/DenunciaCorrupcionPage';
 import LibroReclamacionesPage from '../../pages/servicios/LibroReclamacionesPage';
+import PresupuestoParticipativo from '../../pages/servicios/PresupuestoParticipativoPage';
+import Biblioteca from '../../pages/servicios/BibliotecaPage';
+import DefensaCivilPage from '../../pages/tramites/DefensaCivilPage';
+import LicenciaFuncionamientoPage from '../../pages/tramites/LicenciaFuncionamientoPage';
+import LicenciaEdificacionPage from '../../pages/tramites/LicenciaEdificacionPage';
 
 export const routes = [
 	// Ruta principal
@@ -77,20 +84,21 @@ export const routes = [
 			},
 			{
 				path: 'pdu',
-				element: <PDUPage/>,
+				element: <PDUPage />,
 			},
 			{
 				path: 'misionVision',
-				element: <MisionVisionPage/>,
+				element: <MisionVisionPage />,
 			},
 			{
 				path: 'reseñaHistorica',
-				element: <ReseñaHistorica/>,
+				element: <ReseñaHistorica />,
 			},
 			{
 				path: 'himno',
 				element: <HimnoPage />,
-			},			{
+			},
+			{
 				path: 'escudo',
 				element: <EscudoBanderaPage />,
 			},
@@ -106,19 +114,19 @@ export const routes = [
 				index: true,
 				element: <p>Ver Todos los Servicios</p>,
 			},
-			
+
 			{
 				path: 'reclamaciones',
 				element: <LibroReclamacionesPage />,
 			},
-			
+
 			{
 				path: 'presupuesto',
-				element: <p>Presupuesto Participativo</p>,
+				element: <PresupuestoParticipativo />,
 			},
 			{
 				path: 'biblioteca',
-				element: <p>Biblioteca Municipal</p>,
+				element: <Biblioteca />,
 			},
 		],
 	},
@@ -132,10 +140,7 @@ export const routes = [
 				index: true,
 				element: <p>Ver Todos los trámites</p>,
 			},
-			{
-				path: 'defensa-civil',
-				element: <p>Defensa Civil</p>,
-			},
+			{ path: 'defensa-civil', element: <DefensaCivilPage /> },
 			{
 				path: 'transparencia',
 				element: <p>Transparencia</p>,
@@ -146,15 +151,15 @@ export const routes = [
 			},
 			{
 				path: 'registro-civil',
-				element: <p>Registro Civil</p>,
+				element: <RegistroCivilPage />,
 			},
 			{
 				path: 'licencia-funcionamiento',
-				element: <p>Licencia de Funcionamiento</p>,
+				element: <LicenciaFuncionamientoPage />,
 			},
 			{
 				path: 'licencia-edificacion',
-				element: <p>Licencia de Edificación</p>,
+				element: <LicenciaEdificacionPage />,
 			},
 			{
 				path: 'convocatorias',
@@ -162,7 +167,7 @@ export const routes = [
 			},
 			{
 				path: 'denuncia',
-				element: <p>DENUNCIA CONTRA LA CORRUPCION</p>,
+				element: <DenunciaCorrupcionPage />,
 			},
 		],
 	},
