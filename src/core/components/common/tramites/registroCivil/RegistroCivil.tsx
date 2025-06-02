@@ -1,17 +1,18 @@
-import React from 'react';
+
 import { Target, Award, Baby, Users, UserPlus, UserCheck, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function RegistroCivil() {
-	const fadeInUp = {
-		initial: { opacity: 0, y: 20 },
-		animate: { opacity: 1, y: 0 },
-		viewport: { once: true, amount: 0.1 },
-		transition: { duration: 0.5 },
-	};
+const fadeInUp = {
+	initial: { opacity: 0, y: 20 },
+	animate: { opacity: 1, y: 0 },
+	transition: { duration: 0.3, staggerChildren: 0.05 },
+	viewport: { once: true },
+};
 
+
+export default function RegistroCivil() {
 	return (
-		<div className='container mx-auto px-4 py-8 max-w-5xl'>
+		<motion.div className='container mx-auto px-4 py-8 max-w-5xl' initial='initial' animate='animate'>
 			{/* Misión y Visión */}
 			<div className='grid md:grid-cols-2 gap-6 mb-12'>
 				{/* Misión */}
@@ -258,7 +259,6 @@ export default function RegistroCivil() {
 						</ul>
 					</motion.div>
 				</div>
-			</div>
-		</div>
+			</div>		</motion.div>
 	);
 }

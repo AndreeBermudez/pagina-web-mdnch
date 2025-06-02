@@ -4,22 +4,20 @@ import { SectionNews } from '../core/components/common/home/noticias/SectionNews
 import { SectionPlaces } from '../core/components/common/home/turismo/SectionPlaces';
 import { AlcaldeSection } from '../core/components/common/home/alcalde/AlcaldeSection';
 import { HeroSection } from '../core/layout/hero/HeroSection';
-
-import { Layout } from '../core/layout/Layout';
+import { NavbarSection } from '../core/layout/navbar/NavbarSection';
+import { Footer } from '../core/layout/footer/Footer';
 
 export const HomePage = () => {
 	return (
-		<Layout>
-			<div className='bg-gray-100'>
-				
-				<HeroSection />
-				<ServiceSection />
-				<SectionNews />
-				<SectionEvent />
-				<AlcaldeSection />
-				<SectionPlaces />
-				
-			</div>
-		</Layout>
+		<body className='bg-gray-100'>
+			<NavbarSection />
+			<HeroSection />
+			<ServiceSection />
+			<SectionNews />
+			<SectionEvent />
+			<AlcaldeSection />
+			<SectionPlaces />
+			<Footer />
+		</body>
 	);
 };

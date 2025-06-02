@@ -1,4 +1,5 @@
 import React from 'react';
+import { HiClock } from 'react-icons/hi';
 import { type Evento } from './types';
 import { MESES, COLORES_CATEGORIAS } from './constants';
 
@@ -40,20 +41,7 @@ const EventoCard: React.FC<EventoCardProps> = ({ evento, index, onSelect }) => {
               </span>
             )}
             <div className="flex items-center text-sm text-gray-500 mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-1"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
+              <HiClock className="w-3 h-3 mr-1" />
               {evento.horaInicio} - {evento.horaFin}
             </div>
             <div className="text-sm text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">

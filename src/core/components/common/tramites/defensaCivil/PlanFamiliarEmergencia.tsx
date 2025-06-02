@@ -6,10 +6,10 @@ export default function PlanFamiliarEmergencia() {
 			<div className='space-y-8'>
 				<div className='bg-white rounded-2xl shadow-lg p-8'>
 					<div className='grid lg:grid-cols-2 gap-12 items-center'>
-						<div>
-							<h2 className='text-3xl font-bold text-gray-800 mb-6'>
-								¿Qué debe contener tu mochila de emergencia?
-							</h2>
+						<div>							
+							<h2 className='text-3xl font-bold text-gray-800 mb-6 text-center lg:text-left'>
+							¿Qué debe contener tu mochila de emergencia?
+						    </h2>
 							<p className='text-gray-600 mb-8'>
 								Prepara una mochila por cada miembro de la familia con suministros para al menos 72 horas.
 							</p>

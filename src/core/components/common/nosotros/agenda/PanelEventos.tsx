@@ -1,4 +1,5 @@
 import React from 'react';
+import { HiViewGrid } from 'react-icons/hi';
 import EventoCard from './EventoCard';
 import EventoDetalle from './EventoDetalle';
 import { type Evento } from './types';
@@ -22,22 +23,7 @@ const PanelEventos: React.FC<PanelEventosProps> = ({
   if (eventosFiltrados.length === 0) {
     return (
       <div className="text-center text-gray-500 p-8 bg-blue-50 rounded">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="mx-auto mb-2 w-10 h-10 text-blue-300"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          viewBox="0 0 24 24"
-        >
-          <path d="M2 12V2h10v10H2z"></path>
-          <path d="M12 22V12h10v10H12z"></path>
-          <path d="M2 22V12h10v10H2z"></path>
-          <path d="M12 2h4v4"></path>
-          <path d="M22 12V2H12"></path>
-        </svg>
+        <HiViewGrid className="mx-auto mb-2 w-10 h-10 text-blue-300" />
         <p>No hay eventos para mostrar</p>
         <p className="text-sm">¡Añade nuevos eventos para verlos aquí!</p>
       </div>

@@ -22,7 +22,7 @@ interface RegidoresCardsProps {
 
 export default function RegidoresCards({ regidores }: RegidoresCardsProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-20 mb-20">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:px-20 mb-20">
       {regidores.map((r) => (
         <div key={r.id} className="regidor-card relative group perspective w-full h-96 overflow-hidden shadow border-gray-100 rounded-lg">
           {/* Frente */}
