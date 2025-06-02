@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Funcionario } from './types';
 
