@@ -21,7 +21,6 @@ const CalendarioGrid: React.FC<CalendarioGridProps> = ({
 }) => {
 	return (
 		<div>
-			{/* Navegación del calendario */}
 			<div className='flex justify-between items-center p-4 border-b border-blue-100 bg-gradient-to-r from-blue-100 to-cyan-100'>
 				<button
 					className='bg-transparent text-blue-700 font-medium flex items-center p-2 rounded transition-colors hover:bg-white/50'

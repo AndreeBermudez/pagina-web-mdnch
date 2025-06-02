@@ -54,7 +54,7 @@ export default function ReseñaHistorica() {
 			</div>
 
 			{/* Timeline and Content */}
-			<div className='max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8'>
+			<div className='max-w-6xl mx-auto px-4 py-12 mb-25 sm:px-6 lg:px-8'>
 				<div className='grid md:grid-cols-3 gap-8'>
 					{/* Sidebar with timeline */}
 					<div className='md:col-span-1 space-y-6'>

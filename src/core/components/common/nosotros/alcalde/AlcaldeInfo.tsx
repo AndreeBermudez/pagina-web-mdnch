@@ -5,14 +5,8 @@ import { FileSearch, Calendar, Target, Award, Users } from 'lucide-react';
 
 const AlcaldeInfo: React.FC = () => {
   return (
-    <section className="bg-gradient-to-br from-slate-100 to-slate-200 min-h-screen pt-20">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 lg:pt-20 pb-12 relative">
-        <div className="relative mb-12 text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a2158] inline-block relative">
-            Conoce a Nuestro Alcalde
-            <div className="absolute -bottom-3 left-0 w-full h-1 bg-yellow-500" />
-          </h1>
-        </div>
+    <section className="bg-gradient-to-br from-slate-100 to-slate-200 min-h-screen ">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 lg:pt-10 pb-12 relative">
         <div className="relative">
           <div className="bg-[#0a2158] rounded-lg shadow-2xl overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
