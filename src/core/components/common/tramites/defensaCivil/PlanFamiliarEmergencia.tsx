@@ -103,15 +103,15 @@ export default function PlanFamiliarEmergencia() {
 							<div className='w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4'>
 								<Phone className='w-8 h-8 text-white' />
 							</div>
-							<div className='text-white font-bold text-2xl mb-1'>(043) 635544</div>
+							<div className='text-white font-bold text-2xl mb-1'>(043)313000</div>
 							<div className='text-blue-100'>Serenazgo</div>
 						</div>
 						<div className='bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center'>
 							<div className='w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4'>
 								<Heart className='w-8 h-8 text-white' />
 							</div>
-							<div className='text-white font-bold text-2xl mb-1'>116</div>
-							<div className='text-blue-100'>SAMU - Salud</div>
+							<div className='text-white font-bold text-2xl mb-1'>483230</div>
+							<div className='text-blue-100'>EsSalud - Salud</div>
 						</div>
 						<div className='bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center'>
 							<div className='w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4'>

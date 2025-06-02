@@ -14,8 +14,7 @@ const PresupuestoParticipativo = () => {
 							return (
 								<div
 									key={documento.id}
-									className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden ${colorClasses.border}`}>
-									<div className='p-6'>
+									className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden ${colorClasses.border}`}>									<div className='p-6 flex flex-col h-full'>
 										{/* Header con badge y fecha */}
 										<div className='flex items-start justify-between mb-4'>
 											<span
@@ -26,7 +25,7 @@ const PresupuestoParticipativo = () => {
 										</div>
 
 										{/* Título del documento */}
-										<h3 className='text-lg font-bold text-gray-800 mb-6 leading-tight min-h-[3rem]'>
+										<h3 className='text-lg font-bold text-gray-800 mb-4 leading-tight flex-grow'>
 											{documento.nombre}
 										</h3>
 
@@ -35,7 +34,7 @@ const PresupuestoParticipativo = () => {
 											href={documento.enlace}
 											target='_blank'
 											rel='noopener noreferrer'
-											className='w-full inline-flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-3 rounded-lg transition-colors duration-200'>
+											className='w-full inline-flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-3 rounded-lg transition-colors duration-200 mt-auto'>
 											<span>Descargar</span>
 											<FiExternalLink className='w-4 h-4' />
 										</a>

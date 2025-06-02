@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Funcionario } from './types';
 
@@ -22,7 +22,7 @@ export default function DirectorioCards({ funcionarios, cardsPerPage }: Director
 	};
 
 	return (
-        
+
 		<div className='space-y-8 py-0  md:px-20 mb-15'>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
 				{visibleFuncionarios.map((funcionario) => (
@@ -122,6 +122,6 @@ export default function DirectorioCards({ funcionarios, cardsPerPage }: Director
 				</div>
 			)}
 		</div>
-        
+
 	);
 }
