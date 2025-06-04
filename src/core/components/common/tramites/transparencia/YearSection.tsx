@@ -61,7 +61,7 @@ export const YearSection = ({ year, data, documentId }: YearSectionProps) => {
 								<div className='flex items-center gap-2 mb-3'>
 									<span
 										className={`inline-flex items-center px-3 py-1 ${colors.trimestre} text-xs font-semibold rounded-lg`}>
-										Q{item.trimestre}
+										{item.trimestre}
 									</span>
 									<span className='text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md'>{year}</span>
 								</div>

@@ -23,6 +23,7 @@ import LicenciaFuncionamientoPage from '../../pages/tramites/LicenciaFuncionamie
 import LicenciaEdificacionPage from '../../pages/tramites/LicenciaEdificacionPage';
 import ControlInternoPage from '../../pages/tramites/ControlInternoPage';
 import TransparenciaPage from '../../pages/tramites/TransparenciaPage';
+import ConvocatoriaPage from '../../pages/tramites/ConvocatoriaPage';
 
 export const routes = [
 	// Ruta principal
@@ -165,7 +166,7 @@ export const routes = [
 			},
 			{
 				path: 'convocatorias',
-				element: <p>CONVOCATORIAS CAS 2025</p>,
+				element: <ConvocatoriaPage />,
 			},
 			{
 				path: 'denuncia',
