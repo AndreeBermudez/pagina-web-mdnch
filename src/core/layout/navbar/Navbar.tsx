@@ -26,7 +26,7 @@ export const Navbar = ({ isHomePage, scrolled, mobileMenuOpen, setMobileMenuOpen
 					<div className='w-full flex justify-between items-center'>
 						{/* Logo */}
 						<div className='flex items-center gap-3'>
-							<img src={logo} alt='Logo' className='h-14 lg:h-12 w-auto' />
+							<Link to='/' replace><img src={logo} alt='Logo' className='h-14 lg:h-12 w-auto' /></Link>
 							<div className='hidden lg:flex lg:flex-col '>
 								<span className={`font-bold text-base ${textClasses}`}>Municipalidad Distrital</span>
 								<span className={`font-semibold text-sm ${subtextClasses}`}>Nuevo Chimbote</span>
