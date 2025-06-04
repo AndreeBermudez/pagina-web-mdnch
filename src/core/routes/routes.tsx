@@ -21,6 +21,8 @@ import Biblioteca from '../../pages/servicios/BibliotecaPage';
 import DefensaCivilPage from '../../pages/tramites/DefensaCivilPage';
 import LicenciaFuncionamientoPage from '../../pages/tramites/LicenciaFuncionamientoPage';
 import LicenciaEdificacionPage from '../../pages/tramites/LicenciaEdificacionPage';
+import ControlInternoPage from '../../pages/tramites/ControlInternoPage';
+import TransparenciaPage from '../../pages/tramites/TransparenciaPage';
 
 export const routes = [
 	// Ruta principal
@@ -143,11 +145,11 @@ export const routes = [
 			{ path: 'defensa-civil', element: <DefensaCivilPage /> },
 			{
 				path: 'transparencia',
-				element: <p>Transparencia</p>,
+				element: <TransparenciaPage />,
 			},
 			{
 				path: 'control-interno',
-				element: <p>Control Interno</p>,
+				element: <ControlInternoPage />,
 			},
 			{
 				path: 'registro-civil',
