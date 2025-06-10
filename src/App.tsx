@@ -5,7 +5,7 @@ export const App = () => {
 	return (
 		<>
 			<AppContainer />
-      <ReturnToTop />
+			<ReturnToTop />
 		</>
 	);
 };
