@@ -1,11 +1,11 @@
+import { RefreshCcw } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import logoMunicipalidad from '../../../../../assets/logo.webp';
 import { ButtonAdmin } from './ButtonAdmin';
 import { ButtonSidebar } from './ButtonSidebar';
+import { ButtonSidebarCollapsed } from './ButtonSidebarCollapsed';
 import { useSidebarContext } from './context/SidebarContext';
 import { menuItems } from './context/items-sidebar';
-import { ButtonSidebarCollapsed } from './ButtonSidebarCollapsed';
-import { RefreshCcw } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
 	const location = useLocation();
