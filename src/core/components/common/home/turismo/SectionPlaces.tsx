@@ -14,16 +14,7 @@ export const SectionPlaces = () => {
 						</div>
 						<h2 className='text-3xl md:text-4xl font-bold text-blue-900 mb-6'>Bienvenido a Nuevo Chimbote</h2>
 						<div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-center'>							<div className='relative rounded-xl overflow-hidden shadow-xl'>
-								<iframe 
-									width="560"
-									height="315"
-									src="https://www.youtube.com/embed/uSGQnmXXcm8"
-									title="Nuevo Chimbote, tu nuevo destino"
-									className='w-full aspect-video'
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowFullScreen
-									loading="lazy"
-								/>
+								
 								<div className='absolute bottom-4 right-4 bg-blue-600 text-white py-1 px-3 rounded-full text-sm font-medium'>
 									Ciudad moderna
 								</div>
