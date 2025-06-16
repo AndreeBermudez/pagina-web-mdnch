@@ -2,7 +2,6 @@ import { ArrowUpRight, Clock, Facebook, Instagram, MapPin, Phone, Twitter, Youtu
 import logo from '../../../assets/logo.webp';
 
 export const Footer = () => {
-
 	const normasDocumentos = ['Documentos De Gestión', 'Normas Y Documentos Legales', 'Informes Y Publicaciones'];
 
 	return (
@@ -116,7 +115,6 @@ export const Footer = () => {
 						</div>
 					</div>
 
-		
 					{/* Normas y documentos */}
 					<div className='flex flex-col'>
 						<h3 className='text-xl font-bold text-white mb-6 pb-2 border-b border-blue-700 inline-block'>
@@ -168,9 +166,8 @@ export const Footer = () => {
 			<div className='h-px bg-gray-700 my-8'></div>
 
 			{/* Copyright */}
-			<div className='flex flex-col md:flex-row justify-between items-center'>
+			<div className='container mx-auto px-4 lg:px-6 flex flex-col md:flex-row justify-between items-center'>
 				<p className='text-sm mb-4 md:mb-0'>© Copyright 2025 - GAMBARU | Todos los derechos reservados.</p>
-
 				<div className='flex items-center'>
 					<p className='text-sm mr-4'>Desarrollado con ❤️ para los ciudadanos</p>
 				</div>

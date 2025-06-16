@@ -2,6 +2,7 @@ import { BookOpen, Mail, Menu, Search, X } from 'lucide-react';
 import { useState } from 'react';
 import logo from '../../../assets/logo.webp';
 import { navLinks } from './navLinks';
+import { Link } from 'react-router-dom';
 
 export interface MobileProps {
 	isOpen: boolean;
@@ -26,7 +27,7 @@ export const MobileMenu = ({ isOpen, onClose }: MobileProps) => {
 				{/* Header */}
 				<div className='bg-blue-900 p-4 flex items-center justify-between'>
 					<div className='flex items-center gap-2'>
-						<img src={logo} alt='Logo' className='w-8 h-8' />
+						<Link to={'/'} replace><img src={logo} alt='Logo' className='w-8 h-auto' /></Link>
 						<div className='flex flex-col'>
 							<span className='text-white font-bold'>Municipalidad Distrital</span>
 							<span className='text-blue-200 text-sm'>Nuevo Chimbote</span>

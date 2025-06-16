@@ -4,7 +4,7 @@ export const regidores = [
 		numero: 1,
 		cargo: 'Regidor 1',
 		nombre: 'Milagritos Karina Manrique Quipusco',
-		foto: 'img_walterEjem.jpg',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Asuntos Legales y Secretaría General', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Carlos Mendoza', cargo: 'Asistente' },
@@ -16,7 +16,7 @@ export const regidores = [
 		numero: 2,
 		cargo: 'Regidor 2',
 		nombre: 'Julio Cesar Maceda Cruzado',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Desarrollo Urbano', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Pedro Ramírez', cargo: 'Asistente' },
@@ -28,7 +28,7 @@ export const regidores = [
 		numero: 3,
 		cargo: 'Regidor 3',
 		nombre: 'Zoila Renee Villanueva Calonge',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Asuntos Legales y Secretaría General', cargo: 'Primer Miembro' }],
 		equipo: [
 			{ nombre: 'Juan Pérez', cargo: 'Asistente' },
@@ -40,7 +40,7 @@ export const regidores = [
 		numero: 4,
 		cargo: 'Regidor 4',
 		nombre: 'Abel Dino Palma León',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Asuntos Legales y Secretaría General', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Roberto Sánchez', cargo: 'Asistente' },
@@ -52,7 +52,7 @@ export const regidores = [
 		numero: 5,
 		cargo: 'Regidor 5',
 		nombre: 'Diana Katherine Manrique Muguerza',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Administración, Planeamiento y Presupuesto', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Fernando Castro', cargo: 'Asistente' },
@@ -64,7 +64,7 @@ export const regidores = [
 		numero: 6,
 		cargo: 'Regidor 6',
 		nombre: 'Jorge Raul Gomez Arana',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Servicios Públicos', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Miguel Ángel Rojas', cargo: 'Asistente' },
@@ -76,7 +76,7 @@ export const regidores = [
 		numero: 7,
 		cargo: 'Regidor 7',
 		nombre: 'Diana Anghella Cueva Melgarejo',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Desarrollo Social', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Javier Morales', cargo: 'Asistente' },
@@ -88,7 +88,7 @@ export const regidores = [
 		numero: 8,
 		cargo: 'Regidor 8',
 		nombre: 'Beatriz Madrid Amayo',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Cultura y Educación', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Raúl Jiménez', cargo: 'Asistente' },
@@ -100,7 +100,7 @@ export const regidores = [
 		numero: 9,
 		cargo: 'Regidor 9',
 		nombre: 'Juan Augusto Zavaleta Pinedo',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Administración, Planeamiento y Presupuesto', cargo: 'Segundo Miembro' }],
 		equipo: [
 			{ nombre: 'Ernesto Vega', cargo: 'Asistente' },
@@ -112,7 +112,7 @@ export const regidores = [
 		numero: 10,
 		cargo: 'Regidor 10',
 		nombre: 'Susana Margarita Bustillos Oyanguren',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Medio Ambiente', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Daniel Flores', cargo: 'Asistente' },
@@ -124,7 +124,7 @@ export const regidores = [
 		numero: 11,
 		cargo: 'Regidor 11',
 		nombre: 'Ronald Javier Nieto Gallo',
-		foto: 'https://via.placeholder.com/300',
+		foto: '/Daniel.jpg',
 		comisiones: [{ nombre: 'Comisión de Seguridad Ciudadana', cargo: 'Presidente' }],
 		equipo: [
 			{ nombre: 'Alejandro Medina', cargo: 'Asistente' },

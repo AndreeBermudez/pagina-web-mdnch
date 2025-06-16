@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import cityImage from '../../../assets/imagen-plaza.webp';
 import { HeroSlider } from './HeroSlider';
 import { Indicators } from './Indicators';
-import { Weather } from '../../../core/components/ui/Weather'; // Asumiendo que ya tienes un componente Weather en React
 import { slides } from './slides';
-import cityImage from '../../../assets/imagen-plaza.webp';
 
 export const HeroSection = () => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -51,9 +50,6 @@ export const HeroSection = () => {
       
       {/* Contenido */}
       <div className="container-municipalidad">
-        <div className="absolute top-28 right-8">
-          <Weather />
-        </div>
         <HeroSlider activeSlide={activeSlide} />
         <Indicators activeSlide={activeSlide} onClick={goToSlide} />
       </div>

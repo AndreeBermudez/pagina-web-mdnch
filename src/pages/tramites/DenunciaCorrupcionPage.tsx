@@ -1,4 +1,3 @@
-import React from 'react';
 import DenunciaCorrupcion from '../../core/components/common/tramites/denuncia/DenunciaCorrupcion';
 import { Layout } from '../../core/layout/Layout';
 

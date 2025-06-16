@@ -1,26 +1,30 @@
 import { Outlet } from 'react-router-dom';
 import { HomePage } from '../../pages/HomePage';
 import { AgendaPage } from '../../pages/nosotros/AgendaPage';
-import { PrivateGuard } from './guard/PrivateGuard';
 import { AlcaldePage } from '../../pages/nosotros/AlcaldePage';
-import RegistroCivilPage from '../../pages/tramites/RegistroCivilPage';
-import { DirectorioPage } from '../../pages/nosotros/DirectorioPage';
 import ConsejoMunicipalPage from '../../pages/nosotros/ConsejoMunicipalPage';
-import OrganigramaPage from '../../pages/nosotros/OrganigramaPage';
+import { DirectorioPage } from '../../pages/nosotros/DirectorioPage';
 import MapaPage from '../../pages/nosotros/MapaPage';
-import TurismoPage from '../../pages/tuDistrito/TurismoPage';
-import MisionVisionPage from '../../pages/tuDistrito/MisionVisionPage';
-import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
-import HimnoPage from '../../pages/tuDistrito/HimnoPage';
-import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
-import PDUPage from '../../pages/tuDistrito/PDUPage';
-import DenunciaCorrupcionPage from '../../pages/tramites/DenunciaCorrupcionPage';
+import OrganigramaPage from '../../pages/nosotros/OrganigramaPage';
+import Biblioteca from '../../pages/servicios/BibliotecaPage';
 import LibroReclamacionesPage from '../../pages/servicios/LibroReclamacionesPage';
 import PresupuestoParticipativo from '../../pages/servicios/PresupuestoParticipativoPage';
-import Biblioteca from '../../pages/servicios/BibliotecaPage';
+import ControlInternoPage from '../../pages/tramites/ControlInternoPage';
+import ConvocatoriaPage from '../../pages/tramites/ConvocatoriaPage';
 import DefensaCivilPage from '../../pages/tramites/DefensaCivilPage';
-import LicenciaFuncionamientoPage from '../../pages/tramites/LicenciaFuncionamientoPage';
+import DenunciaCorrupcionPage from '../../pages/tramites/DenunciaCorrupcionPage';
 import LicenciaEdificacionPage from '../../pages/tramites/LicenciaEdificacionPage';
+import LicenciaFuncionamientoPage from '../../pages/tramites/LicenciaFuncionamientoPage';
+import RegistroCivilPage from '../../pages/tramites/RegistroCivilPage';
+import TransparenciaPage from '../../pages/tramites/TransparenciaPage';
+import EscudoBanderaPage from '../../pages/tuDistrito/EscudoBanderaPage';
+import HimnoPage from '../../pages/tuDistrito/HimnoPage';
+import MisionVisionPage from '../../pages/tuDistrito/MisionVisionPage';
+import PDUPage from '../../pages/tuDistrito/PDUPage';
+import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
+import TurismoPage from '../../pages/tuDistrito/TurismoPage';
+import { AdminLayout } from '../components/common/administrador/AdminLayout';
+import { PrivateGuard } from './guard/PrivateGuard';
 
 export const routes = [
 	// Ruta principal
@@ -143,11 +147,11 @@ export const routes = [
 			{ path: 'defensa-civil', element: <DefensaCivilPage /> },
 			{
 				path: 'transparencia',
-				element: <p>Transparencia</p>,
+				element: <TransparenciaPage />,
 			},
 			{
 				path: 'control-interno',
-				element: <p>Control Interno</p>,
+				element: <ControlInternoPage />,
 			},
 			{
 				path: 'registro-civil',
@@ -163,7 +167,7 @@ export const routes = [
 			},
 			{
 				path: 'convocatorias',
-				element: <p>CONVOCATORIAS CAS 2025</p>,
+				element: <ConvocatoriaPage />,
 			},
 			{
 				path: 'denuncia',
@@ -181,7 +185,7 @@ export const routes = [
 	// Admin
 	{
 		path: '/admin',
-		element: <Outlet />,
+		element: <AdminLayout />,
 		loader: PrivateGuard,
 		children: [
 			{
