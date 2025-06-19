@@ -1,7 +1,6 @@
-import React from 'react';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
+import { COLORES_CATEGORIAS, MESES } from './constants';
 import type { DiaCalendario } from './types';
-import { MESES, COLORES_CATEGORIAS } from './constants';
 
 interface CalendarioGridProps {
 	mesActual: number;
@@ -10,24 +9,28 @@ interface CalendarioGridProps {
 	cambiarMes: (delta: number) => void;
 	seleccionarEvento: (id: string) => void;
 	esFechaHoy: (fecha: Date) => boolean;
+	diaSeleccionado?: Date | null;
+	onDiaClick?: (fecha: Date) => void;
 }
 
-const CalendarioGrid: React.FC<CalendarioGridProps> = ({
+const CalendarioGrid = ({
 	mesActual,
 	anioActual,
 	diasCalendario,
 	cambiarMes,
 	seleccionarEvento,
 	esFechaHoy,
-}) => {
-	return (		
-	<div className="w-full max-w-full overflow-hidden ">
+	diaSeleccionado,
+	onDiaClick,
+}: CalendarioGridProps) => {
+	return (
+		<div className='w-full max-w-full overflow-hidden '>
 			<div className='flex justify-between items-center p-2 sm:p-4 border-b border-blue-100 bg-gradient-to-r from-blue-100 to-cyan-100'>
 				<button
 					className='bg-transparent text-blue-700 font-medium flex items-center p-1 sm:p-2 rounded transition-colors hover:bg-white/50'
 					onClick={() => cambiarMes(-1)}>
-					<HiChevronLeft className="w-4 h-4 mr-1" />
-					<span className="hidden sm:inline">{MESES[mesActual === 0 ? 11 : mesActual - 1].toUpperCase()}</span>
+					<HiChevronLeft className='w-4 h-4 mr-1' />
+					<span className='hidden sm:inline'>{MESES[mesActual === 0 ? 11 : mesActual - 1].toUpperCase()}</span>
 				</button>
 				<h2 className='text-lg sm:text-2xl font-bold uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
 					{MESES[mesActual].toUpperCase()} {anioActual}
@@ -35,8 +38,8 @@ const CalendarioGrid: React.FC<CalendarioGridProps> = ({
 				<button
 					className='bg-transparent text-blue-700 font-medium flex items-center p-1 sm:p-2 rounded transition-colors hover:bg-white/50'
 					onClick={() => cambiarMes(1)}>
-					<span className="hidden sm:inline">{MESES[mesActual === 11 ? 0 : mesActual + 1].toUpperCase()}</span>
-					<HiChevronRight className="w-4 h-4 ml-1" />
+					<span className='hidden sm:inline'>{MESES[mesActual === 11 ? 0 : mesActual + 1].toUpperCase()}</span>
+					<HiChevronRight className='w-4 h-4 ml-1' />
 				</button>
 			</div>
 
@@ -54,33 +57,49 @@ const CalendarioGrid: React.FC<CalendarioGridProps> = ({
 				{diasCalendario.map((dia, idx) => {
 					const hoy = esFechaHoy(dia.fecha);
 					const esFinde = dia.fecha.getDay() === 0 || dia.fecha.getDay() === 6;
-					const tieneEventos = dia.eventos.length > 0;					let claseBase =
+					const tieneEventos = dia.eventos.length > 0;
+					const esSeleccionado =
+						diaSeleccionado && dia.fecha.toDateString() === diaSeleccionado.toDateString() && dia.esMesActual;
+					let claseBase =
 						'p-0.5 sm:p-2 border-b border-gray-200 border-r border-gray-200 min-h-[50px] sm:min-h-[100px] relative transition-all duration-200';
 					if (!dia.esMesActual) claseBase += ' text-gray-400 bg-gray-50';
 					if (esFinde && dia.esMesActual) claseBase += ' bg-blue-50';
 					if (hoy) claseBase += ' bg-cyan-50 border-cyan-200';
 					if (tieneEventos && dia.esMesActual) claseBase += ' cursor-pointer';
+					if (esSeleccionado) {
+						claseBase +=
+							' bg-gradient-to-br from-blue-500 to-blue-600 text-white border-blue-700 border-2 shadow-lg transform scale-105 z-10';
+					}
 
 					return (
 						<div
 							key={idx}
 							className={claseBase}
 							onClick={() => {
-								if (tieneEventos && dia.esMesActual) {
-									seleccionarEvento(dia.eventos[0].id);
+								if (dia.esMesActual) {
+									onDiaClick?.(dia.fecha);
+									if (tieneEventos) {
+										seleccionarEvento(dia.eventos[0].id);
+									}
 								}
 							}}>
 							<div
-								className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 rounded-full mb-1 mx-auto text-sm sm:text-base ${
-									hoy ? 'bg-blue-600 text-white font-bold' : 'bg-transparent'
+								className={`flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8 rounded-full mb-1 mx-auto text-sm sm:text-base transition-all duration-300 ${
+									hoy
+										? 'bg-blue-600 text-white font-bold shadow-md'
+										: esSeleccionado
+										? 'bg-white text-blue-600 font-bold shadow-md'
+										: 'bg-transparent'
 								}`}>
 								{dia.fecha.getDate()}
 							</div>
 							{tieneEventos && dia.esMesActual && (
 								<>
 									<div
-										className={`text-[10px] sm:text-xs p-0.5 sm:p-1 rounded inline-block max-w-[70px] sm:max-w-[80px] whitespace-nowrap overflow-hidden text-ellipsis ${
-											(COLORES_CATEGORIAS[dia.eventos[0].categoria] || COLORES_CATEGORIAS.default).clase
+										className={`text-[10px] sm:text-xs p-0.5 sm:p-1 rounded inline-block max-w-[70px] sm:max-w-[80px] whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-300 ${
+											esSeleccionado
+												? 'bg-white/20 text-white border border-white/30'
+												: (COLORES_CATEGORIAS[dia.eventos[0].categoria] || COLORES_CATEGORIAS.default).clase
 										}`}
 										onClick={(e) => {
 											e.stopPropagation();
@@ -89,7 +108,10 @@ const CalendarioGrid: React.FC<CalendarioGridProps> = ({
 										{dia.eventos[0].titulo}
 									</div>
 									{dia.eventos.length > 1 && (
-										<div className='text-[10px] sm:text-xs text-blue-500 text-center font-medium'>
+										<div
+											className={`text-[10px] sm:text-xs text-center font-medium ${
+												esSeleccionado ? 'text-white/90' : 'text-blue-500'
+											}`}>
 											+{dia.eventos.length - 1} más
 										</div>
 									)}
@@ -99,7 +121,9 @@ const CalendarioGrid: React.FC<CalendarioGridProps> = ({
 											return (
 												<div
 													key={ev.id}
-													className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${colorCat.dot}`}
+													className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
+														esSeleccionado ? 'bg-white/80' : colorCat.dot
+													}`}
 													title={ev.titulo}></div>
 											);
 										})}
