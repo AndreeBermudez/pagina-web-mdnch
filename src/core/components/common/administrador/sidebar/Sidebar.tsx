@@ -37,7 +37,7 @@ export const Sidebar: React.FC = () => {
 					</div>
 					<div className='flex flex-col w-full'>
 						<ButtonSidebarCollapsed
-							titulo='Dashboard'
+							titulo='Contenido'
 							Icon={RefreshCcw}
 							isCollapsed={isCollapsed}
 							isDropdown={isDropdownOpen}

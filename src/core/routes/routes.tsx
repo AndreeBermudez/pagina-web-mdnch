@@ -25,6 +25,7 @@ import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 import TurismoPage from '../../pages/tuDistrito/TurismoPage';
 import { AdminLayout } from '../components/common/administrador/AdminLayout';
 import { PrivateGuard } from './guard/PrivateGuard';
+import FuncionariosAdmin from '../components/common/administrador/Page/FuncioariosAd/FuncionariosAdmin';
 
 export const routes = [
 	// Ruta principal
@@ -193,8 +194,8 @@ export const routes = [
 				element: <p>Panel principal</p>,
 			},
 			{
-				path: 'paginas',
-				element: <p>Administrar páginas</p>,
+				path: 'funcionarios',
+				element: <FuncionariosAdmin/>,
 			},
 			{
 				path: 'eventos',

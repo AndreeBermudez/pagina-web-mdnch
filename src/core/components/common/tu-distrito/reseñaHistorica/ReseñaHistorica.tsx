@@ -38,9 +38,8 @@ const historicalItems = [
 export default function ReseñaHistorica() {
 	return (
 		<div className='min-h-screen bg-gradient-to-b from-blue-50 to-white'>
-			{/* Hero Section full-width */}
-			<div className='relative w-full overflow-hidden  h-[70vh]'>
-				<img src='historia.jpg' alt='Reseña histórica' className='object-cover w-full h-full' />
+			{/* Hero Section full-width */}			<div className='relative w-full overflow-hidden  h-[70vh]'>
+				<img src='/antiguoDistrito.jpg' alt='Reseña histórica' className='object-cover w-full h-full' />
 				<div className='absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end'>
 					<div className='max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8'>
 						<h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2'>Reseña Histórica</h1>

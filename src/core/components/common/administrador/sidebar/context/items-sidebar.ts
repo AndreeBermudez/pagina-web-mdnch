@@ -9,8 +9,14 @@ export interface MenuItem {
 
 export const menuItems = [
 	{
-		titulo: 'Editar Contenido',
+		titulo: 'Agenda',
 		link: '/admin/contenido',
+		icon: FilePenLine,
+		isActive: false,
+	},
+	{
+		titulo: 'Funcionarios',
+		link: '/admin/funcionarios',
 		icon: FilePenLine,
 		isActive: false,
 	},
