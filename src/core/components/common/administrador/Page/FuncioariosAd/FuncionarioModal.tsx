@@ -26,6 +26,7 @@ const FuncionarioModal = ({
     initialData = null,
     onSuccess,
     initialPreviewImage = null
+
 }: FuncionarioModalProps) => {
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
@@ -93,7 +94,6 @@ const FuncionarioModal = ({
             try {
                 ok = await updateFuncionarioJson(initialData!.id, payload);
             } catch (err) {
-                console.error("handleSubmit – actualización fallida:", err);
                 ok = false;
             }
         }
@@ -103,9 +103,7 @@ const FuncionarioModal = ({
         if (ok) {
             onClose();
             onSuccess?.();
-        } else {
-            alert("Hubo un problema al guardar el funcionario (revisa la consola).");
-        }
+        } 
     };
 
     return (
@@ -181,11 +179,7 @@ const FuncionarioModal = ({
                                 {previewImage && (
                                     <div>
                                         <p className="text-sm font-medium mb-1">Vista previa:</p>
-                                        <img
-                                            src={previewImage}
-                                            alt="Vista previa"
-                                            className="max-w-[100px] max-h-[100px] object-contain rounded-md border border-gray-300 shadow-sm"
-                                        />
+                                        <img src={previewImage}  alt="Vista previa" className="max-w-[100px] max-h-[100px] object-contain rounded-md border border-gray-300 shadow-sm" />
                                         <button
                                             onClick={() => setPreviewImage(null)}
                                             className="text-xs text-red-600 hover:text-red-800 cursor-pointer"

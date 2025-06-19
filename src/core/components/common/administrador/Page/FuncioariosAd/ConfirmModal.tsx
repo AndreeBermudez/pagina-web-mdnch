@@ -26,10 +26,7 @@ export default function ConfirmModal({
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         <div className="flex items-center justify-between border-b p-4">
           <h3 className="text-lg font-medium">{title}</h3>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-500"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-500" >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -39,19 +36,11 @@ export default function ConfirmModal({
         </div>
         
         <div className="bg-gray-50 px-4 py-3 flex justify-end gap-3 rounded-b-lg">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
-          >
+          <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50" >
             {cancelText}
           </button>
-          <button
-            onClick={() => {
-              onConfirm();
-              onClose();
-            }}
-            className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700"
-          >
+          <button onClick={() => { onConfirm(); onClose(); }}
+            className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
             {confirmText}
           </button>
         </div>
