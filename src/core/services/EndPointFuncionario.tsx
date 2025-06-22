@@ -28,6 +28,7 @@ export const getFuncionarios = async (): Promise<Funcionario[]> => {
             cargo: item.cargo,
             contacto: item.contacto,
             direccionImagen: item.direccionImagen,
+            fechaCreacion:item.fechaCreacion
         }));
         return funcionarios;
     } catch (error) {
@@ -67,23 +68,22 @@ export const createFuncionario = async (formData: FormData): Promise<boolean> =>
     }
 };
 
-export const updateFuncionarioJson = async (
+export const ActualizarFuncionario = async (
   id: number,
-  payload: UpdatePayload
+  formData: FormData
 ): Promise<boolean> => {
   try {
     const res = await fetch(
       `http://localhost:8080/api/authentication/funcionarios/${id}`,
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       }
     );
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return true;
   } catch (err) {
-    console.error("Error al actualizar funcionario (JSON):", err);
+    console.error("Error al actualizar funcionario (FormData):", err);
     return false;
   }
 };

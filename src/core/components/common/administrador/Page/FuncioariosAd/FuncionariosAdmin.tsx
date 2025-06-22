@@ -14,6 +14,7 @@ interface Funcionario {
   cargo: string;
   contacto: string;
   direccionImagen?: string;
+  fechaCreacion?: string;
 }
 
 export default function FuncionariosAdmin() {
@@ -103,7 +104,7 @@ export default function FuncionariosAdmin() {
                     {funcionarios.map((f) => (
                       <tr key={f.id}>
                         <td className="px-4 py-2 whitespace-nowrap">
-                          <div className="text-sm">01/01/2023</div>
+                          <div className="text-sm">{f.fechaCreacion}</div>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap">
                           <div className="text-sm">{f.nombre}</div>

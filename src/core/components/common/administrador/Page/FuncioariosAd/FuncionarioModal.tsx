@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createFuncionario, updateFuncionarioJson } from "../../../../../../core/services/EndPointFuncionario";
+import { createFuncionario, ActualizarFuncionario } from "../../../../../../core/services/EndPointFuncionario";
 
 interface Funcionario {
     id: number;
@@ -71,7 +71,6 @@ const FuncionarioModal = ({
         let ok: boolean;
 
         if (modalType === "add") {
-           
             const formData = new FormData();
             formData.append("nombre", nombre);
             formData.append("apellido", apellido);
@@ -82,29 +81,39 @@ const FuncionarioModal = ({
             ok = await createFuncionario(formData);
 
         } else {
-          
-            const payload = {
-                nombre,
-                apellido,
-                cargo,
-                contacto,
-                direccionImagen: initialData?.direccionImagen,
-            };
+            const formData = new FormData();
 
-            try {
-                ok = await updateFuncionarioJson(initialData!.id, payload);
-            } catch (err) {
-                ok = false;
+            // Solo enviar campos modificados
+            if (nombre !== initialData?.nombre) {
+                formData.append("nombre", nombre);
             }
+            if (apellido !== initialData?.apellido) {
+                formData.append("apellido", apellido);
+            }
+            if (cargo !== initialData?.cargo) {
+                formData.append("cargo", cargo);
+            }
+            if (contacto !== initialData?.contacto) {
+                formData.append("contacto", contacto);
+            }
+
+            // Si hay nueva imagen seleccionada, enviarla
+            if (file) {
+                formData.append("direccionImagen", file);
+            }
+
+
+            ok = await ActualizarFuncionario(initialData!.id, formData);
         }
 
-        setLoading(false);
+        setLoading(false); // ✅ MOVER AQUÍ
 
         if (ok) {
             onClose();
             onSuccess?.();
-        } 
+        }
     };
+
 
     return (
         <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
@@ -179,7 +188,7 @@ const FuncionarioModal = ({
                                 {previewImage && (
                                     <div>
                                         <p className="text-sm font-medium mb-1">Vista previa:</p>
-                                        <img src={previewImage}  alt="Vista previa" className="max-w-[100px] max-h-[100px] object-contain rounded-md border border-gray-300 shadow-sm" />
+                                        <img src={previewImage} alt="Vista previa" className="max-w-[100px] max-h-[100px] object-contain rounded-md border border-gray-300 shadow-sm" />
                                         <button
                                             onClick={() => setPreviewImage(null)}
                                             className="text-xs text-red-600 hover:text-red-800 cursor-pointer"
