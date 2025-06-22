@@ -7,13 +7,17 @@ import PanelEventos from './PanelEventos';
 import type { DiaCalendario, Evento } from './types';
 
 const CalendarSection = () => {
-	// Estados principales
 	const [mesActual, setMesActual] = useState<number>(new Date().getMonth()); // 0..11
 	const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
 	const [busqueda, setBusqueda] = useState<string>('');
 	const [eventoSeleccionado, setEventoSeleccionado] = useState<Evento | null>(null);
 	const [eventosFiltrados, setEventosFiltrados] = useState<Evento[]>([]);
 	const [rangoAnios, setRangoAnios] = useState<number[]>([]);
+	const [diaSeleccionado, setDiaSeleccionado] = useState<Date | null>(null);
+
+	const handleDiaClick = (fecha: Date) => {
+		setDiaSeleccionado(fecha);
+	};
 
 	useEffect(() => {
 		const anioBase = new Date().getFullYear();
@@ -146,12 +150,14 @@ const CalendarSection = () => {
 						cambiarMes={cambiarMes}
 						seleccionarEvento={seleccionarEvento}
 						esFechaHoy={esFechaHoy}
+						diaSeleccionado={diaSeleccionado}
+						onDiaClick={handleDiaClick}
 					/>
 
 					{/* Panel de eventos */}
 					<div className='border-l border-blue-100 p-4 bg-white max-h-[720px] overflow-y-auto'>
 						<div className='flex items-center gap-2 mb-4'>
-							<HiViewGrid className="w-5 h-5 text-blue-500" />
+							<HiViewGrid className='w-5 h-5 text-blue-500' />
 							<h3 className='text-lg font-bold uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
 								Eventos para {MESES[mesActual]}
 							</h3>
