@@ -26,6 +26,7 @@ import TurismoPage from '../../pages/tuDistrito/TurismoPage';
 import { AdminLayout } from '../components/common/administrador/AdminLayout';
 import { PrivateGuard } from './guard/PrivateGuard';
 import FuncionariosAdmin from '../components/common/administrador/Page/FuncioariosAd/FuncionariosAdmin';
+import ConsejoAd from '../components/common/administrador/Page/ConsejoAd/ConsejosAdmin';
 
 export const routes = [
 	// Ruta principal
@@ -198,8 +199,8 @@ export const routes = [
 				element: <FuncionariosAdmin/>,
 			},
 			{
-				path: 'eventos',
-				element: <p>Gestión de eventos</p>,
+				path: 'consejoMunicipal',
+				element: <ConsejoAd/>,
 			},
 			{
 				path: 'noticias',

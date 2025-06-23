@@ -68,7 +68,6 @@ export default function FuncionariosAdmin() {
                   Agregar Funcionario
                 </button>
               </div>
-
               <div className="flex items-center gap-3 mt-3">
                 <div className="relative flex-1 max-w-sm">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3.5 h-3.5" />

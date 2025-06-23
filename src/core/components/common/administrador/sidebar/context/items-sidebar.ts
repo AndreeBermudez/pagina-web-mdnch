@@ -21,14 +21,14 @@ export const menuItems = [
 		isActive: false,
 	},
 	{
-		titulo: 'Documentos de Gestión',
-		link: '/admin/docs',
+		titulo: 'Consejo Municipal',
+		link: '/admin/consejoMunicipal',
 		icon: FilePlus2,
 		isActive: false,
 	},
 	{
-		titulo: 'Fronted',
-		link: '/admin/frontend',
+		titulo: 'Organigrama',
+		link: '/admin/organigrama',
 		icon: Figma,
 		isActive: false,
 	},
