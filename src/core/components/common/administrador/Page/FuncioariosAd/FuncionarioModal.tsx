@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createFuncionario, ActualizarFuncionario } from "../../../../../../core/services/EndPointFuncionario";
+import { createFuncionario, ActualizarFuncionario } from "../../../../../services/EndPointFuncionario";
 
 interface Funcionario {
     id: number;
@@ -82,8 +82,6 @@ const FuncionarioModal = ({
 
         } else {
             const formData = new FormData();
-
-            // Solo enviar campos modificados
             if (nombre !== initialData?.nombre) {
                 formData.append("nombre", nombre);
             }
@@ -96,17 +94,14 @@ const FuncionarioModal = ({
             if (contacto !== initialData?.contacto) {
                 formData.append("contacto", contacto);
             }
-
-            // Si hay nueva imagen seleccionada, enviarla
             if (file) {
                 formData.append("direccionImagen", file);
             }
 
-
             ok = await ActualizarFuncionario(initialData!.id, formData);
         }
 
-        setLoading(false); // ✅ MOVER AQUÍ
+        setLoading(false); 
 
         if (ok) {
             onClose();

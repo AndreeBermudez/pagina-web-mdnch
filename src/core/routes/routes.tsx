@@ -27,6 +27,7 @@ import { AdminLayout } from '../components/common/administrador/AdminLayout';
 import { PrivateGuard } from './guard/PrivateGuard';
 import FuncionariosAdmin from '../components/common/administrador/Page/FuncioariosAd/FuncionariosAdmin';
 import ConsejoAd from '../components/common/administrador/Page/ConsejoAd/ConsejosAdmin';
+import OrganigramaAd from '../components/common/administrador/Page/OrganigramaAd/OrganigramaAdmin';
 
 export const routes = [
 	// Ruta principal
@@ -203,8 +204,8 @@ export const routes = [
 				element: <ConsejoAd/>,
 			},
 			{
-				path: 'noticias',
-				element: <p>Gestión de noticias</p>,
+				path: 'organigrama',
+				element: <OrganigramaAd/>,
 			},
 			{
 				path: 'agenda',
