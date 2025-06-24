@@ -1,5 +1,5 @@
 
-import { OrganigramaSection } from '../../core/components/common/nosotros/organigrama';
+import  OrganigramaSection  from '../../core/components/common/nosotros/organigrama/Organigrama';
 import { Layout } from '../../core/layout/Layout';
 
 export default function OrganigramaPage() {

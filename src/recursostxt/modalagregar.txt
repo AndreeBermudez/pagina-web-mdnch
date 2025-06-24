@@ -1,0 +1,134 @@
+import { useState, useEffect } from "react";
+
+interface FuncionarioModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function FuncionarioModal({ isOpen, onClose }: FuncionarioModalProps) {
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [cargo, setCargo] = useState("");
+  const [contacto, setContacto] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  if (!isOpen) return null;
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0] ?? null;
+    setFile(f);
+    if (f && f.type.match("image.*")) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        if (ev.target?.result) setPreviewImage(ev.target.result as string);
+      };
+      reader.readAsDataURL(f);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Aquí puedes manejar el formulario más adelante
+    console.log({ nombre, apellido, cargo, contacto, file });
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+        <div className="p-4 border-b border-gray-300">
+          <h3 className="text-lg font-medium">Formulario de Funcionario</h3>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="p-4 grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">Nombre</label>
+                <input
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  required
+                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                  placeholder="Ingrese el nombre"
+                />
+              </div>
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">Apellido</label>
+                <input
+                  value={apellido}
+                  onChange={(e) => setApellido(e.target.value)}
+                  required
+                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                  placeholder="Ingrese el apellido"
+                />
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Cargo</label>
+              <input
+                value={cargo}
+                onChange={(e) => setCargo(e.target.value)}
+                required
+                className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                placeholder="Ingrese el cargo"
+              />
+            </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Contacto</label>
+              <input
+                type="email"
+                value={contacto}
+                onChange={(e) => setContacto(e.target.value)}
+                required
+                className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                placeholder="Ingrese el email"
+              />
+            </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Imagen</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="border-2 p-1.5 rounded-md"
+              />
+              {previewImage && (
+                <div>
+                  <p className="text-sm font-medium mb-1">Vista previa:</p>
+                  <img
+                    src={previewImage}
+                    alt="Vista previa"
+                    className="max-w-[100px] max-h-[100px] object-contain rounded-md border border-gray-300 shadow-sm"
+                  />
+                  <button
+                    onClick={() => setPreviewImage(null)}
+                    className="text-xs text-red-600 hover:text-red-800 cursor-pointer"
+                    type="button"
+                  >
+                    Eliminar imagen
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="p-4 border-t border-gray-300 flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-400"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

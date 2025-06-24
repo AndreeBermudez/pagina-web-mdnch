@@ -25,9 +25,8 @@ import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 import TurismoPage from '../../pages/tuDistrito/TurismoPage';
 import { AdminLayout } from '../components/common/administrador/AdminLayout';
 import { PrivateGuard } from './guard/PrivateGuard';
-import FuncionariosAdmin from '../components/common/administrador/pages/FuncioariosAd/FuncionariosAdmin';
-import ConsejoAd from '../components/common/administrador/pages/ConsejoAd/ConsejosAdmin';
-import { NoticiasAdmin } from '../components/common/administrador/pages/noticias-admin/NoticiasAdmin';
+import FuncionariosAdmin from '../components/common/administrador/Page/FuncioariosAd/FuncionariosAdmin';
+import ConsejoAd from '../components/common/administrador/Page/ConsejoAd/ConsejosAdmin';
 
 export const routes = [
 	// Ruta principal
@@ -205,7 +204,7 @@ export const routes = [
 			},
 			{
 				path: 'noticias',
-				element: <NoticiasAdmin />,
+				element: <p>Gestión de noticias</p>,
 			},
 			{
 				path: 'agenda',

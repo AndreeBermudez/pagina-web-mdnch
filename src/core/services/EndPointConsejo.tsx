@@ -127,4 +127,30 @@ export async function eliminarConsejo(id: number): Promise<boolean> {
   }
 }
 
+//END POINT PARA EDITAR MIEMBRO DE EQUIPO DE MANERA INDEPENDIENTE 
+
+export const editarMiembroEquipo = async (
+  equipoId: number,
+  miembro: { nombre: string; apellido: string }
+): Promise<boolean> => {
+  try {
+    const res = await fetch(`http://localhost:8080/api/authentication/equipo-trabajo-edit/${equipoId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre: miembro.nombre,
+        apellido: miembro.apellido,
+      }),
+    });
+
+    if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+    return true;
+  } catch (err) {
+    console.error("Error al editar miembro:", err);
+    return false;
+  }
+};
+
 
