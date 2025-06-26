@@ -1,10 +1,10 @@
 import { axiosInstance } from '../../api/axiosInstance';
-import type { NoticiaResponse } from './noticia.interface';
+import type { NoticiaResponse, ResponseBase } from './noticia.interface';
 import { handleError } from '../../utils/handleError';
 
 export const obtenerNoticiaPorId = async (id: number): Promise<NoticiaResponse> => {
 	try {
-		const response = await axiosInstance.get<NoticiaResponse>(`noticias/${id}`);
+		const response = await axiosInstance.get<ResponseBase<NoticiaResponse>>(`noticias/${id}`);
 		console.log(response.data);
 		if (!response || response.status !== 200) {
 			throw new Error(`Error en la respuesta del servidor: ${response?.status || 'Sin respuesta'}`);
@@ -12,7 +12,7 @@ export const obtenerNoticiaPorId = async (id: number): Promise<NoticiaResponse> 
 		if (!response.data) {
 			throw new Error('Respuesta del servidor inválida');
 		}
-		return response.data;
+		return response.data.data;
 	} catch (error: unknown) {
 		return handleError(error);
 	}

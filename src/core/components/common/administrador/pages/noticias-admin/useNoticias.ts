@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { NoticiaRequest, NoticiaResponse } from '../../../../../services/noticias/noticia.interface';
-import { listarNoticias } from '../../../../../services/noticias/listarNoticias';
-import { crearNoticia } from '../../../../../services/noticias/crearNoticia';
 import { actualizarNoticia } from '../../../../../services/noticias/actualizarNoticia';
+import { crearNoticia } from '../../../../../services/noticias/crearNoticia';
 import { eliminarNoticia } from '../../../../../services/noticias/eliminarNoticia';
+import { listarNoticias } from '../../../../../services/noticias/listarNoticias';
+import type { NoticiaRequest, NoticiaResponse } from '../../../../../services/noticias/noticia.interface';
 
 export const useNoticias = () => {
 	const [noticias, setNoticias] = useState<NoticiaResponse[]>([]);

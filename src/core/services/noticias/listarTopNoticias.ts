@@ -2,9 +2,9 @@ import { axiosInstance } from '../../api/axiosInstance';
 import type { NoticiaResponse, ResponseBase } from './noticia.interface';
 import { handleError } from '../../utils/handleError';
 
-export const listarNoticias = async (): Promise<NoticiaResponse[]> => {
+export const listarTopNoticias = async (): Promise<NoticiaResponse[]> => {
 	try {
-		const response = await axiosInstance.get<ResponseBase<NoticiaResponse[]>>('noticias');
+		const response = await axiosInstance.get<ResponseBase<NoticiaResponse[]>>('noticias/top5');
 		console.log(response.data);
 		if (!response || response.status !== 200) {
 			throw new Error(`Error en la respuesta del servidor: ${response?.status || 'Sin respuesta'}`);
