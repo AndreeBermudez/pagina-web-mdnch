@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Edit } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
 import CreateConsejoModal from "./modals/CreateConsejoModal";
 import TeamModal from "./modals/TeamModal";
@@ -56,6 +56,7 @@ export default function ConsejoAd() {
       console.error("Error al eliminar el consejo.");
     }
   };
+
   return (
     <div>
       {/* Tabla de Consejos */}
@@ -84,29 +85,28 @@ export default function ConsejoAd() {
             </span>
           </div>
         </div>
-
-        <div className="rounded-lg border border-gray-200">
+        <div className="rounded-lg border border-gray-200 overflow-auto max-h-[450px]">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-200 sticky top-0">
               <tr>
-                <th>Fecha</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Cargo</th>
-                <th>Area</th>
-                <th>Imagen</th>
-                <th>Acciones</th>
+                <th className="px-4 py-3">Fecha</th>
+                <th className="px-4 py-3">Nombre</th>
+                <th className="px-4 py-3">Apellido</th>
+                <th className="px-4 py-3">Cargo</th>
+                <th className="px-4 py-3">Area</th>
+                <th className="px-4 py-3">Imagen</th>
+                <th className="px-4 py-3">Acciones</th>
               </tr>
             </thead>
             <tbody>
               {consejos.map(c => (
                 <tr key={c.consejoMuniId} className="border-b hover:bg-gray-50">
-                  <td className="py-2 px-4">{c.fechaCreacion}</td>
-                  <td className="py-2 px-4 font-medium">{c.nombre}</td>
-                  <td className="py-2 px-4">{c.apellido}</td>
-                  <td className="py-2 px-4">{c.cargo}</td>
-                  <td className="py-2 px-4">{c.area}</td>
-                  <td className="py-2 px-4">
+                  <td className="py-2 px-4 text-sm">{c.fechaCreacion}</td>
+                  <td className="py-2 px-4 text-sm">{c.nombre}</td>
+                  <td className="py-2 px-4 text-sm">{c.apellido}</td>
+                  <td className="py-2 px-4 text-sm">{c.cargo}</td>
+                  <td className="py-2 px-4 text-sm">{c.area}</td>
+                  <td className="py-2 px-4 text-sm">
                     <div className="flex items-center justify-center">
                       {c.direccionImagen ? (
                         <img
@@ -121,35 +121,39 @@ export default function ConsejoAd() {
                       )}
                     </div>
                   </td>
-                  <td className="py-4 px-6">
-                    <div className="flex gap-3">
-                      <td className="py-4 px-6">
-                        <div className="flex gap-3">
-                          {/* Botón Miembros */}
-                          <button
-                            onClick={async () => {
-                              const consejo = await getConsejoById(c.consejoMuniId!);
-                              if (consejo) {
-                                setSelectedConsejo(consejo);
-                                setIsTeamModalOpen(true);
-                              }
-                            }}
-                            className="px-3 py-1.5 hover:bg-blue-50 border border-blue-200 rounded-md text-blue-600 text-sm flex items-center"
-                          >
-                            <span>Miembros {c.miembros?.length || 0}</span>
-                          </button>
-                          <button
-                            onClick={() => {
-                              setConsejoToDelete(c);
-                              setIsDeleteModalOpen(true);
-                            }}
-                            className="p-1.5 hover:bg-red-50 rounded-md text-red-600"
->
-                            <FiTrash2 className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </td>
-
+                  <td className="px-4 py-2 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex items-center justify-end gap-2">
+                      {/* Botón Miembros */}
+                      <button
+                        onClick={async () => {
+                          const consejo = await getConsejoById(c.consejoMuniId!);
+                          if (consejo) {
+                            setSelectedConsejo(consejo);
+                            setIsTeamModalOpen(true);
+                          }
+                        }}
+                        className="px-3 py-1.5 hover:bg-blue-50 border border-blue-200 rounded-md text-blue-600 text-sm flex items-center"
+                      >
+                        <span>Miembros {c.miembros?.length || 0}</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setConsejoToDelete(c);
+                          setIsDeleteModalOpen(true);
+                        }}
+                        className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-red-500 p-1 text-sm text-white hover:bg-red-300"
+                      >
+                        <FiTrash2 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedConsejo(c); // guardar consejo a editar
+                          setIsCreateModalOpen(true); // abrir modal
+                        }}
+                        className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-1 text-sm text-gray-700 hover:bg-gray-50"
+                      >
+                        <Edit className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -161,8 +165,15 @@ export default function ConsejoAd() {
 
       <CreateConsejoModal
         isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        onSave={() => fetchConsejos()}
+        onClose={() => {
+          setIsCreateModalOpen(false);
+          setSelectedConsejo(null);
+        }}
+        onSave={() => {
+          fetchConsejosLista();
+          setSelectedConsejo(null);
+        }}
+        initialData={selectedConsejo}
       />
 
       <TeamModal

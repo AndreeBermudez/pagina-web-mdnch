@@ -33,8 +33,13 @@ export const menuItems = [
 		isActive: false,
 	},
 		{
-		titulo: 'Configuración',
-		link: '/admin/configuracion',
+		titulo: 'AlcaldeIndex',
+		link: '/admin/alcaldeIndex',
+		icon: Settings,
+		isActive: false,
+	},{
+		titulo: 'AlcaldePage',
+		link: '/admin/alcaldePage',
 		icon: Settings,
 		isActive: false,
 	},

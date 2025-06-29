@@ -29,6 +29,9 @@ import FuncionariosAdmin from '../components/common/administrador/Page/Funcioari
 import ConsejoAd from '../components/common/administrador/Page/ConsejoAd/ConsejosAdmin';
 import OrganigramaAd from '../components/common/administrador/Page/OrganigramaAd/OrganigramaAdmin';
 
+import AlcaldePageAdmin from '../components/common/administrador/Page/AlcaldePageAd/AlcaldePageAdmin';
+
+
 export const routes = [
 	// Ruta principal
 	{
@@ -208,12 +211,12 @@ export const routes = [
 				element: <OrganigramaAd/>,
 			},
 			{
-				path: 'agenda',
-				element: <p>Administrar agenda</p>,
+				path: 'AlcaldeIndex',
+				element: <p>PageNotFound</p>,
 			},
 			{
-				path: 'usuarios',
-				element: <p>Gestión de usuarios</p>,
+				path: 'AlcaldePage',
+				element: < AlcaldePageAdmin/>,
 			},
 		],
 	},
