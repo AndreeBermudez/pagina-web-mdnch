@@ -9,14 +9,19 @@ export const actualizarNoticia = async (id: number, data: NoticiaRequest): Promi
 		formData.append('categoria', data.categoria);
 		formData.append('descripcion', data.descripcion);
 		formData.append('fechaManual', data.fechaManual);
-		formData.append('imagen', data.imagen);
+		if (data.imagen) {
+			formData.append('imagen', data.imagen);
+		}
+		
 		const response = await axiosInstance.put<ResponseBase<NoticiaResponse>>(`noticias/${id}`, formData);
 		console.log(response.data);
 		if (!response || response.status !== 200) {
 			throw new Error(`Error en la respuesta del servidor: ${response?.status || 'Sin respuesta'}`);
+			console.error('Error en la respuesta del servidor:', response);
 		}
 		if (!response.data) {
 			throw new Error('Respuesta del servidor inválida');
+			console.error('Respuesta del servidor inválida:', response.data);
 		}
 		return response.data.data;
 	} catch (error: unknown) {

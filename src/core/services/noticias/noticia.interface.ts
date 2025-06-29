@@ -16,7 +16,7 @@ export interface NoticiaRequest {
 	categoria: string;
 	descripcion: string;
   fechaManual: string;
-	imagen: File;
+	imagen?: File;
 }
 
 export interface ResponseBase<T> {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { NoticiaRequest, NoticiaResponse } from '../../../../../services/noticias/noticia.interface';
+import { RichTextEditor } from '../../editor/RichTextEditor';
 
 interface NoticiaModalProps {
 	isOpen: boolean;
@@ -43,8 +44,10 @@ export const NoticiaModal = ({
 			categoria,
 			descripcion: descripcion.trim(),
 			fechaManual,
-			imagen: file!,
 		};
+		if (file) {
+			noticiaData.imagen = file;
+		}
 
 		try {
 			let success: boolean;
@@ -94,20 +97,22 @@ export const NoticiaModal = ({
 	};
 
 	return (
-		<div className='fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50'>
-			<div className='bg-white rounded-lg shadow-xl w-full max-w-2xl'>
+		<div className='fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 bg-black/50'>
+			<div className='bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto'>
+				{' '}
+				{/* ← Hacer modal más grande */}
 				<div className='p-4 border-b border-gray-300'>
 					<h3 className='text-lg font-medium'>Formulario de Noticia</h3>
 				</div>
 				<form onSubmit={handleSubmit}>
-					<div className='p-4 grid gap-4'>
+					<div className='grid gap-4 p-4'>
 						<div className='grid gap-2'>
 							<label className='text-sm font-medium'>Título</label>
 							<input
 								value={titulo}
 								onChange={(e) => setTitulo(e.target.value)}
 								required
-								className='h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm'
+								className='w-full h-10 px-3 py-2 text-sm border border-gray-300 rounded-md'
 								placeholder='Ingrese el título de la noticia'
 							/>
 						</div>
@@ -117,7 +122,7 @@ export const NoticiaModal = ({
 								value={categoria}
 								onChange={(e) => setCategoria(e.target.value)}
 								required
-								className='h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm'>
+								className='w-full h-10 px-3 py-2 text-sm border border-gray-300 rounded-md'>
 								<option value=''>Seleccione una categoría</option>
 								<option value='Anuncios'>Anuncios</option>
 								<option value='Eventos'>Eventos</option>
@@ -138,32 +143,32 @@ export const NoticiaModal = ({
 								value={fechaManual}
 								onChange={(e) => setFechaManual(e.target.value)}
 								required
-								className='h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm disabled:bg-gray-100 disabled:cursor-not-allowed'
+								className='w-full h-10 px-3 py-2 text-sm border border-gray-300 rounded-md disabled:bg-gray-100 disabled:cursor-not-allowed'
 							/>
 						</div>
-						<div className='grid gap-2'>
-							<label className='text-sm font-medium'>Descripción</label>
-							<textarea
-								value={descripcion}
-								onChange={(e) => setDescripcion(e.target.value)}
-								required
-								rows={4}
-								className='w-full rounded-md border border-gray-300 px-3 py-2 text-sm resize-none'
-								placeholder='Ingrese la descripción de la noticia'
-							/>
-						</div>
+
+						<RichTextEditor
+							value={descripcion}
+							onChange={setDescripcion}
+							label='Descripción'
+							required
+							height={300}
+							showPreview={true}
+							placeholder='Escriba la descripción de la noticia...'
+						/>
+
 						<div className='grid gap-2'>
 							<label className='text-sm font-medium'>Imagen</label>
 							<input
 								type='file'
 								accept='image/*'
 								onChange={handleImageChange}
-								required
+								required={!noticiaEditable}
 								className='border-2 p-1.5 rounded-md'
 							/>
 							{previewImage && (
 								<div>
-									<p className='text-sm font-medium mb-1'>Vista previa:</p>
+									<p className='mb-1 text-sm font-medium'>Vista previa:</p>
 									<img
 										src={previewImage}
 										alt='Vista previa'
@@ -174,7 +179,7 @@ export const NoticiaModal = ({
 											setPreviewImage(null);
 											setFile(null);
 										}}
-										className='text-xs text-red-600 hover:text-red-800 cursor-pointer mt-1 block'
+										className='block mt-1 text-xs text-red-600 cursor-pointer hover:text-red-800'
 										type='button'>
 										Eliminar imagen
 									</button>
@@ -182,17 +187,16 @@ export const NoticiaModal = ({
 							)}
 						</div>
 					</div>
-					<div className='p-4 border-t border-gray-300 flex justify-end gap-2'>
+					<div className='flex justify-end gap-2 p-4 border-t border-gray-300'>
 						<button
 							type='button'
 							onClick={handleClose}
-							className='rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-400'>
+							className='px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-400'>
 							Cancelar
 						</button>
 						<button
 							type='submit'
-							className='rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700'
-							disabled={!titulo || !categoria || !descripcion || !file}>
+							className='px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700'>
 							{noticiaEditable ? 'Actualizar Noticia' : 'Crear Noticia'}
 						</button>
 					</div>
