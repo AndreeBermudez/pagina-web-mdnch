@@ -29,8 +29,7 @@ import FuncionariosAdmin from '../components/common/administrador/pages/Funcioar
 import ConsejoAd from '../components/common/administrador/pages/ConsejoAd/ConsejosAdmin';
 import { NoticiasAdmin } from '../components/common/administrador/pages/noticias-admin/NoticiasAdmin';
 import OrganigramaAdmin from '../components/common/administrador/pages/OrganigramaAd/OrganigramaAdmin';
-
-import AlcaldePageAdmin from '../components/common/administrador/Page/AlcaldePageAd/AlcaldePageAdmin';
+import AlcaldePageAdmin from '../components/common/administrador/pages/AlcaldePageAd/AlcaldePageAdmin';
 
 
 export const routes = [
@@ -221,7 +220,7 @@ export const routes = [
 			},
 			{
 				path: 'AlcaldePage',
-				element: < AlcaldePageAdmin/>,
+				element: <AlcaldePageAdmin/>,
 			},
 		],
 	},
