@@ -33,6 +33,23 @@ export const createConsejo = async (formData: FormData): Promise<boolean> => {
   }
 };
 
+export const editarConsejo = async (
+  id: number,
+  formData: FormData
+): Promise<boolean> => {
+  try {
+    const res = await fetch(`http://localhost:8080/api/authentication/consejo-muni/${id}`, {
+      method: "PUT", // O PATCH si tu backend lo requiere
+      body: formData,
+    });
+
+    if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+    return true;
+  } catch (err) {
+    console.error("Error al editar consejo:", err);
+    return false;
+  }
+};
 
 export const getAllConsejos = async (): Promise<Consejo[]> => {
   try {

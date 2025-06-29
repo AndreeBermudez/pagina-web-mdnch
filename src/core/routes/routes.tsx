@@ -43,6 +43,7 @@ const FuncionariosAdmin = lazy(() => import('../components/common/administrador/
 const ConsejoAdmin = lazy(() => import('../components/common/administrador/pages/ConsejoAd/ConsejosAdmin'));
 const NoticiasAdmin = lazy(() => import('../components/common/administrador/pages/noticias-admin/NoticiasAdmin').then(module => ({ default: module.NoticiasAdmin })));
 const OrganigramaAdmin = lazy(() => import('../components/common/administrador/pages/OrganigramaAd/OrganigramaAdmin'));
+const AlcaldePageAdmin = lazy(() => import('../components/common/administrador/pages/AlcaldePageAd/AlcaldePageAdmin'));
 
 export const routes = [
   // Ruta principal
@@ -206,6 +207,10 @@ export const routes = [
       {
         path: 'organigrama',
         element: <LazyWrapper><OrganigramaAdmin /></LazyWrapper>,
+      },
+      {
+        path: 'alcalde-page',
+        element: <LazyWrapper><AlcaldePageAdmin /></LazyWrapper>,
       },
       {
         path: 'agenda',

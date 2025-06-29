@@ -58,6 +58,7 @@ export const Sidebar: React.FC = () => {
 							</Link>
 						))}
 					</div>
+					
 				</section>
 				<section className={`flex flex-col items-center gap-4 p-4 mb-3`}>
 					<ButtonAdmin isCollapsed={isCollapsed} />

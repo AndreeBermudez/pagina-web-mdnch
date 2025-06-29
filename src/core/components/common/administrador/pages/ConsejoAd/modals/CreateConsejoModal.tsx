@@ -1,13 +1,15 @@
-import { useState } from "react";
-import { createConsejo } from "../../../../../../services/EndPointConsejo";
+import { useState, useEffect } from "react";
+import { createConsejo,  editarConsejo } from "../../../../../../services/EndPointConsejo";
+import type { Consejo } from "../../../../../../services/EndPointConsejo";
 
 interface CreateConsejoModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave?: () => void;
+  initialData?: Consejo | null;
 }
 
-export default function CreateConsejoModal({ isOpen, onClose, onSave }: CreateConsejoModalProps) {
+export default function CreateConsejoModal({ isOpen, onClose, onSave, initialData }: CreateConsejoModalProps) {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [cargo, setCargo] = useState("");
@@ -15,37 +17,57 @@ export default function CreateConsejoModal({ isOpen, onClose, onSave }: CreateCo
   const [file, setFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (initialData) {
+      setNombre(initialData.nombre || "");
+      setApellido(initialData.apellido || "");
+      setCargo(initialData.cargo || "");
+      setArea(initialData.area || "");
+      setPreviewImage(initialData.direccionImagen || null);
+      setFile(null); // limpiamos el file seleccionado
+    }
+  }, [initialData]);
+
   if (!isOpen) return null;
 
-  const handleSave = async () => {
-    const form = new FormData();
-    form.append('nombre', nombre);
-    form.append('apellido', apellido);
-    form.append('cargo', cargo);
-    form.append('area', area);
-    if (file) form.append('direccionImagen', file);
+const handleSave = async () => {
+  const form = new FormData();
+  form.append('nombre', nombre);
+  form.append('apellido', apellido);
+  form.append('cargo', cargo);
+  form.append('area', area);
+  if (file) form.append('direccionImagen', file);
 
-    const ok = await createConsejo(form);
-    if (ok) {
-      onSave?.();
-      onClose();
-      // limpiar campos
-      setNombre("");
-      setApellido("");
-      setCargo("");
-      setArea("");
-      setFile(null);
-      setPreviewImage(null);
-    } else {
-      alert('Error al crear el consejo');
-    }
-  };
+  let ok = false;
+
+  if (initialData?.consejoMuniId) {
+    ok = await editarConsejo(initialData.consejoMuniId, form);
+  } else {
+    ok = await createConsejo(form);
+  }
+
+  if (ok) {
+    onSave?.();
+    onClose();
+    setNombre("");
+    setApellido("");
+    setCargo("");
+    setArea("");
+    setFile(null);
+    setPreviewImage(null);
+  } else {
+    alert('Error al guardar el consejo');
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 bg-opacity-30 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
         <div className="px-6 py-4 border-b flex justify-between items-center">
-          <h3 className="text-xl font-semibold">Crear Consejo</h3>
+          <h3 className="text-xl font-semibold">
+            {initialData ? "Editar Consejo" : "Crear Consejo"}
+          </h3>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-xl font-bold">×</button>
         </div>
         <div className="p-6">
