@@ -1,266 +1,156 @@
-import { useState, useEffect } from "react";
-import { crearAlcalde } from "../../../../../services/EndPointAlcaldePage";
-import type { Alcalde } from "../../../../../services/EndPointAlcaldePage";
-import { editarAlcalde } from "../../../../../services/EndPointAlcaldePage";
-interface FuncionarioModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: () => void;
-  initialData?: Alcalde | null;
-}
+import { useEffect, useState } from 'react';
+import ModalAgregar from './modals/ModalAgregar';
+import { Search, Plus, Edit, Trash2 } from 'lucide-react';
+import { obtenerAlcaldes, eliminarAlcalde } from '../../../../../services/EndPointAlcaldePage';
+import type { Alcalde } from '../../../../../services/EndPointAlcaldePage';
+import ConfirmModal from './modals/ConfirmModal';
 
-export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }: FuncionarioModalProps) {
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [numeroObras, setNumeroObras] = useState("");
-  const [presupuesto, setPresupuesto] = useState("");
-  const [aprobacion, setAprobacion] = useState("");
-  const [experiencia, setExperiencia] = useState("");
-  const [reconocimiento, setReconocimiento] = useState("");
-  const [compromiso, setCompromiso] = useState("");
-  const [periodo, setPeriodo] = useState("");
-  const [file, setFile] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+export default function AlcaldePageAdmin() {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [alcaldes, setAlcaldes] = useState<Alcalde[]>([]);
+	const [alcaldeEnEdicion, setAlcaldeEnEdicion] = useState<Alcalde | null>(null);
+	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+	const [alcaldeAEliminar, setAlcaldeAEliminar] = useState<Alcalde | null>(null);
+	const openModal = () => setIsModalOpen(true);
 
-  useEffect(() => {
-    if (initialData) {
-      setNombre(initialData.nombre);
-      setApellido(initialData.apellido);
-      setDescripcion(initialData.descripcion);
-      setNumeroObras(initialData.numeroObras.toString());
-      setPresupuesto(initialData.presupuesto.toString());
-      setAprobacion(initialData.aprobacionCiudadana);
-      setExperiencia(initialData.experiencia);
-      setReconocimiento(initialData.reconocimientos);
-      setCompromiso(initialData.compromiso);
-      setPeriodo(initialData.periodo);
-      setPreviewImage(initialData.direccionImagen);
-    } else {
-      setNombre("");
-      setApellido("");
-      setDescripcion("");
-      setNumeroObras("");
-      setPresupuesto("");
-      setAprobacion("");
-      setExperiencia("");
-      setReconocimiento("");
-      setCompromiso("");
-      setPeriodo("");
-      setFile(null);
-      setPreviewImage(null);
-    }
-  }, [initialData]);
-   if (!isOpen) return null;
-   
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0] ?? null;
-    setFile(f);
-    if (f && f.type.match("image.*")) {
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        if (ev.target?.result) setPreviewImage(ev.target.result as string);
-      };
-      reader.readAsDataURL(f);
-    }
-  };
+	const openEditarModal = (alcalde: Alcalde) => {
+		setAlcaldeEnEdicion(alcalde);
+		setIsModalOpen(true);
+	};
+	const closeModal = () => {
+		setIsModalOpen(false);
+		setAlcaldeEnEdicion(null);
+	};
+	const openEliminarModal = (alcalde: Alcalde) => {
+		setAlcaldeAEliminar(alcalde);
+		setIsConfirmModalOpen(true);
+	};
+	const cargarAlcaldes = async () => {
+		const data = await obtenerAlcaldes();
+		setAlcaldes(data);
+	};
+	const confirmarEliminacion = async () => {
+		if (!alcaldeAEliminar) return;
 
+		const success = await eliminarAlcalde(alcaldeAEliminar.alcaldeId);
+		if (success) {
+			await cargarAlcaldes();
+		} else {
+			alert('Error al eliminar el alcalde.');
+		}
+		setAlcaldeAEliminar(null);
+	};
+	useEffect(() => {
+		cargarAlcaldes();
+	}, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+	return (
+		<div className='bg-white border border-gray-300 rounded-lg shadow-sm'>
+			{/* Cabecera */}
+			<div className='p-3 border-b'>
+				<div className='flex items-center justify-between'>
+					<h2 className='text-lg font-medium'>Alcalde Page</h2>
+					<button
+						onClick={openModal}
+						className='inline-flex cursor-pointer items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700'>
+						<Plus className='w-3.5 h-3.5 mr-1.5' />
+						Agregar Alcalde
+					</button>
+				</div>
+				<div className='flex items-center gap-3 mt-3'>
+					<div className='relative flex-1 max-w-sm'>
+						<Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3.5 h-3.5' />
+						<input
+							placeholder='Buscar funcionarios...'
+							className='flex h-8 w-full rounded-md border border-gray-300 bg-white pl-9 pr-3 py-1.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent'
+						/>
+					</div>
+					<span className='inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800'>
+						{alcaldes.length} funcionarios encontrados
+					</span>
+				</div>
+			</div>
 
-    const form = new FormData();
-    form.append("nombre", nombre);
-    form.append("apellido", apellido);
-    form.append("descripcion", descripcion);
-    form.append("numeroObras", numeroObras);
-    form.append("presupuesto", presupuesto);
-    form.append("aprobacionCiudadana", aprobacion);
-    form.append("atencionCiudadana", "24/7");
-    form.append("periodo", periodo);
-    form.append("experiencia", experiencia);
-    form.append("reconocimientos", reconocimiento);
-    form.append("compromiso", compromiso);
-    if (file) form.append("direccionImagen", file);
+			{/* Tabla */}
+			<div className='overflow-auto' style={{ maxHeight: '420px', maxWidth: '1220px' }}>
+				<table className='w-full divide-y divide-gray-200 table-fixed'>
+					<thead className='sticky top-0 z-10 bg-gray-50'>
+						<tr>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Fecha</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Nombre</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Apellido</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Descripción</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Obras</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Presupuesto</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Aprobación</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Periodo</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Experiencia</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Reconocimiento</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Compromiso</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Imagen</th>
+							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Acciones</th>
+						</tr>
+					</thead>
+					<tbody className='bg-white divide-y divide-gray-200'>
+						{alcaldes.map((a) => (
+							<tr key={a.alcaldeId} className='hover:bg-gray-50'>
+								<td className='px-4 py-3 text-sm'>{a.fechaCreacion}</td>
+								<td className='px-4 py-3 text-sm'>{a.nombre}</td>
+								<td className='px-4 py-3 text-sm'>{a.apellido}</td>
+								<td className='px-4 py-3 text-sm truncate'>{a.descripcion}</td>
+								<td className='px-4 py-3 text-sm'>{a.numeroObras}</td>
+								<td className='px-4 py-3 text-sm'>{a.presupuesto}</td>
+								<td className='px-4 py-3 text-sm'>{a.aprobacionCiudadana}</td>
+								<td className='px-4 py-3 text-sm'>{a.periodo}</td>
 
-    const success = initialData
-      ? await editarAlcalde(initialData.alcaldeId, form)
-      : await crearAlcalde(form);
+								<td className='px-4 py-3 text-sm truncate'>{a.experiencia}</td>
+								<td className='px-4 py-3 text-sm truncate'>{a.reconocimientos}</td>
+								<td className='px-4 py-3 text-sm truncate'>{a.compromiso}</td>
+								<td className='px-4 py-3 text-sm text-center'>
+									<img
+										src={a.direccionImagen || '/placeholder.svg'}
+										alt={a.nombre}
+										className='object-cover w-10 h-10 border rounded-full'
+									/>
+								</td>
+								<td className='px-4 py-3 text-sm text-center'>
+									<div className='flex justify-center gap-2'>
+										<button
+											onClick={() => openEditarModal(a)}
+											className='p-1 bg-white border rounded-md hover:bg-gray-50'>
+											<Edit className='w-4 h-4 text-gray-600' />
+										</button>
 
-    if (success) {
-      onSuccess();
-      onClose();
-    }
-  };
+										<button
+											onClick={() => openEliminarModal(a)}
+											className='p-1 bg-red-500 border rounded-md hover:bg-red-600'>
+											<Trash2 className='w-4 h-4 text-white' />
+										</button>
+									</div>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 
+			{/* Modal */}
+			<ModalAgregar
+				isOpen={isModalOpen}
+				onClose={closeModal}
+				onSuccess={cargarAlcaldes}
+				initialData={alcaldeEnEdicion}
+			/>
 
-  return (
-    <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl">
-        <div className="p-2 border-b border-gray-300">
-          <h3 className="text-lg font-medium">
-            {initialData ? "Formulario Editar Alcalde" : "Formulario de Alcalde"}
-          </h3>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="p-2 grid gap-2">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Nombre</label>
-                <input
-                  value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese el nombre"
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Apellido</label>
-                <input
-                  value={apellido}
-                  onChange={(e) => setApellido(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese el apellido"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Descripción</label>
-                <input
-                  value={descripcion}
-                  onChange={(e) => setDescripcion(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese la descripción"
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Obras</label>
-                <input
-                  value={numeroObras}
-                  onChange={(e) => setNumeroObras(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese el número de obras"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Presupuesto</label>
-                <input
-                  value={presupuesto}
-                  onChange={(e) => setPresupuesto(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese el presupuesto"
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Aprobación</label>
-                <input
-                  value={aprobacion}
-                  onChange={(e) => setAprobacion(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese la aprobación"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Experiencia</label>
-                <input
-                  value={experiencia}
-                  onChange={(e) => setExperiencia(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese la experiencia"
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Reconocimiento</label>
-                <input
-                  value={reconocimiento}
-                  onChange={(e) => setReconocimiento(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese el reconocimiento"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Compromiso</label>
-                <input
-                  value={compromiso}
-                  onChange={(e) => setCompromiso(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese la Compromiso"
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Periodo</label>
-                <input
-                  value={periodo}
-                  onChange={(e) => setPeriodo(e.target.value)}
-                  required
-                  className="h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  placeholder="Ingrese el Periodo"
-                />
-              </div>
-            </div>
-            <div className="grid gap-2">
-              <label className="text-sm font-medium">Imagen</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="border-2 p-1.5 rounded-md"
-              />
-              {previewImage && (
-                <div>
-                  <p className="text-sm font-medium mb-1">Vista previa:</p>
-                  <img
-                    src={previewImage}
-                    alt="Vista previa"
-                    className="max-w-[100px] max-h-[100px] object-contain rounded-md border border-gray-300 shadow-sm"
-                  />
-                  <button
-                    onClick={() => setPreviewImage(null)}
-                    className="text-xs text-red-600 hover:text-red-800 cursor-pointer"
-                    type="button"
-                  >
-                    Eliminar imagen
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="p-2 border-t border-gray-300 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-400"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
-            >
-              Guardar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+			<ConfirmModal
+				isOpen={isConfirmModalOpen}
+				onClose={() => setIsConfirmModalOpen(false)}
+				onConfirm={confirmarEliminacion}
+				title='Confirmar Eliminación'
+				message={`¿Estás seguro de que deseas eliminar al alcalde "${alcaldeAEliminar?.nombre} ${alcaldeAEliminar?.apellido}"?`}
+				confirmText='Eliminar'
+				cancelText='Cancelar'
+			/>
+		</div>
+	);
 }

@@ -45,7 +45,7 @@ export const menuItems = [
 		isActive: false,
 	},{
 		titulo: 'AlcaldePage',
-		link: '/admin/alcaldePage',
+		link: '/admin/alcalde-page',
 		icon: Settings,
 		isActive: false,
 	},
