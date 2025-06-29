@@ -2,8 +2,16 @@ import { MainNews } from './MainNews';
 import { NewsCard } from './NewsCard';
 import { TriangleDivider } from './TriangleDivider';
 import cityImage from '../../../../../assets/imagen-plaza.webp';
+import { useEffect } from 'react';
+import { useNoticiasHome } from '../../administrador/pages/noticias-admin/useNoticiasHome';
 
 export const SectionNews = () => {
+	const { noticias, loading, error, refreshNoticias } = useNoticiasHome();
+
+	useEffect(() => {
+		refreshNoticias();
+	}, [refreshNoticias]);
+
 	return (
 		<>
 			<section className='relative bg-gradient-to-b from-gray-50 to-gray-100'>
@@ -31,7 +39,17 @@ export const SectionNews = () => {
 							</div>
 
 							<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-								<NewsCard
+								{noticias.map((noticia) => (
+									<NewsCard
+										key={noticia.noticiaId}
+										category={noticia.categoria}
+										title={noticia.titulo}
+										description={noticia.descripcion}
+										date={noticia.fechaManual}
+										image={noticia.direccionImagen || cityImage}
+									/>
+								))}
+								{/* <NewsCard
 									category='Educación'
 									title='Talleres gratuitos de empleabilidad para jóvenes'
 									description='La municipalidad lanzó una serie de talleres gratuitos para jóvenes entre 18 y 25 años, enfocados en habilidades...'
@@ -58,7 +76,7 @@ export const SectionNews = () => {
 									description='El programa de reciclaje implementado hace seis meses ha logrado reducir en un 30% los residuos enviados al...'
 									date='01 de abril de 2025'
 									image={cityImage}
-								/>
+								/> */}
 							</div>
 						</div>
 					</div>

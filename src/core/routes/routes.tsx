@@ -25,9 +25,10 @@ import ReseñaHistorica from '../../pages/tuDistrito/ReseñaHistoricaPage';
 import TurismoPage from '../../pages/tuDistrito/TurismoPage';
 import { AdminLayout } from '../components/common/administrador/AdminLayout';
 import { PrivateGuard } from './guard/PrivateGuard';
-import FuncionariosAdmin from '../components/common/administrador/Page/FuncioariosAd/FuncionariosAdmin';
-import ConsejoAd from '../components/common/administrador/Page/ConsejoAd/ConsejosAdmin';
-import OrganigramaAd from '../components/common/administrador/Page/OrganigramaAd/OrganigramaAdmin';
+import FuncionariosAdmin from '../components/common/administrador/pages/FuncioariosAd/FuncionariosAdmin';
+import ConsejoAd from '../components/common/administrador/pages/ConsejoAd/ConsejosAdmin';
+import { NoticiasAdmin } from '../components/common/administrador/pages/noticias-admin/NoticiasAdmin';
+import OrganigramaAdmin from '../components/common/administrador/pages/OrganigramaAd/OrganigramaAdmin';
 
 import AlcaldePageAdmin from '../components/common/administrador/Page/AlcaldePageAd/AlcaldePageAdmin';
 
@@ -200,15 +201,19 @@ export const routes = [
 			},
 			{
 				path: 'funcionarios',
-				element: <FuncionariosAdmin/>,
+				element: <FuncionariosAdmin />,
 			},
 			{
 				path: 'consejoMunicipal',
-				element: <ConsejoAd/>,
+				element: <ConsejoAd />,
+			},
+			{
+				path: 'noticias',
+				element: <NoticiasAdmin />,
 			},
 			{
 				path: 'organigrama',
-				element: <OrganigramaAd/>,
+				element: <OrganigramaAdmin/>,
 			},
 			{
 				path: 'AlcaldeIndex',

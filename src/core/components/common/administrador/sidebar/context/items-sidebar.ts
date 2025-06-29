@@ -1,4 +1,4 @@
-import { Figma, FilePenLine, FilePlus2, Settings, type LucideIcon } from 'lucide-react';
+import { Calendar, Figma, FilePenLine, FilePlus2, Settings, type LucideIcon } from 'lucide-react';
 
 export interface MenuItem {
 	titulo: string;
@@ -24,6 +24,12 @@ export const menuItems = [
 		titulo: 'Consejo Municipal',
 		link: '/admin/consejoMunicipal',
 		icon: FilePlus2,
+		isActive: false,
+	},
+	{
+		titulo: 'Noticias',
+		link: '/admin/noticias',
+		icon: Calendar,
 		isActive: false,
 	},
 	{
