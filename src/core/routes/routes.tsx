@@ -297,7 +297,25 @@ export const routes = [
 	// Contacto
 	{
 		path: '/contact',
-		element: <p>Contáctanos</p>,
+		element: (
+			<div className='flex items-center justify-center min-h-screen p-6 bg-slate-50'>
+				<div className='w-full max-w-md p-8 text-center bg-white shadow-lg rounded-xl'>
+					<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full'>
+						<svg className='w-8 h-8 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth={2}
+								d='M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+							/>
+						</svg>
+					</div>
+					<h1 className='mb-2 text-2xl font-bold text-slate-900'>Contáctanos</h1>
+					<p className='mb-4 text-slate-600'>Esta página está en desarrollo</p>
+					<p className='text-sm text-slate-500'>Próximamente tendrás acceso a nuestros canales de contacto</p>
+				</div>
+			</div>
+		),
 	},
 
 	// Admin
@@ -348,7 +366,621 @@ export const routes = [
 			},
 			{
 				path: 'contenido/agenda',
-				element: <p>Administrar agenda</p>,
+				element: (
+					<div className='space-y-6'>
+						{/* Header */}
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center justify-between'>
+									<div className='flex items-center space-x-3'>
+										<div className='p-2 rounded-lg bg-blue-50'>
+											<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+												<path
+													strokeLinecap='round'
+													strokeLinejoin='round'
+													strokeWidth={2}
+													d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+												/>
+											</svg>
+										</div>
+										<div>
+											<h1 className='text-2xl font-bold text-slate-900'>Gestión de Agenda</h1>
+											<p className='mt-1 text-slate-600'>Administra los eventos y actividades municipales</p>
+										</div>
+									</div>
+									<button className='flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700'>
+										<svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+											/>
+										</svg>
+										<span>Nuevo Evento</span>
+									</button>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de agenda estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			// Rutas adicionales que faltan del sidebar
+			{
+				path: 'contenido/slider',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Slider</h1>
+										<p className='mt-1 text-slate-600'>Administra las imágenes del carousel principal</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de slider estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'contenido/servicios',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'
+											/>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Servicios</h1>
+										<p className='mt-1 text-slate-600'>Administra los servicios municipales</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de servicios estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'contenido/eventos',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Eventos</h1>
+										<p className='mt-1 text-slate-600'>Administra los eventos municipales</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de eventos estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'contenido/alcalde-banner',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Banner Alcalde</h1>
+										<p className='mt-1 text-slate-600'>Administra el banner principal del alcalde</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>
+									El módulo de gestión de banner del alcalde estará disponible próximamente
+								</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			// Rutas de Documentos
+			{
+				path: 'documentos/pdu',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de PDU</h1>
+										<p className='mt-1 text-slate-600'>Administra los documentos del Plan de Desarrollo Urbano</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de PDU estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'documentos/presupuesto',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Presupuesto</h1>
+										<p className='mt-1 text-slate-600'>Administra los documentos de presupuesto municipal</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>
+									El módulo de gestión de presupuesto estará disponible próximamente
+								</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'documentos/transparencia',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+											/>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Transparencia</h1>
+										<p className='mt-1 text-slate-600'>Administra los documentos de transparencia municipal</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>
+									El módulo de gestión de transparencia estará disponible próximamente
+								</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'documentos/control-interno',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 2.3-.59 4.35-1.73 6.06-3.29l-2.12-2.12A8.964 8.964 0 0112 17.5c-1.657 0-3.157-.672-4.243-1.757S6 13.157 6 11.5s.671-3.157 1.757-4.243S10.343 6 12 6s3.157.672 4.243 1.757S17.5 9.843 17.5 11.5'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Control Interno</h1>
+										<p className='mt-1 text-slate-600'>Administra los documentos de control interno municipal</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>
+									El módulo de gestión de control interno estará disponible próximamente
+								</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'documentos/convocatoria-cas',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m8 0H8m8 0v6a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0H8'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Convocatoria CAS</h1>
+										<p className='mt-1 text-slate-600'>
+											Administra las convocatorias de Contratación Administrativa de Servicios
+										</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>
+									El módulo de gestión de convocatoria CAS estará disponible próximamente
+								</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			// Rutas de Frontend
+			{
+				path: 'frontend/paginas',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Páginas</h1>
+										<p className='mt-1 text-slate-600'>Administra las páginas del frontend municipal</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de páginas estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'frontend/menu',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M4 6h16M4 12h16M4 18h16'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Menú y Submenú</h1>
+										<p className='mt-1 text-slate-600'>Administra la navegación del sitio web</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>
+									El módulo de gestión de menú y submenú estará disponible próximamente
+								</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			// Rutas de Configuración
+			{
+				path: 'configuracion/usuarios',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Usuarios</h1>
+										<p className='mt-1 text-slate-600'>Administra los usuarios del sistema</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de usuarios estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
+			},
+			{
+				path: 'configuracion/roles',
+				element: (
+					<div className='space-y-6'>
+						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+							<div className='p-6 border-b border-slate-200'>
+								<div className='flex items-center space-x-3'>
+									<div className='p-2 rounded-lg bg-blue-50'>
+										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth={2}
+												d='M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z'
+											/>
+										</svg>
+									</div>
+									<div>
+										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Roles</h1>
+										<p className='mt-1 text-slate-600'>Administra los roles y permisos del sistema</p>
+									</div>
+								</div>
+							</div>
+							<div className='p-6 text-center'>
+								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
+									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+										/>
+									</svg>
+								</div>
+								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
+								<p className='text-slate-500'>El módulo de gestión de roles estará disponible próximamente</p>
+							</div>
+						</div>
+					</div>
+				),
 			},
 		],
 	},
@@ -356,10 +988,62 @@ export const routes = [
 	// Rutas de error
 	{
 		path: '/404',
-		element: <p>PageNotFound</p>,
+		element: (
+			<div className='flex items-center justify-center min-h-screen p-6 bg-slate-50'>
+				<div className='w-full max-w-md p-8 text-center bg-white shadow-lg rounded-xl'>
+					<div className='flex items-center justify-center w-20 h-20 mx-auto mb-6 bg-red-100 rounded-full'>
+						<svg className='w-10 h-10 text-red-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth={2}
+								d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z'
+							/>
+						</svg>
+					</div>
+					<h1 className='mb-2 text-4xl font-bold text-slate-900'>404</h1>
+					<h2 className='mb-4 text-xl font-semibold text-slate-700'>Página no encontrada</h2>
+					<p className='mb-6 text-slate-600'>La página que buscas no existe o ha sido movida</p>
+					<a
+						href='/'
+						className='inline-flex items-center px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700'>
+						<svg className='w-4 h-4 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 19l-7-7m0 0l7-7m-7 7h18' />
+						</svg>
+						Volver al inicio
+					</a>
+				</div>
+			</div>
+		),
 	},
 	{
 		path: '*',
-		element: <p>PageNotFound</p>,
+		element: (
+			<div className='flex items-center justify-center min-h-screen p-6 bg-slate-50'>
+				<div className='w-full max-w-md p-8 text-center bg-white shadow-lg rounded-xl'>
+					<div className='flex items-center justify-center w-20 h-20 mx-auto mb-6 bg-red-100 rounded-full'>
+						<svg className='w-10 h-10 text-red-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth={2}
+								d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z'
+							/>
+						</svg>
+					</div>
+					<h1 className='mb-2 text-4xl font-bold text-slate-900'>404</h1>
+					<h2 className='mb-4 text-xl font-semibold text-slate-700'>Página no encontrada</h2>
+					<p className='mb-6 text-slate-600'>La página que buscas no existe o ha sido movida</p>
+					<a
+						href='/'
+						className='inline-flex items-center px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700'>
+						<svg className='w-4 h-4 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 19l-7-7m0 0l7-7m-7 7h18' />
+						</svg>
+						Volver al inicio
+					</a>
+				</div>
+			</div>
+		),
 	},
 ];

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ModalAgregar from '../components/ModalAgregar';
-import { Search, Plus, Edit, Trash2 } from 'lucide-react';
+import { Search, Plus, Edit, Trash2, Eye, User } from 'lucide-react';
 import { obtenerAlcaldes, eliminarAlcalde } from '../../../../core/services/alcalde';
 import type { Alcalde } from '../../../../core/services/alcalde';
 import ConfirmModal from '../components/ConfirmModal';
@@ -11,6 +11,17 @@ export default function AlcaldePageAdmin() {
 	const [alcaldeEnEdicion, setAlcaldeEnEdicion] = useState<Alcalde | null>(null);
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 	const [alcaldeAEliminar, setAlcaldeAEliminar] = useState<Alcalde | null>(null);
+	const [searchTerm, setSearchTerm] = useState('');
+	const [loading, setLoading] = useState(false);
+
+	// Filtrar alcaldes por término de búsqueda
+	const filteredAlcaldes = alcaldes.filter(
+		(alcalde) =>
+			alcalde.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			alcalde.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			alcalde.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			alcalde.periodo.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 	const openModal = () => setIsModalOpen(true);
 
 	const openEditarModal = (alcalde: Alcalde) => {
@@ -26,8 +37,15 @@ export default function AlcaldePageAdmin() {
 		setIsConfirmModalOpen(true);
 	};
 	const cargarAlcaldes = async () => {
-		const data = await obtenerAlcaldes();
-		setAlcaldes(data);
+		setLoading(true);
+		try {
+			const data = await obtenerAlcaldes();
+			setAlcaldes(data);
+		} catch (error) {
+			console.error('Error al cargar alcaldes:', error);
+		} finally {
+			setLoading(false);
+		}
 	};
 	const confirmarEliminacion = async () => {
 		if (!alcaldeAEliminar) return;
@@ -45,96 +63,201 @@ export default function AlcaldePageAdmin() {
 	}, []);
 
 	return (
-		<div className='bg-white border border-gray-300 rounded-lg shadow-sm'>
-			{/* Cabecera */}
-			<div className='p-3 border-b'>
-				<div className='flex items-center justify-between'>
-					<h2 className='text-lg font-medium'>Alcalde Page</h2>
-					<button
-						onClick={openModal}
-						className='inline-flex cursor-pointer items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700'>
-						<Plus className='w-3.5 h-3.5 mr-1.5' />
-						Agregar Alcalde
-					</button>
-				</div>
-				<div className='flex items-center gap-3 mt-3'>
-					<div className='relative flex-1 max-w-sm'>
-						<Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3.5 h-3.5' />
-						<input
-							placeholder='Buscar funcionarios...'
-							className='flex h-8 w-full rounded-md border border-gray-300 bg-white pl-9 pr-3 py-1.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent'
-						/>
+		<div className='space-y-6'>
+			{/* Header */}
+			<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
+				<div className='p-6 border-b border-slate-200'>
+					<div className='flex items-center justify-between'>
+						<div className='flex items-center space-x-3'>
+							<div className='p-2 rounded-lg bg-blue-50'>
+								<User className='w-6 h-6 text-blue-600' />
+							</div>
+							<div>
+								<h1 className='text-2xl font-bold text-slate-900'>Gestión de Alcalde</h1>
+								<p className='mt-1 text-slate-600'>Administra la información del alcalde municipal</p>
+							</div>
+						</div>
+						<button
+							className='flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700'
+							onClick={openModal}>
+							<Plus className='w-4 h-4' />
+							<span>Nuevo Alcalde</span>
+						</button>
 					</div>
-					<span className='inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800'>
-						{alcaldes.length} funcionarios encontrados
-					</span>
+				</div>
+
+				<div className='p-6'>
+					<div className='flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0'>
+						<div className='flex-1 max-w-md'>
+							<div className='relative'>
+								<Search className='absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-400' />
+								<input
+									placeholder='Buscar por nombre, apellido, período...'
+									value={searchTerm}
+									onChange={(e) => setSearchTerm(e.target.value)}
+									className='w-full py-2.5 pl-10 pr-4 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors'
+								/>
+							</div>
+						</div>
+						<div className='flex items-center px-3 py-2 text-sm border rounded-lg bg-slate-50 border-slate-200'>
+							<span className='font-medium text-slate-700'>{filteredAlcaldes.length}</span>
+							<span className='ml-1 text-slate-500'>alcaldes</span>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			{/* Tabla */}
-			<div className='overflow-auto' style={{ maxHeight: '420px', maxWidth: '1220px' }}>
-				<table className='w-full divide-y divide-gray-200 table-fixed'>
-					<thead className='sticky top-0 z-10 bg-gray-50'>
-						<tr>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Fecha</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Nombre</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Apellido</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Descripción</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Obras</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Presupuesto</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Aprobación</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Periodo</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Experiencia</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Reconocimiento</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Compromiso</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Imagen</th>
-							<th className='px-4 py-4 text-xs font-medium text-gray-500'>Acciones</th>
-						</tr>
-					</thead>
-					<tbody className='bg-white divide-y divide-gray-200'>
-						{alcaldes.map((a) => (
-							<tr key={a.alcaldeId} className='hover:bg-gray-50'>
-								<td className='px-4 py-3 text-sm'>{a.fechaCreacion}</td>
-								<td className='px-4 py-3 text-sm'>{a.nombre}</td>
-								<td className='px-4 py-3 text-sm'>{a.apellido}</td>
-								<td className='px-4 py-3 text-sm truncate'>{a.descripcion}</td>
-								<td className='px-4 py-3 text-sm'>{a.numeroObras}</td>
-								<td className='px-4 py-3 text-sm'>{a.presupuesto}</td>
-								<td className='px-4 py-3 text-sm'>{a.aprobacionCiudadana}</td>
-								<td className='px-4 py-3 text-sm'>{a.periodo}</td>
-
-								<td className='px-4 py-3 text-sm truncate'>{a.experiencia}</td>
-								<td className='px-4 py-3 text-sm truncate'>{a.reconocimientos}</td>
-								<td className='px-4 py-3 text-sm truncate'>{a.compromiso}</td>
-								<td className='px-4 py-3 text-sm text-center'>
-									<img
-										src={a.direccionImagen || '/placeholder.svg'}
-										alt={a.nombre}
-										className='object-cover w-10 h-10 border rounded-full'
-									/>
-								</td>
-								<td className='px-4 py-3 text-sm text-center'>
-									<div className='flex justify-center gap-2'>
-										<button
-											onClick={() => openEditarModal(a)}
-											className='p-1 bg-white border rounded-md hover:bg-gray-50'>
-											<Edit className='w-4 h-4 text-gray-600' />
-										</button>
-
-										<button
-											onClick={() => openEliminarModal(a)}
-											className='p-1 bg-red-500 border rounded-md hover:bg-red-600'>
-											<Trash2 className='w-4 h-4 text-white' />
-										</button>
-									</div>
-								</td>
+			{/* Content */}
+			<div className='overflow-hidden bg-white border shadow-sm rounded-xl border-slate-200'>
+				<div className='overflow-x-auto'>
+					<table className='w-full'>
+						<thead className='border-b bg-slate-50 border-slate-200'>
+							<tr>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Fecha
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Alcalde
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Período
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Descripción
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Obras
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Presupuesto
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Aprobación
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Imagen
+								</th>
+								<th className='px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600'>
+									Acciones
+								</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody className='divide-y divide-slate-200'>
+							{loading && (
+								<tr>
+									<td colSpan={9} className='py-16 text-center'>
+										<div className='flex flex-col items-center space-y-3'>
+											<div className='w-8 h-8 border-2 border-blue-600 rounded-full border-t-transparent animate-spin'></div>
+											<p className='text-slate-600'>Cargando alcaldes...</p>
+										</div>
+									</td>
+								</tr>
+							)}
+							{!loading && filteredAlcaldes.length === 0 && (
+								<tr>
+									<td colSpan={9} className='py-16 text-center'>
+										<div className='flex flex-col items-center space-y-3'>
+											<div className='p-3 rounded-full bg-slate-100'>
+												<Search className='w-6 h-6 text-slate-400' />
+											</div>
+											<div>
+												<p className='font-medium text-slate-700'>No se encontraron alcaldes</p>
+												<p className='mt-1 text-sm text-slate-500'>Intenta con otros términos de búsqueda</p>
+											</div>
+										</div>
+									</td>
+								</tr>
+							)}
+							{!loading &&
+								filteredAlcaldes.map((alcalde) => (
+									<tr key={alcalde.alcaldeId} className='transition-colors hover:bg-slate-50'>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<div className='text-sm font-medium text-slate-900'>{alcalde.fechaCreacion}</div>
+										</td>
+										<td className='px-6 py-4'>
+											<div className='flex items-center space-x-3'>
+												<div className='flex-shrink-0'>
+													{alcalde.direccionImagen ? (
+														<img
+															src={alcalde.direccionImagen}
+															alt={`${alcalde.nombre} ${alcalde.apellido}`}
+															className='object-cover w-10 h-10 rounded-full'
+														/>
+													) : (
+														<div className='flex items-center justify-center w-10 h-10 text-sm font-medium rounded-full text-slate-600 bg-slate-200'>
+															{alcalde.nombre.charAt(0)}
+															{alcalde.apellido.charAt(0)}
+														</div>
+													)}
+												</div>
+												<div>
+													<p className='text-sm font-medium text-slate-900'>
+														{alcalde.nombre} {alcalde.apellido}
+													</p>
+												</div>
+											</div>
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<span className='inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200'>
+												{alcalde.periodo}
+											</span>
+										</td>
+										<td className='px-6 py-4'>
+											<div className='max-w-md text-sm text-slate-600 line-clamp-2'>{alcalde.descripcion}</div>
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<div className='text-sm text-slate-900'>{alcalde.numeroObras}</div>
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<div className='text-sm text-slate-900'>{alcalde.presupuesto}</div>
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<div className='text-sm text-slate-900'>{alcalde.aprobacionCiudadana}</div>
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<div className='w-12 h-12 overflow-hidden rounded-lg bg-slate-100'>
+												{alcalde.direccionImagen ? (
+													<img
+														src={alcalde.direccionImagen}
+														alt={`${alcalde.nombre} ${alcalde.apellido}`}
+														className='object-cover w-full h-full'
+													/>
+												) : (
+													<div className='flex items-center justify-center w-full h-full text-xs font-medium text-slate-600'>
+														NA
+													</div>
+												)}
+											</div>
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap'>
+											<div className='flex items-center space-x-1'>
+												<button
+													className='p-2 transition-colors rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50'
+													title='Ver alcalde'>
+													<Eye className='w-4 h-4' />
+												</button>
+												<button
+													className='p-2 transition-colors rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50'
+													onClick={() => openEditarModal(alcalde)}
+													title='Editar alcalde'>
+													<Edit className='w-4 h-4' />
+												</button>
+												<button
+													className='p-2 transition-colors rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50'
+													onClick={() => openEliminarModal(alcalde)}
+													title='Eliminar alcalde'>
+													<Trash2 className='w-4 h-4' />
+												</button>
+											</div>
+										</td>
+									</tr>
+								))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 
-			{/* Modal */}
+			{/* Modals */}
 			<ModalAgregar
 				isOpen={isModalOpen}
 				onClose={closeModal}

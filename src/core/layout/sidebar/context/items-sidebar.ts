@@ -81,6 +81,12 @@ export const menuItems: MenuItem[] = [
                 isActive: false,
             },
             {
+                titulo: 'Alcalde Page',
+                link: '/admin/contenido/alcalde-page',
+                icon: User,
+                isActive: false,
+            },
+            {
                 titulo: 'Funcionarios',
                 link: '/admin/contenido/funcionarios',
                 icon: UserCheck,
