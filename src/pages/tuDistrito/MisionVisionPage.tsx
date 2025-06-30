@@ -1,4 +1,4 @@
-import MisionVision from '../../core/components/common/tu-distrito/visionMision/MisionVision';
+import MisionVision from '../../core/components/common/page/tu-distrito/visionMision/MisionVision';
 import { Layout } from '../../core/layout/Layout';
 export default function MisionVisionPage() {
 	return (

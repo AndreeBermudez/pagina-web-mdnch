@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Loader } from "../../components/common/administrador/loader/Loader";
+import { Loader } from "../../components/ui/Loader";
 
 export const LazyWrapper = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<Loader />}>

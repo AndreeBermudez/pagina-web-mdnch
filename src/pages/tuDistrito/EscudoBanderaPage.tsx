@@ -1,4 +1,4 @@
-import PresentacionDistrito from '../../core/components/common/tu-distrito/escudoBandera/PresentacionDistrito';
+import PresentacionDistrito from '../../core/components/common/page/tu-distrito/escudoBandera/PresentacionDistrito';
 import { Layout } from '../../core/layout/Layout';
 
 export default function EscudoBanderaPage() {

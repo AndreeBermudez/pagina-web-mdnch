@@ -1,4 +1,4 @@
-import { ConsejoMunicipalSection } from '../../core/components/common/nosotros/consejoMunicipal';
+import { ConsejoMunicipalSection } from '../../core/components/common/page/nosotros/consejoMunicipal';
 import { Layout } from '../../core/layout/Layout';
 
 export default function ConsejoMunicipalPage() {

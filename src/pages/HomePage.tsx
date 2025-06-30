@@ -1,8 +1,8 @@
-import { AlcaldeSection } from '../core/components/common/home/alcalde/AlcaldeSection';
-import { SectionEvent } from '../core/components/common/home/eventos/SectionEvent';
-import { SectionNews } from '../core/components/common/home/noticias/SectionNews';
-import { ServiceSection } from '../core/components/common/home/servicios/ServiceSection';
-import { SectionPlaces } from '../core/components/common/home/turismo/SectionPlaces';
+import { AlcaldeSection } from '../core/components/common/page/home/alcalde/AlcaldeSection';
+import { SectionEvent } from '../core/components/common/page/home/eventos/SectionEvent';
+import { SectionNews } from '../core/components/common/page/home/noticias/SectionNews';
+import { ServiceSection } from '../core/components/common/page/home/servicios/ServiceSection';
+import { SectionPlaces } from '../core/components/common/page/home/turismo/SectionPlaces';
 import { SocialButtons } from '../core/components/ui/SocialButtons';
 import { Weather } from '../core/components/ui/Weather';
 import { Footer } from '../core/layout/footer/Footer';

@@ -1,4 +1,4 @@
-import { TurismoPage } from '../../core/components/common/tu-distrito/turismo';
+import { TurismoPage } from '../../core/components/common/page/tu-distrito/turismo';
 import { Layout } from '../../core/layout/Layout';
 
 export default function TurismoPageContainer() {

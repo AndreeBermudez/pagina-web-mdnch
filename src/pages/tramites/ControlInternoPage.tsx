@@ -1,4 +1,4 @@
-import { TableControlInterno } from '../../core/components/common/tramites/control-interno/TableControlInterno';
+import { TableControlInterno } from '../../core/components/common/page/tramites/control-interno/TableControlInterno';
 import { Layout } from '../../core/layout/Layout';
 
 export default function ControlInternoPage() {

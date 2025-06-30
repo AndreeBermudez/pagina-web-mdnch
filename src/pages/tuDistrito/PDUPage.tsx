@@ -1,4 +1,4 @@
-import PlanDesarrolloUrbano from '../../core/components/common/tu-distrito/pdu/PlanDesarrolloUrbano';
+import PlanDesarrolloUrbano from '../../core/components/common/page/tu-distrito/pdu/PlanDesarrolloUrbano';
 import { Layout } from '../../core/layout/Layout';
 export default function PDUPage() {
 	return (

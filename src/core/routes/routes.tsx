@@ -1,17 +1,23 @@
 import { lazy } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AdminLayout } from '../components/common/administrador/AdminLayout';
+import { AdminLayout } from '../layout/AdminLayout';
 import { LazyWrapper } from './components/LazyWrapper';
 import { PrivateGuard } from './guard/PrivateGuard';
 
 //* Home - Lazy loading
-const HomePage = lazy(() => import('../../pages/HomePage').then(module => ({ default: module.HomePage })));
+const HomePage = lazy(() => import('../../pages/HomePage').then((module) => ({ default: module.HomePage })));
 
 //* Nosotros - Lazy loading
-const AgendaPage = lazy(() => import('../../pages/nosotros/AgendaPage').then(module => ({ default: module.AgendaPage })));
-const AlcaldePage = lazy(() => import('../../pages/nosotros/AlcaldePage').then(module => ({ default: module.AlcaldePage })));
+const AgendaPage = lazy(() =>
+	import('../../pages/nosotros/AgendaPage').then((module) => ({ default: module.AgendaPage }))
+);
+const AlcaldePage = lazy(() =>
+	import('../../pages/nosotros/AlcaldePage').then((module) => ({ default: module.AlcaldePage }))
+);
 const ConsejoMunicipalPage = lazy(() => import('../../pages/nosotros/ConsejoMunicipalPage'));
-const DirectorioPage = lazy(() => import('../../pages/nosotros/DirectorioPage').then(module => ({ default: module.DirectorioPage })));
+const DirectorioPage = lazy(() =>
+	import('../../pages/nosotros/DirectorioPage').then((module) => ({ default: module.DirectorioPage }))
+);
 const MapaPage = lazy(() => import('../../pages/nosotros/MapaPage'));
 const OrganigramaPage = lazy(() => import('../../pages/nosotros/OrganigramaPage'));
 
@@ -39,197 +45,325 @@ const ReseñaHistoricaPage = lazy(() => import('../../pages/tuDistrito/ReseñaHi
 const TurismoPage = lazy(() => import('../../pages/tuDistrito/TurismoPage'));
 
 //* Admin - Lazy loading
-const FuncionariosAdmin = lazy(() => import('../components/common/administrador/pages/FuncioariosAd/FuncionariosAdmin'));
-const ConsejoAdmin = lazy(() => import('../components/common/administrador/pages/ConsejoAd/ConsejosAdmin'));
-const NoticiasAdmin = lazy(() => import('../components/common/administrador/pages/noticias-admin/NoticiasAdmin').then(module => ({ default: module.NoticiasAdmin })));
-const OrganigramaAdmin = lazy(() => import('../components/common/administrador/pages/OrganigramaAd/OrganigramaAdmin'));
-const AlcaldePageAdmin = lazy(() => import('../components/common/administrador/pages/AlcaldePageAd/AlcaldePageAdmin'));
+const FuncionariosAdmin = lazy(
+	() => import('../../features/administrador/funcionarios-admin/pages/FuncionariosAdmin')
+);
+const ConsejoAdmin = lazy(() => import('../../features/administrador/consejo-admin/pages/ConsejosAdmin'));
+const NoticiasAdmin = lazy(() =>
+	import('../../features/administrador/noticias-admin/pages/NoticiasAdmin').then((module) => ({
+		default: module.NoticiasAdmin,
+	}))
+);
+const OrganigramaAdmin = lazy(
+	() => import('../../features/administrador/organigrama-admin/pages/OrganigramaAdmin')
+);
+const AlcaldePageAdmin = lazy(() => import('../../features/administrador/alcalde-admin/pages/AlcaldePageAdmin'));
 
 export const routes = [
-  // Ruta principal
-  {
-    path: '/',
-    element: <LazyWrapper><HomePage /></LazyWrapper>,
-  },
-  {
-    path: '/inicio',
-    element: <LazyWrapper><HomePage /></LazyWrapper>,
-  },
+	// Ruta principal
+	{
+		path: '/',
+		element: (
+			<LazyWrapper>
+				<HomePage />
+			</LazyWrapper>
+		),
+	},
+	{
+		path: '/inicio',
+		element: (
+			<LazyWrapper>
+				<HomePage />
+			</LazyWrapper>
+		),
+	},
 
-  // Nosotros
-  {
-    path: '/nosotros',
-    element: <Outlet />,
-    children: [
-      {
-        path: 'calendar',
-        element: <LazyWrapper><AgendaPage /></LazyWrapper>,
-      },
-      {
-        path: 'directorio',
-        element: <LazyWrapper><DirectorioPage /></LazyWrapper>,
-      },
-      {
-        path: 'alcalde',
-        element: <LazyWrapper><AlcaldePage /></LazyWrapper>,
-      },
-      {
-        path: 'consejoMunicipal',
-        element: <LazyWrapper><ConsejoMunicipalPage /></LazyWrapper>,
-      },
-      {
-        path: 'organigrama',
-        element: <LazyWrapper><OrganigramaPage /></LazyWrapper>,
-      },
-      {
-        path: 'mapa',
-        element: <LazyWrapper><MapaPage /></LazyWrapper>,
-      },
-    ],
-  },
+	// Nosotros
+	{
+		path: '/nosotros',
+		element: <Outlet />,
+		children: [
+			{
+				path: 'calendar',
+				element: (
+					<LazyWrapper>
+						<AgendaPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'directorio',
+				element: (
+					<LazyWrapper>
+						<DirectorioPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'alcalde',
+				element: (
+					<LazyWrapper>
+						<AlcaldePage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'consejoMunicipal',
+				element: (
+					<LazyWrapper>
+						<ConsejoMunicipalPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'organigrama',
+				element: (
+					<LazyWrapper>
+						<OrganigramaPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'mapa',
+				element: (
+					<LazyWrapper>
+						<MapaPage />
+					</LazyWrapper>
+				),
+			},
+		],
+	},
 
-  // Tu Distrito
-  {
-    path: '/tudistrito',
-    element: <Outlet />,
-    children: [
-      {
-        path: 'turismo',
-        element: <LazyWrapper><TurismoPage /></LazyWrapper>,
-      },
-      {
-        path: 'pdu',
-        element: <LazyWrapper><PDUPage /></LazyWrapper>,
-      },
-      {
-        path: 'misionVision',
-        element: <LazyWrapper><MisionVisionPage /></LazyWrapper>,
-      },
-      {
-        path: 'reseñaHistorica',
-        element: <LazyWrapper><ReseñaHistoricaPage /></LazyWrapper>,
-      },
-      {
-        path: 'himno',
-        element: <LazyWrapper><HimnoPage /></LazyWrapper>,
-      },
-      {
-        path: 'escudo',
-        element: <LazyWrapper><EscudoBanderaPage /></LazyWrapper>,
-      },
-    ],
-  },
+	// Tu Distrito
+	{
+		path: '/tudistrito',
+		element: <Outlet />,
+		children: [
+			{
+				path: 'turismo',
+				element: (
+					<LazyWrapper>
+						<TurismoPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'pdu',
+				element: (
+					<LazyWrapper>
+						<PDUPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'misionVision',
+				element: (
+					<LazyWrapper>
+						<MisionVisionPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'reseñaHistorica',
+				element: (
+					<LazyWrapper>
+						<ReseñaHistoricaPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'himno',
+				element: (
+					<LazyWrapper>
+						<HimnoPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'escudo',
+				element: (
+					<LazyWrapper>
+						<EscudoBanderaPage />
+					</LazyWrapper>
+				),
+			},
+		],
+	},
 
-  // Servicios
-  {
-    path: '/servicios',
-    element: <Outlet />,
-    children: [
-      {
-        path: 'reclamaciones',
-        element: <LazyWrapper><LibroReclamacionesPage /></LazyWrapper>,
-      },
-      {
-        path: 'presupuesto',
-        element: <LazyWrapper><PresupuestoParticipativoPage /></LazyWrapper>,
-      },
-      {
-        path: 'biblioteca',
-        element: <LazyWrapper><BibliotecaPage /></LazyWrapper>,
-      },
-    ],
-  },
+	// Servicios
+	{
+		path: '/servicios',
+		element: <Outlet />,
+		children: [
+			{
+				path: 'reclamaciones',
+				element: (
+					<LazyWrapper>
+						<LibroReclamacionesPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'presupuesto',
+				element: (
+					<LazyWrapper>
+						<PresupuestoParticipativoPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'biblioteca',
+				element: (
+					<LazyWrapper>
+						<BibliotecaPage />
+					</LazyWrapper>
+				),
+			},
+		],
+	},
 
-  // Trámites
-  {
-    path: '/tramites',
-    element: <Outlet />,
-    children: [
-      {
-        path: 'defensa-civil',
-        element: <LazyWrapper><DefensaCivilPage /></LazyWrapper>,
-      },
-      {
-        path: 'transparencia',
-        element: <LazyWrapper><TransparenciaPage /></LazyWrapper>,
-      },
-      {
-        path: 'control-interno',
-        element: <LazyWrapper><ControlInternoPage /></LazyWrapper>,
-      },
-      {
-        path: 'registro-civil',
-        element: <LazyWrapper><RegistroCivilPage /></LazyWrapper>,
-      },
-      {
-        path: 'licencia-funcionamiento',
-        element: <LazyWrapper><LicenciaFuncionamientoPage /></LazyWrapper>,
-      },
-      {
-        path: 'licencia-edificacion',
-        element: <LazyWrapper><LicenciaEdificacionPage /></LazyWrapper>,
-      },
-      {
-        path: 'convocatorias',
-        element: <LazyWrapper><ConvocatoriaPage /></LazyWrapper>,
-      },
-      {
-        path: 'denuncia',
-        element: <LazyWrapper><DenunciaCorrupcionPage /></LazyWrapper>,
-      },
-    ],
-  },
+	// Trámites
+	{
+		path: '/tramites',
+		element: <Outlet />,
+		children: [
+			{
+				path: 'defensa-civil',
+				element: (
+					<LazyWrapper>
+						<DefensaCivilPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'transparencia',
+				element: (
+					<LazyWrapper>
+						<TransparenciaPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'control-interno',
+				element: (
+					<LazyWrapper>
+						<ControlInternoPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'registro-civil',
+				element: (
+					<LazyWrapper>
+						<RegistroCivilPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'licencia-funcionamiento',
+				element: (
+					<LazyWrapper>
+						<LicenciaFuncionamientoPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'licencia-edificacion',
+				element: (
+					<LazyWrapper>
+						<LicenciaEdificacionPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'convocatorias',
+				element: (
+					<LazyWrapper>
+						<ConvocatoriaPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'denuncia',
+				element: (
+					<LazyWrapper>
+						<DenunciaCorrupcionPage />
+					</LazyWrapper>
+				),
+			},
+		],
+	},
 
-  // Contacto
-  {
-    path: '/contact',
-    element: <p>Contáctanos</p>,
-  },
+	// Contacto
+	{
+		path: '/contact',
+		element: <p>Contáctanos</p>,
+	},
 
-  // Admin
-  {
-    path: '/admin',
-    element: <AdminLayout />,
-    loader: PrivateGuard,
-    children: [
-      {
-        path: 'funcionarios',
-        element: <LazyWrapper><FuncionariosAdmin /></LazyWrapper>,
-      },
-      {
-        path: 'consejoMunicipal',
-        element: <LazyWrapper><ConsejoAdmin /></LazyWrapper>,
-      },
-      {
-        path: 'noticias',
-        element: <LazyWrapper><NoticiasAdmin /></LazyWrapper>,
-      },
-      {
-        path: 'organigrama',
-        element: <LazyWrapper><OrganigramaAdmin /></LazyWrapper>,
-      },
-      {
-        path: 'alcalde-page',
-        element: <LazyWrapper><AlcaldePageAdmin /></LazyWrapper>,
-      },
-      {
-        path: 'agenda',
-        element: <p>Administrar agenda</p>,
-      },
-      {
-        path: 'usuarios',
-        element: <p>Gestión de usuarios</p>,
-      },
-    ],
-  },
+	// Admin
+	{
+		path: '/admin',
+		element: <AdminLayout />,
+		loader: PrivateGuard,
+		children: [
+			{
+				path: 'funcionarios',
+				element: (
+					<LazyWrapper>
+						<FuncionariosAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'consejoMunicipal',
+				element: (
+					<LazyWrapper>
+						<ConsejoAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'noticias',
+				element: (
+					<LazyWrapper>
+						<NoticiasAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'organigrama',
+				element: (
+					<LazyWrapper>
+						<OrganigramaAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'alcalde-page',
+				element: (
+					<LazyWrapper>
+						<AlcaldePageAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'agenda',
+				element: <p>Administrar agenda</p>,
+			},
+			{
+				path: 'usuarios',
+				element: <p>Gestión de usuarios</p>,
+			},
+		],
+	},
 
-  // Rutas de error
-  {
-    path: '/404',
-    element: <p>PageNotFound</p>,
-  },
-  {
-    path: '*',
-    element: <p>PageNotFound</p>,
-  },
+	// Rutas de error
+	{
+		path: '/404',
+		element: <p>PageNotFound</p>,
+	},
+	{
+		path: '*',
+		element: <p>PageNotFound</p>,
+	},
 ];

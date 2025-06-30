@@ -1,4 +1,4 @@
-import Himno from '../../core/components/common/tu-distrito/himno/Himno';
+import Himno from '../../core/components/common/page/tu-distrito/himno/Himno';
 import { Layout } from '../../core/layout/Layout';
 
 export default function HimnoPage() {
