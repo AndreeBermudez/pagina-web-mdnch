@@ -36,9 +36,7 @@ const AdminLayoutContent: React.FC = () => {
 					</div>
 				</header>
 				<section className='flex-1 mx-6 my-6 overflow-x-auto sm:mx-9'>
-					<div className='flex flex-col w-full gap-5 bg-white rounded-lg shadow-md'>
-						<Outlet />
-					</div>
+					<Outlet />
 				</section>
 			</main>
 		</div>

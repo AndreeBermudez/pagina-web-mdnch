@@ -1,14 +1,10 @@
-import { RefreshCcw } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
 import logoMunicipalidad from '../../../assets/logo.webp';
 import { ButtonAdmin } from './ButtonAdmin';
-import { ButtonSidebar } from './ButtonSidebar';
 import { ButtonSidebarCollapsed } from './ButtonSidebarCollapsed';
 import { useSidebarContext } from './context/SidebarContext';
 import { menuItems } from './context/items-sidebar';
 
 export const Sidebar: React.FC = () => {
-	const location = useLocation();
 	const {
 		isCollapsed,
 		isMobileMenuOpen,
@@ -36,29 +32,19 @@ export const Sidebar: React.FC = () => {
 						</span>
 					</div>
 					<div className='flex flex-col w-full'>
-						<ButtonSidebarCollapsed
-							titulo='Contenido'
-							Icon={RefreshCcw}
-							isCollapsed={isCollapsed}
-							isDropdown={isDropdownOpen}
-							items={menuItems}
-							onClick={toggleDropdown}
-							toggleButtonSidebar={toggleButtonSidebar}
-							isActive={location.pathname === '/admin/*'}
-						/>
 						{menuItems.map((item) => (
-							<Link to={item.link} key={item.link} className='transition-all duration-300 ease-in-out transform'>
-								<ButtonSidebar
-									titulo={item.titulo}
-									Icon={item.icon}
-									isCollapsed={isCollapsed}
-									onClick={toggleButtonSidebar}
-									isActive={location.pathname === item.link}
-								/>
-							</Link>
+							<ButtonSidebarCollapsed
+								key={item.titulo}
+								titulo={item.titulo}
+								Icon={item.icon}
+								isCollapsed={isCollapsed}
+								isDropdown={isDropdownOpen(item.titulo)}
+								items={item.subMenu ? item.subMenu : []}
+								onClick={() => toggleDropdown(item.titulo)}
+								toggleButtonSidebar={toggleButtonSidebar}
+							/>
 						))}
 					</div>
-					
 				</section>
 				<section className={`flex flex-col items-center gap-4 p-4 mb-3`}>
 					<ButtonAdmin isCollapsed={isCollapsed} />

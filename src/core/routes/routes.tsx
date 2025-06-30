@@ -307,7 +307,7 @@ export const routes = [
 		loader: PrivateGuard,
 		children: [
 			{
-				path: 'funcionarios',
+				path: 'contenido/funcionarios',
 				element: (
 					<LazyWrapper>
 						<FuncionariosAdmin />
@@ -315,7 +315,7 @@ export const routes = [
 				),
 			},
 			{
-				path: 'consejoMunicipal',
+				path: 'contenido/consejo-municipal',
 				element: (
 					<LazyWrapper>
 						<ConsejoAdmin />
@@ -323,7 +323,7 @@ export const routes = [
 				),
 			},
 			{
-				path: 'noticias',
+				path: 'contenido/noticias',
 				element: (
 					<LazyWrapper>
 						<NoticiasAdmin />
@@ -331,7 +331,7 @@ export const routes = [
 				),
 			},
 			{
-				path: 'organigrama',
+				path: 'contenido/organigrama',
 				element: (
 					<LazyWrapper>
 						<OrganigramaAdmin />
@@ -339,7 +339,7 @@ export const routes = [
 				),
 			},
 			{
-				path: 'alcalde-page',
+				path: 'contenido/alcalde-page',
 				element: (
 					<LazyWrapper>
 						<AlcaldePageAdmin />
@@ -347,12 +347,8 @@ export const routes = [
 				),
 			},
 			{
-				path: 'agenda',
+				path: 'contenido/agenda',
 				element: <p>Administrar agenda</p>,
-			},
-			{
-				path: 'usuarios',
-				element: <p>Gestión de usuarios</p>,
 			},
 		],
 	},

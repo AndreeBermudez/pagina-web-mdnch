@@ -4,19 +4,20 @@ interface SidebarContextType {
 	isCollapsed: boolean;
 	isMobileMenuOpen: boolean;
 	isMobile: boolean;
-	isDropdownOpen: boolean;
+	openDropdowns: string[];
 	setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	toggleSidebar: () => void;
 	toggleButtonSidebar: () => void;
-	toggleDropdown: () => void;
+	toggleDropdown: (titulo: string) => void;
 	handleMenuClick: () => void;
+	isDropdownOpen: (titulo: string) => boolean;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [isCollapsed, setIsCollapsed] = useState(false);
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [openDropdowns, setOpenDropdowns] = useState<string[]>([]);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -24,12 +25,19 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
 		setIsCollapsed(!isCollapsed);
 	};
 
-	const toggleDropdown = () => {
-		setIsDropdownOpen(!isDropdownOpen);
-		if (isMobile) {
-			setIsMobileMenuOpen(false);
-		}
-	}
+	const toggleDropdown = (titulo: string) => {
+		setOpenDropdowns((prev) => {
+			if (prev.includes(titulo)) {
+				return [];
+			} else {
+				return [titulo];
+			}
+		});
+	};
+
+	const isDropdownOpen = (titulo: string) => {
+		return openDropdowns.includes(titulo);
+	};
 
 	const toggleButtonSidebar = () => {
 		if (isMobile) {
@@ -64,12 +72,13 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
 				isCollapsed,
 				isMobileMenuOpen,
 				isMobile,
-				isDropdownOpen,
+				openDropdowns,
 				setIsMobileMenuOpen,
 				toggleSidebar,
 				toggleButtonSidebar,
 				handleMenuClick,
 				toggleDropdown,
+				isDropdownOpen,
 			}}>
 			{children}
 		</SidebarContext.Provider>

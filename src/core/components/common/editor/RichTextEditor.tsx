@@ -1,9 +1,9 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import JoditEditor from 'jodit-react';
 
 interface RichTextEditorProps {
 	value: string;
-	onChange: (content: string) => void;
+	onBlur: (content: string) => void;
 	placeholder?: string;
 	height?: number;
 	disabled?: boolean;
@@ -15,10 +15,9 @@ interface RichTextEditorProps {
 
 export const RichTextEditor = ({
 	value,
-	onChange,
+	onBlur,
 	placeholder = 'Escriba aquí...',
 	height = 300,
-	disabled = false,
 	className = '',
 	label,
 	required = false,
@@ -55,7 +54,6 @@ export const RichTextEditor = ({
 				'|',
 				'table',
 				'link',
-				'|',
 				'source',
 				'preview',
 			],
@@ -64,14 +62,21 @@ export const RichTextEditor = ({
 			showWordsCounter: false,
 			showXPathInStatusbar: false,
 			height,
+			allowResizeY: false,
+			allowResizeX: false,
 			toolbarAdaptive: false,
 			askBeforePasteHTML: false,
 			askBeforePasteFromWord: false,
+			addNewLine: false,
 			defaultActionOnPaste: 'insert_clear_html' as const,
 			placeholder,
 		}),
 		[height, placeholder]
 	);
+
+	useEffect(() => {
+		console.log('Editor initialized');
+	},[])
 
 	return (
 		<div className={`grid gap-2 ${className}`}>
@@ -80,7 +85,7 @@ export const RichTextEditor = ({
 					{label} {required && <span className='text-red-500'>*</span>}
 				</label>
 			)}
-			<JoditEditor ref={editor} value={value} tabIndex={1} onChange={onChange} config={config} />
+			<JoditEditor ref={editor} value={value} tabIndex={1} onBlur={onBlur} config={config} />
 			{showPreview && (
 				<div>
 					<label className='text-sm font-medium'>Vista previa</label>

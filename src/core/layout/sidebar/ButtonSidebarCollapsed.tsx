@@ -2,15 +2,15 @@ import { ChevronLeft, type LucideIcon } from 'lucide-react';
 import type { ButtonLogoutProps } from './ButtonAdmin';
 import { Link } from 'react-router-dom';
 import { ButtonSidebar } from './ButtonSidebar';
-import type { MenuItem } from './context/items-sidebar';
+import type { SubMenuItem } from './context/items-sidebar';
 
 interface ButtonSidebarCollapsedProps extends ButtonLogoutProps {
 	titulo: string;
 	Icon: LucideIcon;
 	isCollapsed: boolean;
 	isDropdown?: boolean;
-	isActive: boolean;
-	items: MenuItem[];
+	isActive?: boolean;
+	items: SubMenuItem[];
 	toggleButtonSidebar: () => void;
 	onClick: () => void;
 }
@@ -31,7 +31,7 @@ export const ButtonSidebarCollapsed = ({
 				className={`flex items-center justify-between gap-2 w-full px-6 py-3 font-medium text-sm transition-colors cursor-pointer
 					 ${isActive ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}
 				onClick={onClick}>
-				<div className='flex items-center gap-2 w-full'>
+				<div className='flex items-center w-full gap-2'>
 					<Icon size={18} />
 					<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>{titulo}</span>
 				</div>
