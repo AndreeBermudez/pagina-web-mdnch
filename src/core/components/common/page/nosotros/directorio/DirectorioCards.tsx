@@ -1,16 +1,8 @@
 // src/components/DirectorioCards.tsx
 import { useState, useEffect } from 'react';
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react';
-import { getFuncionarios } from '../../../../../services/EndPointFuncionario';
-import type { Funcionario as FuncionarioRaw } from '../../../../../services/EndPointFuncionario';
-
-interface Funcionario {
-	id: number;
-	nombre: string;
-	cargo: string;
-	correo: string;
-	imagen?: string;
-}
+import { getFuncionarios } from '../../../../../services/funcionarios/getFuncionarios';
+import type { Funcionario } from '../../../../../services/funcionarios/funcionario.interface';
 
 interface DirectorioCardsProps {
 	cardsPerPage: number;
@@ -22,15 +14,9 @@ export default function DirectorioCards({ cardsPerPage }: DirectorioCardsProps) 
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const rawList: FuncionarioRaw[] = await getFuncionarios();
-			const adaptados: Funcionario[] = rawList.map((f) => ({
-				id: f.id,
-				nombre: `${f.nombre} ${f.apellido}`,
-				cargo: f.cargo,
-				correo: f.contacto,
-				imagen: f.direccionImagen,
-			}));
-			setAllFuncionarios(adaptados);
+			const rawList: Funcionario[] = await getFuncionarios();
+			
+			setAllFuncionarios(rawList);
 		};
 		fetchData();
 	}, []);
@@ -47,16 +33,16 @@ export default function DirectorioCards({ cardsPerPage }: DirectorioCardsProps) 
 		<div className='space-y-8 py-0 md:px-20 mb-15'>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
 				{visibleFuncionarios.map((funcionario) => (
-					<div key={funcionario.id} className='group perspective'>
+					<div key={funcionario.funcionarioId} className='group perspective'>
 						<div className='relative h-[300px] w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]'>
 							{/* Frente */}
 							<div className='absolute inset-0 [backface-visibility:hidden] rounded-lg shadow-lg overflow-hidden flex flex-col items-center justify-center p-6 bg-gradient-to-b from-blue-200 to-blue bg-no-repeat bg-center [background-image:radial-gradient(circle_10px_at_30%_20%,rgba(210,20,20,0.6),transparent_70%),radial-gradient(#f71818_1px,transparent_5px)] bg-[size:100%_100%,20px_20px]'>
 								<div className='absolute top-4 right-4 w-6 h-6 bg-yellow-200 rounded-full shadow' />
 								<div className='relative w-32 h-32 flex items-center justify-center mb-4'>
 									<div className='absolute w-35 h-35 rounded-full bg-white' />
-									{funcionario.imagen ? (
+									{funcionario.direccionImagen ? (
 										<img
-											src={funcionario.imagen}
+											src={funcionario.direccionImagen}
 											alt={funcionario.nombre}
 											className='relative w-32 h-32 object-cover rounded-full'
 										/>
@@ -83,8 +69,8 @@ export default function DirectorioCards({ cardsPerPage }: DirectorioCardsProps) 
 										<p className='text-xs uppercase tracking-widest text-blue-200'>Contacto</p>
 										<div className='flex items-center mt-1 space-x-2'>
 											<Mail className='w-5 h-5 text-blue-200' />
-											<a href={`mailto:${funcionario.correo}`} className='text-sm break-all hover:underline'>
-												{funcionario.correo}
+											<a href={`mailto:${funcionario.contacto}`} className='text-sm break-all hover:underline'>
+												{funcionario.contacto}
 											</a>
 										</div>
 									</div>

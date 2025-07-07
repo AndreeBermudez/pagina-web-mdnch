@@ -1,6 +1,6 @@
 import { HiViewGrid } from 'react-icons/hi';
 import EventoCard from './EventoCard';
-import EventoDetalle from './EventoDetalle';
+
 import { type Evento } from './types';
 
 interface PanelEventosProps {
@@ -12,7 +12,7 @@ interface PanelEventosProps {
 
 const PanelEventos = ({ eventoSeleccionado, eventosFiltrados, seleccionarEvento }: PanelEventosProps) => {
 	if (eventoSeleccionado) {
-		return <EventoDetalle evento={eventoSeleccionado} />;
+		
 	}
   // Si eventos filtrados está vacío muestra este mensaje
 	if (eventosFiltrados.length === 0) {

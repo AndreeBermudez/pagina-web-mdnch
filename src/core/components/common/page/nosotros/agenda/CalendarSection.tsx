@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { HiViewGrid } from 'react-icons/hi';
 import CalendarioGrid from './CalendarioGrid';
 import CalendarioHeader from './CalendarioHeader';
-import { EVENTOS_INICIALES, MESES } from './constants';
-import PanelEventos from './PanelEventos';
-import type { DiaCalendario, Evento } from './types';
+
+interface DiaCalendario {
+	fecha: Date;
+	esMesActual: boolean;
+}
 
 const CalendarSection = () => {
 	const [mesActual, setMesActual] = useState<number>(new Date().getMonth()); // 0..11
 	const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
 	const [busqueda, setBusqueda] = useState<string>('');
-	const [eventoSeleccionado, setEventoSeleccionado] = useState<Evento | null>(null);
-	const [eventosFiltrados, setEventosFiltrados] = useState<Evento[]>([]);
 	const [rangoAnios, setRangoAnios] = useState<number[]>([]);
 	const [diaSeleccionado, setDiaSeleccionado] = useState<Date | null>(null);
 
@@ -27,23 +27,6 @@ const CalendarSection = () => {
 		}
 		setRangoAnios(arr);
 	}, []);
-
-	useEffect(() => {
-		if (busqueda.trim() === '') {
-			const filtrados = EVENTOS_INICIALES.filter((evento) => {
-				const fechaEvento = new Date(evento.fecha);
-				return fechaEvento.getMonth() === mesActual && fechaEvento.getFullYear() === anioActual;
-			});
-			setEventosFiltrados(filtrados);
-		} else {
-			const filtrados = EVENTOS_INICIALES.filter((evento) => {
-				const texto = (evento.titulo + evento.descripcion).toLowerCase();
-				return texto.includes(busqueda.toLowerCase());
-			});
-			setEventosFiltrados(filtrados);
-		}
-		setEventoSeleccionado(null);
-	}, [mesActual, anioActual, busqueda]);
 
 	const cambiarMes = (delta: number): void => {
 		let nuevoMes = mesActual + delta;
@@ -73,7 +56,6 @@ const CalendarSection = () => {
 			dias.push({
 				fecha,
 				esMesActual: false,
-				eventos: obtenerEventosPorFecha(fecha),
 			});
 		}
 		// Días del mes actual
@@ -82,7 +64,6 @@ const CalendarSection = () => {
 			dias.push({
 				fecha,
 				esMesActual: true,
-				eventos: obtenerEventosPorFecha(fecha),
 			});
 		}
 		// Rellenar los días restantes del mes siguiente hasta completar 42 celdas
@@ -92,21 +73,9 @@ const CalendarSection = () => {
 			dias.push({
 				fecha,
 				esMesActual: false,
-				eventos: obtenerEventosPorFecha(fecha),
 			});
 		}
 		return dias;
-	};
-
-	const obtenerEventosPorFecha = (fecha: Date): Evento[] => {
-		return EVENTOS_INICIALES.filter((evento) => {
-			const f = new Date(evento.fecha);
-			return (
-				f.getDate() === fecha.getDate() &&
-				f.getMonth() === fecha.getMonth() &&
-				f.getFullYear() === fecha.getFullYear()
-			);
-		});
 	};
 
 	const esFechaHoy = (fecha: Date): boolean => {
@@ -116,13 +85,6 @@ const CalendarSection = () => {
 			fecha.getMonth() === hoy.getMonth() &&
 			fecha.getFullYear() === hoy.getFullYear()
 		);
-	};
-
-	const seleccionarEvento = (idEvento: string): void => {
-		const evento = EVENTOS_INICIALES.find((e) => e.id === idEvento);
-		if (evento) {
-			setEventoSeleccionado(evento);
-		}
 	};
 
 	const diasCalendario = obtenerDiasDelCalendario();
@@ -141,33 +103,29 @@ const CalendarSection = () => {
 					onChangeBusqueda={setBusqueda}
 				/>
 
-				{/* Grid principal: calendario y panel de eventos */}
+				{/* Grid principal: calendario y panel */}
 				<div className='grid grid-cols-1 md:grid-cols-[1fr_450px]'>
 					<CalendarioGrid
 						mesActual={mesActual}
 						anioActual={anioActual}
 						diasCalendario={diasCalendario}
 						cambiarMes={cambiarMes}
-						seleccionarEvento={seleccionarEvento}
 						esFechaHoy={esFechaHoy}
 						diaSeleccionado={diaSeleccionado}
 						onDiaClick={handleDiaClick}
 					/>
 
-					{/* Panel de eventos */}
+					{/* Panel de calendario */}
 					<div className='border-l border-blue-100 p-4 bg-white max-h-[720px] overflow-y-auto'>
 						<div className='flex items-center gap-2 mb-4'>
 							<HiViewGrid className='w-5 h-5 text-blue-500' />
 							<h3 className='text-lg font-bold uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
-								Eventos para {MESES[mesActual]}
+								Agenda para {new Date(0, mesActual).toLocaleString('es', { month: 'long' })}
 							</h3>
 						</div>
-						<PanelEventos
-							eventoSeleccionado={eventoSeleccionado}
-							eventosFiltrados={eventosFiltrados}
-							seleccionarEvento={seleccionarEvento}
-							mesActual={mesActual}
-						/>
+						<div className='text-center text-gray-500 p-8'>
+							<p>Calendario disponible</p>
+						</div>
 					</div>
 				</div>
 			</div>

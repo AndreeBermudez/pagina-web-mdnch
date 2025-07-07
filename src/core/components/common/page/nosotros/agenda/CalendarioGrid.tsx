@@ -1,13 +1,20 @@
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
-import { COLORES_CATEGORIAS, MESES } from './constants';
-import type { DiaCalendario } from './types';
+
+const MESES = [
+	"enero", "febrero", "marzo", "abril", "mayo", "junio",
+	"julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+];
+
+interface DiaCalendario {
+	fecha: Date;
+	esMesActual: boolean;
+}
 
 interface CalendarioGridProps {
 	mesActual: number;
 	anioActual: number;
 	diasCalendario: DiaCalendario[];
 	cambiarMes: (delta: number) => void;
-	seleccionarEvento: (id: string) => void;
 	esFechaHoy: (fecha: Date) => boolean;
 	diaSeleccionado?: Date | null;
 	onDiaClick?: (fecha: Date) => void;
@@ -18,7 +25,6 @@ const CalendarioGrid = ({
 	anioActual,
 	diasCalendario,
 	cambiarMes,
-	seleccionarEvento,
 	esFechaHoy,
 	diaSeleccionado,
 	onDiaClick,
@@ -57,15 +63,15 @@ const CalendarioGrid = ({
 				{diasCalendario.map((dia, idx) => {
 					const hoy = esFechaHoy(dia.fecha);
 					const esFinde = dia.fecha.getDay() === 0 || dia.fecha.getDay() === 6;
-					const tieneEventos = dia.eventos.length > 0;
 					const esSeleccionado =
 						diaSeleccionado && dia.fecha.toDateString() === diaSeleccionado.toDateString() && dia.esMesActual;
+					
 					let claseBase =
-						'p-0.5 sm:p-2 border-b border-gray-200 border-r border-gray-200 min-h-[50px] sm:min-h-[100px] relative transition-all duration-200';
+						'p-0.5 sm:p-2 border-b border-gray-200 border-r border-gray-200 min-h-[50px] sm:min-h-[100px] relative transition-all duration-200 cursor-pointer hover:bg-blue-50';
+					
 					if (!dia.esMesActual) claseBase += ' text-gray-400 bg-gray-50';
 					if (esFinde && dia.esMesActual) claseBase += ' bg-blue-50';
 					if (hoy) claseBase += ' bg-cyan-50 border-cyan-200';
-					if (tieneEventos && dia.esMesActual) claseBase += ' cursor-pointer';
 					if (esSeleccionado) {
 						claseBase +=
 							' bg-gradient-to-br from-blue-500 to-blue-600 text-white border-blue-700 border-2 shadow-lg transform scale-105 z-10';
@@ -78,9 +84,6 @@ const CalendarioGrid = ({
 							onClick={() => {
 								if (dia.esMesActual) {
 									onDiaClick?.(dia.fecha);
-									if (tieneEventos) {
-										seleccionarEvento(dia.eventos[0].id);
-									}
 								}
 							}}>
 							<div
@@ -93,43 +96,6 @@ const CalendarioGrid = ({
 								}`}>
 								{dia.fecha.getDate()}
 							</div>
-							{tieneEventos && dia.esMesActual && (
-								<>
-									<div
-										className={`text-[10px] sm:text-xs p-0.5 sm:p-1 rounded inline-block max-w-[70px] sm:max-w-[80px] whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-300 ${
-											esSeleccionado
-												? 'bg-white/20 text-white border border-white/30'
-												: (COLORES_CATEGORIAS[dia.eventos[0].categoria] || COLORES_CATEGORIAS.default).clase
-										}`}
-										onClick={(e) => {
-											e.stopPropagation();
-											seleccionarEvento(dia.eventos[0].id);
-										}}>
-										{dia.eventos[0].titulo}
-									</div>
-									{dia.eventos.length > 1 && (
-										<div
-											className={`text-[10px] sm:text-xs text-center font-medium ${
-												esSeleccionado ? 'text-white/90' : 'text-blue-500'
-											}`}>
-											+{dia.eventos.length - 1} más
-										</div>
-									)}
-									<div className='absolute bottom-0.5 sm:bottom-1 left-1/2 transform -translate-x-1/2 flex gap-0.5 sm:gap-1'>
-										{dia.eventos.slice(0, 3).map((ev) => {
-											const colorCat = COLORES_CATEGORIAS[ev.categoria] || COLORES_CATEGORIAS.default;
-											return (
-												<div
-													key={ev.id}
-													className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
-														esSeleccionado ? 'bg-white/80' : colorCat.dot
-													}`}
-													title={ev.titulo}></div>
-											);
-										})}
-									</div>
-								</>
-							)}
 						</div>
 					);
 				})}

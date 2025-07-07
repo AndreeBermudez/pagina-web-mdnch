@@ -16,11 +16,23 @@ interface Regidor {
 	}[];
 }
 
-interface RegidoresCardsProps {
-	regidores: Regidor[];
-}
+// Datos estáticos de ejemplo
+const regidores: Regidor[] = [
+	{
+		id: 1,
+		numero: 1,
+		cargo: 'Regidor 1',
+		nombre: 'Milagritos Karina Manrique Quipusco',
+		foto: '/Daniel.jpg',
+		comisiones: [{ nombre: 'Comisión de Asuntos Legales y Secretaría General', cargo: 'Presidente' }],
+		equipo: [
+			{ nombre: 'Carlos Mendoza', cargo: 'Asistente' },
+			{ nombre: 'María López', cargo: 'Secretaria' },
+		],
+	},
+];
 
-export default function RegidoresCards({ regidores }: RegidoresCardsProps) {
+export default function RegidoresCards() {
 	return (
 		<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:px-20 mb-20'>
 			{regidores.map((r) => (
