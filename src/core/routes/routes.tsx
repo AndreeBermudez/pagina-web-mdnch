@@ -59,7 +59,7 @@ const OrganigramaAdmin = lazy(
 );
 const AlcaldePageAdmin = lazy(() => import('../../features/administrador/alcalde-admin/pages/AlcaldePageAdmin'));
 const AgendaPageAdmin = lazy(() => import('../../features/administrador/agenda-admin/pages/AgendaAdmin'));
-
+const PduAdmin = lazy(() => import ('../../features/administrador/pdu-admin/pages/PduAdmin'));
 
 export const routes = [
 	// Ruta principal
@@ -373,6 +373,13 @@ export const routes = [
 						<AgendaPageAdmin />
 					</LazyWrapper>
 				),
+			},{
+				path: 'contenido/pdu',
+				element: (
+					<LazyWrapper>
+						<PduAdmin />
+					</LazyWrapper>
+				),
 			},
 			// Rutas adicionales que faltan del sidebar
 			{
@@ -547,48 +554,8 @@ export const routes = [
 					</div>
 				),
 			},
-			// Rutas de Documentos
-			{
-				path: 'documentos/pdu',
-				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de PDU</h1>
-										<p className='mt-1 text-slate-600'>Administra los documentos del Plan de Desarrollo Urbano</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>El módulo de gestión de PDU estará disponible próximamente</p>
-							</div>
-						</div>
-					</div>
-				),
-			},
+		
+			
 			{
 				path: 'documentos/presupuesto',
 				element: (
