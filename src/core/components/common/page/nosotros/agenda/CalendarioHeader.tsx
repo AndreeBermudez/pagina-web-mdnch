@@ -1,5 +1,9 @@
 import { HiCalendar, HiSearch } from 'react-icons/hi';
-import { MESES } from './constants';
+
+const MESES = [
+	"enero", "febrero", "marzo", "abril", "mayo", "junio",
+	"julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+];
 
 interface CalendarioHeaderProps {
 	mesActual: number;

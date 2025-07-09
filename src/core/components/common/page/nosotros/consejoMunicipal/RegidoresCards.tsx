@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { FileText, User, Users } from 'lucide-react';
+import { getAllConsejos } from '../../../../../services/consejo/getAllConsejos'; 
 
 interface Regidor {
 	id: number;
@@ -16,11 +18,37 @@ interface Regidor {
 	}[];
 }
 
-interface RegidoresCardsProps {
-	regidores: Regidor[];
-}
+export default function RegidoresCards() {
+	const [regidores, setRegidores] = useState<Regidor[]>([]);
 
-export default function RegidoresCards({ regidores }: RegidoresCardsProps) {
+	useEffect(() => {
+		const fetchRegidores = async () => {
+			const consejos = await getAllConsejos();
+
+			const formateados: Regidor[] = consejos.map((c: any, i: number) => ({
+				id: c.consejoMuniId,
+				numero: i + 1,
+				cargo: c.cargo,
+				nombre: `${c.nombre} ${c.apellido}`,
+				foto: c.direccionImagen || '/placeholder.jpg',
+				comisiones: [
+					{
+						nombre: c.area || 'Sin comisión asignada',
+						cargo: c.cargo || 'Presidente',
+					},
+				],
+				equipo: (c.equipos || []).map((e: any) => ({
+					nombre: `${e.nombre} ${e.apellido}`,
+					cargo: 'Miembro',
+				})),
+			}));
+
+			setRegidores(formateados);
+		};
+
+		fetchRegidores();
+	}, []);
+
 	return (
 		<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:px-20 mb-20'>
 			{regidores.map((r) => (
@@ -44,7 +72,7 @@ export default function RegidoresCards({ regidores }: RegidoresCardsProps) {
 						</div>
 					</div>
 
-					{/* Reverso*/}
+					{/* Reverso */}
 					<div className='card-back absolute inset-0 bg-white border-2 border-blue-500 text-gray-800 p-4 flex flex-col rounded-lg opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100 shadow-xl'>
 						{/* Header */}
 						<div className='text-center pb-3 border-b border-gray-200'>
@@ -83,21 +111,29 @@ export default function RegidoresCards({ regidores }: RegidoresCardsProps) {
 								</div>
 
 								<div className='space-y-1 max-h-24 overflow-y-auto'>
-									{r.equipo.slice(0, 3).map((m, i) => (
-										<div key={i} className='flex items-center bg-gray-50 rounded px-2 py-1'>
-											<div className='w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2'>
-												<User className='w-2.5 h-2.5 text-blue-500' />
-											</div>
-											<div className='flex-1 min-w-0'>
-												<div className='text-xs font-medium text-gray-800 truncate'>{m.nombre}</div>
-											</div>
+									{r.equipo.length === 0 ? (
+										<div className='text-xs text-slate-500 italic px-2 py-1 bg-slate-50 border border-slate-200 rounded'>
+											Este consejo no tiene un equipo asignado.
 										</div>
-									))}
+									) : (
+										<>
+											{r.equipo.slice(0, 3).map((m, i) => (
+												<div key={i} className='flex items-center bg-gray-50 rounded px-2 py-1'>
+													<div className='w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2'>
+														<User className='w-2.5 h-2.5 text-blue-500' />
+													</div>
+													<div className='flex-1 min-w-0'>
+														<div className='text-xs font-medium text-gray-800 truncate'>{m.nombre}</div>
+													</div>
+												</div>
+											))}
 
-									{r.equipo.length > 3 && (
-										<div className='text-center'>
-											<span className='text-xs text-gray-500'>+{r.equipo.length - 3} más</span>
-										</div>
+											{r.equipo.length > 3 && (
+												<div className='text-center'>
+													<span className='text-xs text-gray-500'>+{r.equipo.length - 3} más</span>
+												</div>
+											)}
+										</>
 									)}
 								</div>
 							</div>

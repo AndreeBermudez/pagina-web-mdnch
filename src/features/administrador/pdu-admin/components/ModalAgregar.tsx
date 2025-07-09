@@ -1,68 +1,38 @@
 import { useState, useEffect } from 'react';
 import { X, Trash2, Upload } from 'lucide-react';
 import { crearAlcalde, editarAlcalde, type Alcalde } from '../../../../core/services/alcalde';
+
+
+
+
 interface FuncionarioModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: () => void;
-  initialData?: Alcalde | null;
+	isOpen: boolean;
+	onClose: () => void;
+	onSuccess: () => void;
+	initialData?: Alcalde | null;
 }
 
 export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }: FuncionarioModalProps) {
 	const [nombre, setNombre] = useState('');
 	const [apellido, setApellido] = useState('');
 	const [descripcion, setDescripcion] = useState('');
-	const [numeroObras, setNumeroObras] = useState('');
-	const [presupuesto, setPresupuesto] = useState('');
-	const [aprobacion, setAprobacion] = useState('');
-	const [experiencia, setExperiencia] = useState('');
-	const [reconocimiento, setReconocimiento] = useState('');
-	const [compromiso, setCompromiso] = useState('');
-	const [periodo, setPeriodo] = useState('');
-	const [file, setFile] = useState<File | null>(null);
-	const [previewImage, setPreviewImage] = useState<string | null>(null);
+	const [documento, setDocumento] = useState<File | null>(null);
 
 	useEffect(() => {
 		if (initialData) {
 			setNombre(initialData.nombre);
 			setApellido(initialData.apellido);
 			setDescripcion(initialData.descripcion);
-			setNumeroObras(initialData.numeroObras.toString());
-			setPresupuesto(initialData.presupuesto.toString());
-			setAprobacion(initialData.aprobacionCiudadana);
-			setExperiencia(initialData.experiencia);
-			setReconocimiento(initialData.reconocimientos);
-			setCompromiso(initialData.compromiso);
-			setPeriodo(initialData.periodo);
-			setPreviewImage(initialData.direccionImagen);
+
 		} else {
 			setNombre('');
 			setApellido('');
 			setDescripcion('');
-			setNumeroObras('');
-			setPresupuesto('');
-			setAprobacion('');
-			setExperiencia('');
-			setReconocimiento('');
-			setCompromiso('');
-			setPeriodo('');
-			setFile(null);
-			setPreviewImage(null);
+
 		}
 	}, [initialData]);
 	if (!isOpen) return null;
 
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const f = e.target.files?.[0] ?? null;
-		setFile(f);
-		if (f && f.type.match('image.*')) {
-			const reader = new FileReader();
-			reader.onload = (ev) => {
-				if (ev.target?.result) setPreviewImage(ev.target.result as string);
-			};
-			reader.readAsDataURL(f);
-		}
-	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -71,15 +41,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 		form.append('nombre', nombre);
 		form.append('apellido', apellido);
 		form.append('descripcion', descripcion);
-		form.append('numeroObras', numeroObras);
-		form.append('presupuesto', presupuesto);
-		form.append('aprobacionCiudadana', aprobacion);
-		form.append('atencionCiudadana', '24/7');
-		form.append('periodo', periodo);
-		form.append('experiencia', experiencia);
-		form.append('reconocimientos', reconocimiento);
-		form.append('compromiso', compromiso);
-		if (file) form.append('direccionImagen', file);
+
 
 		const success = initialData ? await editarAlcalde(initialData.alcaldeId, form) : await crearAlcalde(form);
 
@@ -94,15 +56,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 		setNombre('');
 		setApellido('');
 		setDescripcion('');
-		setNumeroObras('');
-		setPresupuesto('');
-		setAprobacion('');
-		setExperiencia('');
-		setReconocimiento('');
-		setCompromiso('');
-		setPeriodo('');
-		setFile(null);
-		setPreviewImage(null);
+
 	};
 
 	const handleClose = () => {
@@ -130,7 +84,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 						<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 							<div>
 								<label className='block mb-2 text-sm font-medium text-slate-700'>
-									Nombre <span className='text-red-500'>*</span>
+									Titulo <span className='text-red-500'>*</span>
 								</label>
 								<input
 									value={nombre}
@@ -142,7 +96,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 							</div>
 							<div>
 								<label className='block mb-2 text-sm font-medium text-slate-700'>
-									Apellido <span className='text-red-500'>*</span>
+									Descripción <span className='text-red-500'>*</span>
 								</label>
 								<input
 									value={apellido}
@@ -158,14 +112,14 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 						<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 							<div>
 								<label className='block mb-2 text-sm font-medium text-slate-700'>
-									Descripción <span className='text-red-500'>*</span>
+									Documento (PDF o Word) <span className='text-red-500'>*</span>
 								</label>
 								<input
-									value={descripcion}
-									onChange={(e) => setDescripcion(e.target.value)}
-									required
-									className='w-full px-3 py-2 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-									placeholder='Ingrese la descripción'
+									type="file"
+									accept=".pdf,.doc,.docx"
+									onChange={(e) => setDocumento(e.target.files?.[0] ?? null)}
+									required={!initialData}
+									className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
 								/>
 							</div>
 						</div>

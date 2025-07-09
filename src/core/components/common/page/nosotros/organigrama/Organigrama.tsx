@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { ListaOrganigramas } from '../../../../../services/EndPointOrganigrama';
-import type { Organigrama } from '../../../../../services/EndPointOrganigrama';
+import { listaOrganigramas } from '../../../../../services/organigrama/listaOrganigramas';
+import type { Organigrama } from '../../../../../services/organigrama/organigrama.interface';
 
 export default function Organigrama() {
 	const [organigramaUrl, setOrganigramaUrl] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data: Organigrama[] = await ListaOrganigramas();
+			const data: Organigrama[] = await listaOrganigramas();
 			if (data.length > 0) {
 				const ultimo = data[data.length - 1];
 				setOrganigramaUrl(ultimo.direccionImagen);

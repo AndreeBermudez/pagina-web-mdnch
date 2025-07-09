@@ -1,9 +1,26 @@
 
 import React from 'react';
-import AlcaldeImage from '../../../../../../assets/walterSoto.jpg';
 import { FileSearch, Calendar, Target, Award, Users } from 'lucide-react';
+import {obtenerAlcaldes} from '../../../../../services/alcalde/obtenerAlcaldes';
+import type { Alcalde } from '../../../../../services/alcalde/alcalde.interface';
 
 const AlcaldeInfo: React.FC = () => {
+const [alcalde,setAlcalde] = React.useState<Alcalde | null>(null);
+
+ React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data: Alcalde[] = await obtenerAlcaldes();
+        if (data.length > 0) {
+          setAlcalde(data[0]);
+        }
+      } catch (error) {
+        console.error('Error al obtener alcalde:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 ">
       <div className="container relative px-4 pt-10 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8 md:pt-16 lg:pt-10">
@@ -12,40 +29,38 @@ const AlcaldeInfo: React.FC = () => {
             <div className="grid grid-cols-1 gap-0 lg:grid-cols-12">
               <div className="relative h-full lg:col-span-5">
                 <img
-                  src={AlcaldeImage}
-                  alt="Alcalde Walter Jesús Soto Campos"
+                  src={alcalde?.direccionImagen || '/default-image.jpg'}
+                  alt={`Alcalde ${alcalde?.nombre }`}
                   className="object-cover object-center w-full h-full lg:rounded-l-lg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a2158]/40 to-transparent lg:bg-none" />
                 <div className="absolute bottom-4 left-6 bg-yellow-500 text-[#0a2158] px-4 py-2 rounded-lg font-bold">
-                  Periodo 2023 - 2026
+                  Periodo {alcalde ? `${alcalde.periodo}` : '2023 - 2026'}
                 </div>
               </div>
               <div className="relative p-8 lg:col-span-7 md:p-10">
                 <div className="pb-4 mb-6 border-b border-slate-600">
-                  <h2 className="mb-2 text-3xl font-bold text-white md:text-4xl">
-                    WALTER JESÚS SOTO CAMPOS
+                  <h2 className="mb-2 text-3xl font-bold text-white md:text-4xl uppercase">
+                    {alcalde ? `${alcalde.nombre} ${alcalde.apellido}` : 'Walter Jesús Soto Campos'}
                   </h2>
                   <span className="text-amber-400 relative pl-4 before:absolute before:content-['-'] before:left-0 before:top-1/2 before:transform before:-translate-y-1/2 text-lg font-semibold">
                     Alcalde Distrital de Nuevo Chimbote
                   </span>
                 </div>
                 <p className="mb-8 text-base leading-relaxed text-slate-300 md:text-lg">
-                  Walter Jesús Soto Campos es el actual alcalde distrital de Nuevo Chimbote, comprometido con el desarrollo
-                  y bienestar de su comunidad. Su gestión se enfoca en promover proyectos de infraestructura, educación y
-                  seguridad ciudadana para mejorar la calidad de vida de los habitantes del distrito.
+                  {alcalde ? alcalde.descripcion : 'Walter Jesús Soto Campos es un líder comprometido con el desarrollo de Nuevo Chimbote, enfocado en la transparencia, la participación ciudadana y la mejora continua de los servicios públicos.'}
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 bg-[#071b4d] p-4 rounded-lg">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-yellow-500">120+</div>
+                    <div className="text-2xl font-bold text-yellow-500">{alcalde?.numeroObras}+</div>
                     <div className="text-sm text-slate-300">Obras ejecutadas</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-yellow-500">30M</div>
+                    <div className="text-2xl font-bold text-yellow-500">{alcalde?.presupuesto}M</div>
                     <div className="text-sm text-slate-300">Presupuesto gestionado</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-yellow-500">85%</div>
+                    <div className="text-2xl font-bold text-yellow-500">{alcalde?.aprobacionCiudadana}%</div>
                     <div className="text-sm text-slate-300">Aprobación ciudadana</div>
                   </div>
                   <div className="text-center">
@@ -74,21 +89,21 @@ const AlcaldeInfo: React.FC = () => {
               <Target className="w-8 h-8 mr-3" />
               <h4 className="text-xl font-bold text-[#0a2158]">Experiencia</h4>
             </div>
-            <p className="text-slate-600">Más de 15 años de experiencia en gestión pública y liderazgo comunitario.</p>
+            <p className="text-slate-600">{alcalde?.experiencia}</p>
           </div>
           <div className="p-8 bg-white rounded-lg shadow-md">
             <div className="flex items-center mb-4">
               <Award className="w-8 h-8 mr-3" />
               <h4 className="text-xl font-bold text-[#0a2158]">Reconocimientos</h4>
             </div>
-            <p className="text-slate-600">Premiado por su transparencia y efectividad en la gestión municipal.</p>
+            <p className="text-slate-600">{alcalde?.reconocimientos}</p>
           </div>
           <div className="p-8 bg-white rounded-lg shadow-md">
             <div className="flex items-center mb-4">
               <Users className="w-8 h-8 mr-3" />
               <h4 className="text-xl font-bold text-[#0a2158]">Compromiso</h4>
             </div>
-            <p className="text-slate-600">Dedicado a mejorar la calidad de vida y promover el desarrollo sostenible en Nuevo Chimbote.</p>
+            <p className="text-slate-600">{alcalde?.compromiso}</p>
           </div>
         </div>
       </div>

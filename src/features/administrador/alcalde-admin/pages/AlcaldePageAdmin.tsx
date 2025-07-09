@@ -5,6 +5,7 @@ import { obtenerAlcaldes, eliminarAlcalde } from '../../../../core/services/alca
 import type { Alcalde } from '../../../../core/services/alcalde';
 import ConfirmModal from '../components/ConfirmModal';
 
+
 export default function AlcaldePageAdmin() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [alcaldes, setAlcaldes] = useState<Alcalde[]>([]);
@@ -176,20 +177,6 @@ export default function AlcaldePageAdmin() {
 										</td>
 										<td className='px-6 py-4'>
 											<div className='flex items-center space-x-3'>
-												<div className='flex-shrink-0'>
-													{alcalde.direccionImagen ? (
-														<img
-															src={alcalde.direccionImagen}
-															alt={`${alcalde.nombre} ${alcalde.apellido}`}
-															className='object-cover w-10 h-10 rounded-full'
-														/>
-													) : (
-														<div className='flex items-center justify-center w-10 h-10 text-sm font-medium rounded-full text-slate-600 bg-slate-200'>
-															{alcalde.nombre.charAt(0)}
-															{alcalde.apellido.charAt(0)}
-														</div>
-													)}
-												</div>
 												<div>
 													<p className='text-sm font-medium text-slate-900'>
 														{alcalde.nombre} {alcalde.apellido}
