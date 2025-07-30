@@ -35,6 +35,14 @@ export const navLinks: NavLink[] = [
 		],
 	},
 	{
+		label: 'Publicaciones',
+		hasDropdown: true,
+		dropdownItems: [
+			{ href: '/publicaciones/noticias', label: 'Noticias' },
+			{ href: '/publicaciones/eventos', label: 'Eventos' },
+		],
+	},
+	{
 		label: 'Servicios',
 		hasDropdown: true,
 		dropdownItems: [

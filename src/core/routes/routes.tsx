@@ -21,6 +21,10 @@ const DirectorioPage = lazy(() =>
 const MapaPage = lazy(() => import('../../pages/nosotros/MapaPage'));
 const OrganigramaPage = lazy(() => import('../../pages/nosotros/OrganigramaPage'));
 
+//* Publicaciones - Lazy loading
+const NoticiasPage = lazy(() => import('../../pages/publicaciones/NoticiasPage'))
+const EventosPage = lazy(() => import('../../pages/publicaciones/EventosPage'))
+
 //* Servicios - Lazy loading
 const BibliotecaPage = lazy(() => import('../../pages/servicios/BibliotecaPage'));
 const LibroReclamacionesPage = lazy(() => import('../../pages/servicios/LibroReclamacionesPage'));
@@ -191,6 +195,30 @@ export const routes = [
 				),
 			},
 		],
+	},
+
+	//Publicaciones
+	{
+		path: '/publicaciones',
+		element: <Outlet />,
+		children: [
+			{
+				path: 'noticias',
+				element: (
+					<LazyWrapper>
+						<NoticiasPage />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'eventos',
+				element: (
+					<LazyWrapper>
+						<EventosPage />
+					</LazyWrapper>
+				),
+			},
+		]
 	},
 
 	// Servicios

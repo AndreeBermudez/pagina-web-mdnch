@@ -1,8 +1,8 @@
 import { axiosInstance } from '../../api/axiosInstance';
-import type { NoticiaRequest, NoticiaResponse, ResponseBase } from './noticia.interface';
+import type { NoticiaRequest, Evento, ResponseBase } from './noticia.interface';
 import { handleError } from '../../utils/handleError';
 
-export const actualizarNoticia = async (id: number, data: NoticiaRequest): Promise<NoticiaResponse> => {
+export const actualizarNoticia = async (id: number, data: NoticiaRequest): Promise<Evento> => {
 	try {
 		const formData = new FormData();
 		formData.append('titulo', data.titulo);
@@ -12,8 +12,8 @@ export const actualizarNoticia = async (id: number, data: NoticiaRequest): Promi
 		if (data.imagen) {
 			formData.append('imagen', data.imagen);
 		}
-		
-		const response = await axiosInstance.put<ResponseBase<NoticiaResponse>>(`noticias/${id}`, formData);
+
+		const response = await axiosInstance.put<ResponseBase<Evento>>(`noticias/${id}`, formData);
 		console.log(response.data);
 		if (!response || response.status !== 200) {
 			throw new Error(`Error en la respuesta del servidor: ${response?.status || 'Sin respuesta'}`);
