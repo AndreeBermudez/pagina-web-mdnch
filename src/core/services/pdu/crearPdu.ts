@@ -1,12 +1,11 @@
-import { axiosWithoutMultipart } from "../../api/axiosInstance";
-import type { pdu } from "./pdu.interface";
+import { axiosInstance } from "../../api/axiosInstance";
 
-export const CrearPdu = async (data: pdu): Promise<boolean> => {
+export const CrearPdu = async (formData: FormData): Promise<boolean> => {
     try {
-        await axiosWithoutMultipart.post("pdu/crear", data);
+        await axiosInstance.post("pdu/crear", formData);
         return true;
     } catch (error) {
-        console.error("Algo a salido mal", error);
+        console.error("Error al crear PDU:", error);
         return false;
     }
 };

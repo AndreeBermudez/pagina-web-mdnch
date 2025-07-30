@@ -2,80 +2,95 @@ import { Edit, Plus, Search, Trash2, Eye, AlertCircle, FileText } from "lucide-r
 import { useState, useEffect } from "react"
 import ModalAgregar from "../components/ModalAgregar"
 import ConfirmModal from "../components/ConfirmModal"
-import { listarPdu, type PduResponse } from "../../../../core/services/pdu/listarPdu"
-import { eliminarPdu } from "../../../../core/services/pdu/eliminarPdu"
+import { listarTurismo } from "../../../../core/services/turismo/listarTurismo"
+import { eliminarTurismo } from "../../../../core/services/turismo/eliminarTurismo"
+import type { Turismo } from "../../../../core/services/turismo/turismo.interface"
 
-export default function PduAdmin() {
+export default function TurismoAdmin() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pdus, setPdus] = useState<PduResponse[]>([])
-  const [editingPdu, setEditingPdu] = useState<PduResponse | null>(null)
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const [pduToDelete, setPduToDelete] = useState<number | null>(null)
+  const [turismoData, setTurismoData] = useState<Turismo[]>([]);
+  const [editingTurismo, setEditingTurismo] = useState<Turismo | null>(null);
 
-  // Cargar PDUs al montar el componente
-  useEffect(() => {
-    loadPdus()
-  }, [])
+  // Estados para el modal de confirmación
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [turismoToDelete, setTurismoToDelete] = useState<Turismo | null>(null);
 
-  const loadPdus = async () => {
-    setLoading(true)
-    setError("")
+  // Cargar datos de turismo
+  const cargarTurismo = async () => {
+    setLoading(true);
+    setError("");
     try {
-      const data = await listarPdu()
-      setPdus(data)
+      const data = await listarTurismo();
+      setTurismoData(Array.isArray(data) ? data : []);
     } catch (err) {
-      setError("Error al cargar los PDUs")
-      console.error("Error:", err)
+      setError("Error al cargar los elementos de turismo");
+      setTurismoData([]); // Asegurar que siempre sea un array
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  // Filtrar PDUs basado en el término de búsqueda
-  const filteredData = pdus.filter(pdu => 
-    pdu.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pdu.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  useEffect(() => {
+    cargarTurismo();
+  }, []);
 
-  const handleAdd = () => {
-    setEditingPdu(null)
-    setIsModalOpen(true)
-  }
+  // Filtrar datos según el término de búsqueda
+  const filteredData = (turismoData || []).filter(item =>
+    item.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.descripcion?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.lugar?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.ubicacion?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const openModal = () => {
+    setEditingTurismo(null);
+    setIsModalOpen(true);
+  };
 
-  const handleEdit = (pdu: PduResponse) => {
-    setEditingPdu(pdu)
-    setIsModalOpen(true)
-  }
-
-  const handleDelete = (pdu: PduResponse) => {
-    setPduToDelete(pdu.pduId)
-    setIsConfirmOpen(true)
-  }
-
-  const confirmDelete = async () => {
-    if (pduToDelete === null) return;
-
-    const success = await eliminarPdu(pduToDelete);
-    if (success) {
-      loadPdus(); // Recargar la lista
-    } else {
-      alert('Error al eliminar PDU.');
-    }
-    setPduToDelete(null);
-  }
+  const openEditModal = (turismo: Turismo) => {
+    setEditingTurismo(turismo);
+    setIsModalOpen(true);
+  };
 
   const handleSuccess = () => {
-    loadPdus() // Recargar la lista después de crear/editar
-  }
+    cargarTurismo(); // Recargar datos después de crear/editar
+  };
+
+  const handleDelete = (turismo: Turismo) => {
+    setTurismoToDelete(turismo);
+    setIsConfirmModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!turismoToDelete) return;
+
+    try {
+      const success = await eliminarTurismo(turismoToDelete.turismoId!);
+      if (success) {
+        console.log("Turismo eliminado exitosamente");
+        cargarTurismo(); // Recargar la lista
+      } else {
+        alert("Error al eliminar el elemento. Por favor intenta de nuevo.");
+      }
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+      alert("Error al eliminar el elemento. Por favor intenta de nuevo.");
+    }
+  };
+
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+    setTurismoToDelete(null);
+  };
 
 
 
   return (
     <div className="space-y-6">
-     
+      {/* Header */}
       <div className="bg-white border shadow-sm rounded-xl border-slate-200">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center justify-between">
@@ -84,16 +99,16 @@ export default function PduAdmin() {
                 <FileText className="w-6 h-6 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">Gestión de PDU</h1>
+                <h1 className="text-2xl font-bold text-slate-900">Gestión de Turismo</h1>
                 <p className="mt-1 text-slate-600">Administra los elementos del sistema municipal</p>
               </div>
             </div>
             <button
               className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"
-              onClick={handleAdd}
+              onClick={openModal}
             >
               <Plus className="w-4 h-4" />
-              <span>Nuevo PDU</span>
+              <span>Nuevo elemento</span>
             </button>
           </div>
         </div>
@@ -104,7 +119,7 @@ export default function PduAdmin() {
               <div className="relative">
                 <Search className="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-400" />
                 <input
-                  placeholder="Buscar por título, descripción..."
+                  placeholder="Buscar por título, categoría..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full py-2.5 pl-10 pr-4 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
@@ -113,13 +128,13 @@ export default function PduAdmin() {
             </div>
             <div className="flex items-center px-3 py-2 text-sm border rounded-lg bg-slate-50 border-slate-200">
               <span className="font-medium text-slate-700">{filteredData.length}</span>
-              <span className="ml-1 text-slate-500">PDUs</span>
+              <span className="ml-1 text-slate-500">elementos</span>
             </div>
           </div>
         </div>
       </div>
 
-    
+      {/* Content */}
       <div className="overflow-hidden bg-white border shadow-sm rounded-xl border-slate-200">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -128,11 +143,14 @@ export default function PduAdmin() {
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Fecha</th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Titulo</th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Descripción</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Archivo</th>
+                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Lugar</th>
+                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Ubicación</th>
+                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Imagen</th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Acciones</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
+
               {loading && (
                 <tr>
                   <td colSpan={6} className="py-16 text-center">
@@ -174,12 +192,10 @@ export default function PduAdmin() {
                 </tr>
               )}
               {!loading &&
-                filteredData.map((item) => (
-                  <tr key={item.pduId} className="transition-colors hover:bg-slate-50">
+                filteredData.map((item, index) => (
+                  <tr key={item.turismoId || index} className="transition-colors hover:bg-slate-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-slate-900">
-                        {(item.fechaCreacion)}
-                      </div>
+                      <div className="text-sm font-medium text-slate-900">{item.fechaCreacion}</div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="max-w-xs">
@@ -188,34 +204,43 @@ export default function PduAdmin() {
                     </td>
 
                     <td className="px-6 py-4">
-                      <div className="max-w-md text-sm text-slate-600 line-clamp-2">
-                        {item.descripcion as string}
+                      <div
+                        className="max-w-md text-sm text-slate-600 line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: item.descripcion }}
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="max-w-xs">
+                        <p className="text-sm font-medium text-slate-900 line-clamp-2">{item.lugar}</p>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="max-w-xs">
-                        <a 
-                          href={item.linkDocumento as string} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-sm text-blue-600 hover:text-blue-800 underline line-clamp-2"
-                        >
-                          Ver documento
-                        </a>
+                        <p className="text-sm font-medium text-slate-900 line-clamp-2">{item.ubicacion}</p>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="max-w-xs">
+                        {item.direccionImagen && (
+                          <img
+                            src={item.direccionImagen}
+                            alt={item.titulo}
+                            className="w-12 h-12 object-cover rounded-lg border border-slate-300"
+                          />
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center space-x-1">
                         <button
                           className="p-2 transition-colors rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50"
-                          title="Ver documento"
-                          onClick={() => window.open(item.linkDocumento as string, '_blank')}
+                          title="Ver elemento"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
                           className="p-2 transition-colors rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50"
-                          onClick={() => handleEdit(item)}
+                          onClick={() => openEditModal(item)}
                           title="Editar elemento"
                         >
                           <Edit className="w-4 h-4" />
@@ -223,7 +248,7 @@ export default function PduAdmin() {
                         <button
                           className="p-2 transition-colors rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50"
                           onClick={() => handleDelete(item)}
-                          title="Eliminar PDU"
+                          title="Eliminar elemento"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -238,25 +263,19 @@ export default function PduAdmin() {
       </div>
       <ModalAgregar
         isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false)
-          setEditingPdu(null)
-        }}
+        onClose={() => setIsModalOpen(false)}
         onSuccess={handleSuccess}
-        initialData={editingPdu ? { ...editingPdu, id: editingPdu.pduId } : null}
+        initialData={editingTurismo}
       />
 
       <ConfirmModal
-        isOpen={isConfirmOpen}
-        onClose={() => {
-          setIsConfirmOpen(false)
-          setPduToDelete(null)
-        }}
+        isOpen={isConfirmModalOpen}
+        onClose={closeConfirmModal}
         onConfirm={confirmDelete}
-        title='Confirmar eliminación'
-        message='¿Estás seguro de que deseas eliminar este PDU? Esta acción no se puede deshacer.'
-        confirmText='Eliminar'
-        cancelText='Cancelar'
+        title="Eliminar Elemento de Turismo"
+        message={`¿Estás seguro de que deseas eliminar "${turismoToDelete?.titulo}"? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
       />
     </div>
 
