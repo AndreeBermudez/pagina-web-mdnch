@@ -13,11 +13,17 @@ export const SectionPlaces = () => {
 							<span className='font-medium text-blue-600'>DESTINO TURÍSTICO</span>
 						</div>
 						<h2 className='mb-6 text-3xl font-bold text-blue-900 md:text-4xl'>Bienvenido a Nuevo Chimbote</h2>
-						<div className='grid items-center grid-cols-1 gap-8 md:grid-cols-2'>							<div className='relative overflow-hidden shadow-xl rounded-xl'>
-								
-								<div className='absolute px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-full bottom-4 right-4'>
-									Ciudad moderna
-								</div>
+						<div className='grid items-center grid-cols-1 gap-8 md:grid-cols-2 h-80'>
+							<div className='relative h-full overflow-hidden border-transparent shadow-xl rounded-xl'>
+								<iframe
+									width='100%'
+									height='100%'
+									src='https://www.youtube.com/embed/gWUKFK62igA?si=FOvz1kH7qn6mUxNW&controls=0'
+									title='YouTube video player'
+									frameBorder='0'
+									allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+									allowFullScreen
+									className='w-full h-full rounded-xl'></iframe>
 							</div>
 							<div className='space-y-6'>
 								<p className='leading-relaxed text-gray-600'>

@@ -10,27 +10,29 @@ interface NewsCardProps {
 
 export const NewsCard = ({ category, title, description, date, image }: NewsCardProps) => {
 	return (
-		<div className='bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-lg'>
-			<div className='h-48 relative overflow-hidden'>
-				<div className='absolute top-3 left-3 z-10'>
-					<span className='bg-blue-600 text-white px-4 py-1 rounded-full text-xs'>{category}</span>
+		<div className='overflow-hidden transition-all duration-300 bg-white shadow-sm rounded-xl hover:shadow-lg'>
+			<div className='relative h-48 overflow-hidden'>
+				<div className='absolute z-10 top-3 left-3'>
+					<span className='px-4 py-1 text-xs text-white bg-blue-600 rounded-full'>{category}</span>
 				</div>
 				<img
 					src={image}
 					alt='Imagen de la noticia'
-					className='h-full w-full object-cover transition-transform duration-500 hover:scale-110'
+					className='object-cover w-full h-full transition-transform duration-500 hover:scale-110'
 				/>
 			</div>
 
 			<div className='p-6'>
-				<div className='flex gap-3 items-center text-gray-500 mb-2'>
+				<div className='flex items-center gap-3 mb-2 text-gray-500'>
 					<CalendarClock size={16} />
-					<span className='text-sm block'>{date}</span>
+					<span className='block text-sm'>{date}</span>
 				</div>
-				<h3 className='text-xl font-bold text-gray-900 mb-2 transition-colors duration-300 hover:text-blue-600'>
+				<h3 className='mb-2 text-xl font-bold text-gray-900 transition-colors duration-300 hover:text-blue-600'>
 					{title}
 				</h3>
-				<p className='text-gray-600 text-sm mb-3'>{description}</p>
+				<div className='mb-3 text-sm text-gray-600'>
+					<div dangerouslySetInnerHTML={{ __html: description }} />
+				</div>
 			</div>
 		</div>
 	);

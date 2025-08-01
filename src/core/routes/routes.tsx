@@ -22,8 +22,8 @@ const MapaPage = lazy(() => import('../../pages/nosotros/MapaPage'));
 const OrganigramaPage = lazy(() => import('../../pages/nosotros/OrganigramaPage'));
 
 //* Publicaciones - Lazy loading
-const NoticiasPage = lazy(() => import('../../pages/publicaciones/NoticiasPage'))
-const EventosPage = lazy(() => import('../../pages/publicaciones/EventosPage'))
+const NoticiasPage = lazy(() => import('../../pages/publicaciones/NoticiasPage'));
+const EventosPage = lazy(() => import('../../pages/publicaciones/EventosPage'));
 
 //* Servicios - Lazy loading
 const BibliotecaPage = lazy(() => import('../../pages/servicios/BibliotecaPage'));
@@ -49,22 +49,23 @@ const ReseñaHistoricaPage = lazy(() => import('../../pages/tuDistrito/ReseñaHi
 const TurismoPage = lazy(() => import('../../pages/tuDistrito/TurismoPage'));
 
 //* Admin - Lazy loading
+const SliderAdmin = lazy(() => import('../../features/administrador/slider-admin/pages/SliderAdmin'));
 const FuncionariosAdmin = lazy(
 	() => import('../../features/administrador/funcionarios-admin/pages/FuncionariosAdmin')
 );
 const ConsejoAdmin = lazy(() => import('../../features/administrador/consejo-admin/pages/ConsejosAdmin'));
-const NoticiasAdmin = lazy(() =>
-	import('../../features/administrador/noticias-admin/pages/NoticiasAdmin').then((module) => ({
-		default: module.NoticiasAdmin,
-	}))
-);
+const NoticiasAdmin = lazy(() => import('../../features/administrador/noticias-admin/pages/NoticiasAdmin'));
 const OrganigramaAdmin = lazy(
 	() => import('../../features/administrador/organigrama-admin/pages/OrganigramaAdmin')
 );
 const AlcaldePageAdmin = lazy(() => import('../../features/administrador/alcalde-admin/pages/AlcaldePageAdmin'));
-const CreatePaginaAdmin = lazy(() => import('../../features/administrador/paginas-admin/pages/CreatePaginaAdmin').then((module) => ({default: module.CreatePaginaAdmin,})));
+const CreatePaginaAdmin = lazy(() =>
+	import('../../features/administrador/paginas-admin/pages/CreatePaginaAdmin').then((module) => ({
+		default: module.CreatePaginaAdmin,
+	}))
+);
 const AgendaPageAdmin = lazy(() => import('../../features/administrador/agenda-admin/pages/AgendaAdmin'));
-const PduAdmin = lazy(() => import ('../../features/administrador/pdu-admin/pages/PduAdmin'));
+const PduAdmin = lazy(() => import('../../features/administrador/pdu-admin/pages/PduAdmin'));
 
 export const routes = [
 	// Ruta principal
@@ -218,7 +219,7 @@ export const routes = [
 					</LazyWrapper>
 				),
 			},
-		]
+		],
 	},
 
 	// Servicios
@@ -402,7 +403,8 @@ export const routes = [
 						<AgendaPageAdmin />
 					</LazyWrapper>
 				),
-			},{
+			},
+			{
 				path: 'contenido/pdu',
 				element: (
 					<LazyWrapper>
@@ -414,42 +416,9 @@ export const routes = [
 			{
 				path: 'contenido/slider',
 				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Slider</h1>
-										<p className='mt-1 text-slate-600'>Administra las imágenes del carousel principal</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>El módulo de gestión de slider estará disponible próximamente</p>
-							</div>
-						</div>
-					</div>
+					<LazyWrapper>
+						<SliderAdmin />
+					</LazyWrapper>
 				),
 			},
 			{
@@ -583,8 +552,7 @@ export const routes = [
 					</div>
 				),
 			},
-		
-			
+
 			{
 				path: 'documentos/presupuesto',
 				element: (

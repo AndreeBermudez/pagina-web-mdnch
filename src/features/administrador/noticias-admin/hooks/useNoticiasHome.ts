@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { listarTopNoticias } from '../../../../core/services/noticias/listarTopNoticias';
-import type { NoticiaResponse } from '../../../../core/services/noticias/noticia.interface';
+import { listarTopNoticias } from '../services/listarTopNoticias';
+import type { NoticiaResponse } from '../services/noticia.interface';
 
 export const useNoticiasHome = () => {
 	const [noticias, setNoticias] = useState<NoticiaResponse[]>([]);

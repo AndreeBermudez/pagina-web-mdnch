@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
-import { X, Trash2, Upload } from 'lucide-react';
+import { X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { crearAlcalde, editarAlcalde, type Alcalde } from '../../../../core/services/alcalde';
-
-
-
 
 interface FuncionarioModalProps {
 	isOpen: boolean;

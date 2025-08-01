@@ -3,20 +3,20 @@ import { NewsCard } from './NewsCard';
 import { TriangleDivider } from './TriangleDivider';
 import cityImage from '../../../../../../assets/imagen-plaza.webp';
 import { useEffect } from 'react';
-import { useNoticiasHome } from '../../../../../../features/administrador/noticias-admin/hooks/useNoticiasHome';
+import { useNoticiasQuery } from '../../../../../../features/administrador/noticias-admin/hooks/useNoticiasQuery';
 
 export const SectionNews = () => {
-	const { noticias, loading, error, refreshNoticias } = useNoticiasHome();
+	const { noticias, refetch } = useNoticiasQuery();
 
 	useEffect(() => {
-		refreshNoticias();
-	}, [refreshNoticias]);
+		refetch();
+	}, [refetch]);
 
 	return (
 		<>
 			<section className='relative bg-gradient-to-b from-gray-50 to-gray-100'>
 				<div className='container-municipalidad'>
-					<div className=''>
+					<div className='w-full'>
 						<div className='grid grid-cols-1 gap-8 mb-12 transition-transform duration-300 hover:scale-[1.01]'>
 							<div className='overflow-hidden transition-all duration-300 shadow-lg rounded-xl hover:shadow-xl'>
 								<MainNews
@@ -39,7 +39,7 @@ export const SectionNews = () => {
 							</div>
 
 							<div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-								{noticias.map((noticia) => (
+								{noticias?.map((noticia) => (
 									<NewsCard
 										key={noticia.noticiaId}
 										category={noticia.categoria}
@@ -49,34 +49,6 @@ export const SectionNews = () => {
 										image={noticia.direccionImagen || cityImage}
 									/>
 								))}
-								{/* <NewsCard
-									category='Educación'
-									title='Talleres gratuitos de empleabilidad para jóvenes'
-									description='La municipalidad lanzó una serie de talleres gratuitos para jóvenes entre 18 y 25 años, enfocados en habilidades...'
-									date='09 de abril de 2025'
-									image={cityImage}
-								/>
-								<NewsCard
-									category='Medio Ambiente'
-									title='Municipalidad inaugura nuevo parque ecológico'
-									description='La municipalidad ha inaugurado un nuevo parque ecológico en el centro de la ciudad, con áreas verdes,...'
-									date='02 de abril de 2025'
-									image={cityImage}
-								/>
-								<NewsCard
-									category='Medio Ambiente'
-									title='Programa de reciclaje comunitario muestra resultados positivos'
-									description='El programa de reciclaje implementado hace seis meses ha logrado reducir en un 30% los residuos enviados al...'
-									date='01 de abril de 2025'
-									image={cityImage}
-								/>
-								<NewsCard
-									category='Medio Ambiente'
-									title='Programa de reciclaje comunitario muestra resultados positivos'
-									description='El programa de reciclaje implementado hace seis meses ha logrado reducir en un 30% los residuos enviados al...'
-									date='01 de abril de 2025'
-									image={cityImage}
-								/> */}
 							</div>
 						</div>
 					</div>

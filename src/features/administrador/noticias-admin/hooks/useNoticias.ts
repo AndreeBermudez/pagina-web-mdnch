@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { actualizarNoticia } from '../../../../core/services/noticias/actualizarNoticia';
-import { crearNoticia } from '../../../../core/services/noticias/crearNoticia';
-import { eliminarNoticia } from '../../../../core/services/noticias/eliminarNoticia';
-import { listarNoticias } from '../../../../core/services/noticias/listarNoticias';
-import type { NoticiaRequest, NoticiaResponse } from '../../../../core/services/noticias/noticia.interface';
+import { actualizarNoticia } from '../services/actualizarNoticia';
+import { crearNoticia } from '../services/crearNoticia';
+import { eliminarNoticia } from '../services/eliminarNoticia';
+import { listarNoticias } from '../services/listarNoticias';
+import type { NoticiaRequest, Noticia } from '../services/noticia.interface';
 
 export const useNoticias = () => {
-	const [noticias, setNoticias] = useState<NoticiaResponse[]>([]);
+	const [noticias, setNoticias] = useState<Noticia[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [searchTerm, setSearchTerm] = useState('');
