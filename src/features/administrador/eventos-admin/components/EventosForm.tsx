@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { RichTextEditor } from '../../../../core/components/common/editor/RichTextEditor';
 import { FormFileInput, FormInput, FormLabel, FormTextArea, ImagePreview } from '../../../../core/components/common/form';
 import { FormDateInput } from '../../../../core/components/common/form/FormDateInput';
 import { FormSelect } from '../../../../core/components/common/form/FormSelect';
 import { useFormatErrors } from '../../../../core/hooks/useFormatErrors';
 import { useImagePreview } from '../../../../core/hooks/useImagePreview';
 import { useNotifications } from '../../../../core/hooks/useNotifications';
+import { useEventosMutations } from '../hooks/useEventosMutation';
 import {
 	eventoEditForm,
 	eventoForm,
@@ -14,7 +14,6 @@ import {
 	type EventoForm,
 	type EventoResponse,
 } from '../schemas/evento.schema';
-import { useEventosMutations } from '../hooks/useEventosMutation';
 
 interface EventoModalProps {
 	handleModal: () => void;
@@ -23,7 +22,7 @@ interface EventoModalProps {
 
 export const EventosForm = ({ handleModal, eventoEditable }: EventoModalProps) => {
 	const isEditing = Boolean(eventoEditable);
-	const { register, handleSubmit, reset, setValue, watch } = useForm<EventoForm | EventoEditForm>({
+	const { register, handleSubmit, reset, setValue } = useForm<EventoForm | EventoEditForm>({
 		resolver: zodResolver(isEditing ? eventoEditForm : eventoForm),
 		defaultValues: {
 			fecha: eventoEditable?.fecha || '',
