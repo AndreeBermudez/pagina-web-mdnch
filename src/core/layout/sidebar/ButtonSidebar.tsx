@@ -15,13 +15,14 @@ export const ButtonSidebar = ({ titulo, Icon, isCollapsed, isActive, onClick, cl
 	return (
 		<button
 			className={cn(
-				'flex items-center gap-2 w-full px-6 py-3 font-medium text-sm transition-colors cursor-pointer',
-				isActive ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50',
+				'relative ml-2 flex items-center gap-2 w-11/12 px-4 py-3 font-medium text-sm transition-colors cursor-pointer text-white/80 hover:bg-item-sidebar',
+				isActive && 'bg-item-sidebar border-r-4 border-blue-600',
 				className
 			)}
 			onClick={onClick}>
-			<Icon size={18} />
-			<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>{titulo}</span>
+				<div className='absolute w-[1px] h-full bg-white/80 left-0' />
+				<Icon size={18} className={`flex-shrink-0 md:ml-0 ${isCollapsed ? 'ml-0' : 'ml-2'}`} />
+				<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>{titulo}</span>
 		</button>
 	);
 };

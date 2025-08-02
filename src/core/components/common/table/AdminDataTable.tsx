@@ -1,28 +1,28 @@
 import {
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
-    type ColumnDef,
-    type ColumnFiltersState,
-    type PaginationState,
-    type Row,
-    type SortingState,
+	flexRender,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	useReactTable,
+	type ColumnDef,
+	type ColumnFiltersState,
+	type PaginationState,
+	type Row,
+	type SortingState,
 } from '@tanstack/react-table';
 import {
-    AlertCircle,
-    ArrowDown,
-    ArrowUp,
-    ArrowUpDown,
-    ChevronLeft,
-    ChevronRight,
-    ChevronsLeft,
-    ChevronsRight,
-    Plus,
-    Search,
-    type LucideIcon
+	AlertCircle,
+	ArrowDown,
+	ArrowUp,
+	ArrowUpDown,
+	ChevronLeft,
+	ChevronRight,
+	ChevronsLeft,
+	ChevronsRight,
+	Plus,
+	Search,
+	type LucideIcon,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -66,7 +66,7 @@ export function AdminDataTable<T>({
 	newButtonText = 'Nuevo elemento',
 	enablePagination = true,
 	initialPageSize = 10,
-	globalFilterFn
+	globalFilterFn,
 }: AdminDataTableProps<T>) {
 	// Estados de la tabla
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -145,7 +145,7 @@ export function AdminDataTable<T>({
 		getSortedRowModel: getSortedRowModel(),
 		getPaginationRowModel: enablePagination ? getPaginationRowModel() : undefined,
 		manualPagination: false,
-		globalFilterFn: globalFilterFn || 'includesString'
+		globalFilterFn: globalFilterFn || 'includesString',
 	});
 
 	// Obtener información de paginación
@@ -156,33 +156,31 @@ export function AdminDataTable<T>({
 	const endItem = Math.min(startItem + pagination.pageSize - 1, totalItems);
 
 	return (
-		<div className='space-y-6'>
+		<div className='px-2 space-y-6 '>
 			{/* Header */}
-			<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-				<div className='p-6 border-b border-slate-200'>
-					<div className='flex items-center justify-between'>
-						<div className='flex items-center space-x-3'>
-							<div className='p-2 rounded-lg bg-blue-50'>
-								<Icon className='w-6 h-6 text-blue-600' />
-							</div>
-							<div>
-								<h1 className='text-2xl font-bold text-slate-900'>{title}</h1>
-								<p className='mt-1 text-slate-600'>{description}</p>
-							</div>
+			<div>
+				<div className='flex items-center justify-between'>
+					<div className='flex items-center space-x-3'>
+						<div className='p-2 rounded-lg bg-blue-50'>
+							<Icon className='w-6 h-6 text-blue-700' />
 						</div>
-						{onNew && (
-							<button
-								className='flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700'
-								onClick={onNew}>
-								<Plus className='w-4 h-4' />
-								<span>{newButtonText}</span>
-							</button>
-						)}
+						<div>
+							<h1 className='text-xl font-bold text-slate-900'>{title}</h1>
+							<p className='text-slate-600'>{description}</p>
+						</div>
 					</div>
+					{onNew && (
+						<button
+							className='flex items-center gap-2 px-4 py-2 text-sm text-white transition-colors bg-blue-700 rounded-lg shadow-sm hover:bg-blue-800'
+							onClick={onNew}>
+							<Plus className='w-4 h-4' />
+							<span className='hidden md:block'>{newButtonText}</span>
+						</button>
+					)}
 				</div>
 
 				{/* Search Bar */}
-				<div className='p-6'>
+				<div className='my-6'>
 					<div className='flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0'>
 						<div className='flex-1 max-w-md'>
 							<div className='relative'>
@@ -191,7 +189,7 @@ export function AdminDataTable<T>({
 									placeholder={searchPlaceholder}
 									value={globalFilter ?? ''}
 									onChange={(e) => setGlobalFilter(e.target.value)}
-									className='w-full py-2.5 pl-10 pr-4 text-sm border border-slate-300 rounded-lg outline-0 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors'
+									className='w-full py-2 pl-10 pr-4 text-sm transition-colors border rounded-lg border-slate-300 outline-0 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
 								/>
 							</div>
 						</div>
@@ -293,7 +291,7 @@ export function AdminDataTable<T>({
 								table.getRowModel().rows.map((row) => (
 									<tr key={row.id} className='transition-colors hover:bg-slate-50'>
 										{row.getVisibleCells().map((cell) => (
-											<td key={cell.id} className='px-6 py-4'>
+											<td key={cell.id} className='px-6 py-3'>
 												{flexRender(cell.column.columnDef.cell, cell.getContext())}
 											</td>
 										))}
@@ -304,8 +302,8 @@ export function AdminDataTable<T>({
 				</div>
 
 				{/* Paginación */}
-				{enablePagination && pageCount > 1 && (
-					<div className='flex flex-col gap-4 p-6 border-t border-slate-200 bg-slate-50 sm:flex-row sm:items-center sm:justify-between'>
+				{enablePagination && (
+					<div className='flex flex-col gap-4 px-6 py-4 border-t border-slate-200 bg-slate-50 sm:flex-row sm:items-center sm:justify-between'>
 						{/* Información y selector de página */}
 						<div className='flex items-center gap-4'>
 							<div className='text-sm text-slate-700'>
@@ -316,9 +314,13 @@ export function AdminDataTable<T>({
 						</div>
 
 						{/* Controles de paginación */}
-						<div className='flex items-center gap-1'>
+						<div className='flex items-center gap-2'>
 							<button
-								className='p-2 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed'
+								className={`px-3 py-2 rounded-lg text-sm font-medium ${
+									table.getCanPreviousPage()
+										? 'bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-600'
+										: 'bg-slate-100 text-slate-400 cursor-not-allowed'
+								}`}
 								onClick={() => table.setPageIndex(0)}
 								disabled={!table.getCanPreviousPage()}
 								title='Primera página'>
@@ -326,39 +328,39 @@ export function AdminDataTable<T>({
 							</button>
 
 							<button
-								className='p-2 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed'
+								className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center ${
+									table.getCanPreviousPage()
+										? 'bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-600'
+										: 'bg-slate-100 text-slate-400 cursor-not-allowed'
+								}`}
 								onClick={() => table.previousPage()}
 								disabled={!table.getCanPreviousPage()}
 								title='Página anterior'>
-								<ChevronLeft className='w-4 h-4' />
+								<ChevronLeft className='w-4 h-4 mr-2' />
+								<span>Anterior</span>
 							</button>
 
-							<div className='flex items-center gap-1 mx-2'>
-								<span className='text-sm text-slate-700'>Página</span>
-								<input
-									type='number'
-									min='1'
-									max={pageCount}
-									value={currentPage}
-									onChange={(e) => {
-										const page = e.target.value ? Number(e.target.value) - 1 : 0;
-										table.setPageIndex(page);
-									}}
-									className='w-12 px-2 py-1 text-sm text-center border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-								/>
-								<span className='text-sm text-slate-700'>de {pageCount}</span>
-							</div>
+							<div className='px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg'>{currentPage}</div>
 
 							<button
-								className='p-2 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed'
+								className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center ${
+									table.getCanNextPage()
+										? 'bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-600'
+										: 'bg-slate-100 text-slate-400 cursor-not-allowed'
+								}`}
 								onClick={() => table.nextPage()}
 								disabled={!table.getCanNextPage()}
 								title='Página siguiente'>
-								<ChevronRight className='w-4 h-4' />
+								<span>Siguiente</span>
+								<ChevronRight className='w-4 h-4 ml-2' />
 							</button>
 
 							<button
-								className='p-2 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed'
+								className={`px-3 py-2 rounded-lg text-sm font-medium ${
+									table.getCanNextPage()
+										? 'bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-600'
+										: 'bg-slate-100 text-slate-400 cursor-not-allowed'
+								}`}
 								onClick={() => table.setPageIndex(pageCount - 1)}
 								disabled={!table.getCanNextPage()}
 								title='Última página'>

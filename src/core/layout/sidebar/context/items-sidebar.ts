@@ -22,6 +22,8 @@ import {
     UserCog,
     KeyRound,
     type LucideIcon,
+    Folder,
+    Monitor,
 } from 'lucide-react';
 
 export interface MenuItem {
@@ -41,7 +43,7 @@ export interface SubMenuItem {
 export const menuItems: MenuItem[] = [
     {
         titulo: 'Contenido',
-        icon: FileText,
+        icon: Folder,
         isActive: false,
         subMenu: [
             {
@@ -108,7 +110,7 @@ export const menuItems: MenuItem[] = [
     },
     {
         titulo: 'Documentos',
-        icon: FileBarChart,
+        icon: FileText,
         isActive: false,
         subMenu: [
             {
@@ -145,7 +147,7 @@ export const menuItems: MenuItem[] = [
     },
     {
         titulo: 'Frontend',
-        icon: Globe,
+        icon: Monitor,
         isActive: false,
         subMenu: [
             {

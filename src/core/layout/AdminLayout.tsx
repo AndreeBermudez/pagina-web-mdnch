@@ -13,29 +13,29 @@ const AdminLayoutContent: React.FC = () => {
 	};
 
 	return (
-		<div className='flex'>
+		<div className='flex h-screen overflow-hidden font-inter'>
 			<Sidebar />
-			<main className='flex flex-col w-full bg-gray-50'>
-				<header className='bg-white h-[76px] border-0 border-b-1 border-gray-300'>
-					<div className='flex items-center justify-between px-6 py-4'>
+			<main className='sticky flex flex-col w-full overflow-auto'>
+				<header className='bg-white border-0 border-gray-300 h-14 border-b-1'>
+					<div className='flex items-center justify-between h-full px-6 py-2'>
 						<div className='w-10'>
 							<button
-								className='p-2 transition-colors rounded-lg bg-gray-50 hover:bg-gray-100 md:hidden lg:block'
+								className='p-2 transition-colors rounded-lg hover:bg-gray-100 md:hidden lg:block'
 								onClick={handleMenuClick}>
-								<Menu className='w-6 h-6 text-gray-600' />
+								<Menu className='w-5 text-gray-600' />
 							</button>
 						</div>
 						<div className='flex items-center space-x-3'>
-							<span className='text-sm text-gray-600'>Salir</span>
 							<div
-								className='flex items-center justify-center p-2 text-white bg-blue-600 rounded-full'
+								className='flex items-center justify-center px-4 py-2 space-x-4 text-gray-600 rounded-lg hover:bg-gray-100'
 								onClick={logout}>
+								<span className='text-sm text-gray-600'>Salir</span>
 								<LogOutIcon size={20} />
 							</div>
 						</div>
 					</div>
 				</header>
-				<section className='flex-1 mx-6 my-6 overflow-x-auto sm:mx-9'>
+				<section className='flex-1 mx-6 my-6'>
 					<Outlet />
 				</section>
 			</main>

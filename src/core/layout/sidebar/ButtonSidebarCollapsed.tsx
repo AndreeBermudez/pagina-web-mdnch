@@ -28,14 +28,14 @@ export const ButtonSidebarCollapsed = ({
 	return (
 		<div>
 			<button
-				className={`flex items-center justify-between gap-2 w-full px-6 py-3 font-medium text-sm transition-colors cursor-pointer
-					 ${isActive ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}
+				className={`flex items-center justify-between rounded-lg gap-2 w-full px-3 py-3 mb-2 font-normal text-sm transition-colors cursor-pointer
+					 ${isActive ? 'bg-item-sidebar text-white/80 border-r-4 border-blue-600' : 'text-white/90 hover:bg-item-sidebar'}`}
 				onClick={onClick}>
-				<div className='flex items-center w-full gap-2'>
+				<div className='flex items-center w-full gap-3'>
 					<Icon size={18} />
 					<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>{titulo}</span>
 				</div>
-				<div className={isCollapsed ? 'hidden' : 'flex items-center'}>
+				<div className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>
 					<ChevronLeft
 						size={18}
 						className={`transition-all duration-200 ${isDropdown ? '-rotate-90' : 'rotate-0'}`}
@@ -54,7 +54,6 @@ export const ButtonSidebarCollapsed = ({
 							isCollapsed={isCollapsed}
 							onClick={toggleButtonSidebar}
 							isActive={location.pathname === links.link}
-							className={'bg-gray-100 pl-8 pr-6'}
 						/>
 					</Link>
 				))}

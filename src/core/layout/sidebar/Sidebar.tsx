@@ -1,5 +1,4 @@
 import logoMunicipalidad from '../../../assets/logo.webp';
-import { ButtonAdmin } from './ButtonAdmin';
 import { ButtonSidebarCollapsed } from './ButtonSidebarCollapsed';
 import { useSidebarContext } from './context/SidebarContext';
 import { menuItems } from './context/items-sidebar';
@@ -18,20 +17,20 @@ export const Sidebar: React.FC = () => {
 		<>
 			<div
 				className={`
-                md:flex md:flex-col justify-between h-screen bg-white transition-all duration-300 ease-in-out w-20 
-              ${isMobileMenuOpen && isMobile ? 'z-40 fixed top-0 left-0 w-60' : 'hidden'} 
-              ${isCollapsed ? 'lg:w-20' : 'lg:w-60'}`}>
+                md:flex md:flex-col justify-between h-screen bg-sidebar transition-all duration-300 ease-in-out w-20 overflow-hidden 
+              ${isMobileMenuOpen && isMobile ? 'z-40 fixed top-0 left-0 w-64' : 'hidden'} 
+              ${isCollapsed ? 'lg:w-20' : 'lg:w-72'}`}>
 				<section className='flex flex-col items-center'>
-					<div className='flex items-center mb-4 border-0 border-b-1 border-gray-300 px-6 py-3 h-[76px]'>
-						<img src={logoMunicipalidad} alt='Logo Municipalidad' className='w-10 h-10' />
+					<div className='flex items-center mb-3 px-5 py-3 h-[76px] min-w-full'>
+						<img src={logoMunicipalidad} alt='Logo Municipalidad' className='w-8 h-auto' />
 						<span
-							className={`ml-2 font-bold text-[15px] text-blue-600 md:hidden lg:block ${
+							className={`ml-2 font-medium text-sm text-white md:hidden lg:block ${
 								isCollapsed && 'lg:hidden'
 							}`}>
-							Municipalidad de Nuevo Chimbote
+							Sistema Administrativo
 						</span>
 					</div>
-					<div className='flex flex-col w-full'>
+					<div className='flex flex-col w-full px-3'>
 						{menuItems.map((item) => (
 							<ButtonSidebarCollapsed
 								key={item.titulo}
@@ -46,9 +45,9 @@ export const Sidebar: React.FC = () => {
 						))}
 					</div>
 				</section>
-				<section className={`flex flex-col items-center gap-4 p-4 mb-3`}>
+				{/* <section className={`flex flex-col items-center gap-4 p-4 mb-3`}>
 					<ButtonAdmin isCollapsed={isCollapsed} />
-				</section>
+				</section> */}
 			</div>
 			{isMobileMenuOpen && (
 				<div

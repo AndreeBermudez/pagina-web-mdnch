@@ -81,7 +81,7 @@ const SliderForm = ({ sliderEditable, handleModal }: SliderFormProps) => {
 	}
 
 	return (
-		<div className='flex flex-col h-[calc(85vh-theme(spacing.28))]'>
+		<div className='flex flex-col h-[calc(95vh-theme(spacing.28))]'>
 			<form onSubmit={handleSubmit(onSubmit, onError)} className='flex flex-col h-full'>
 				<div className='flex-1 overflow-y-auto'>
 					<div className='p-6 space-y-6'>
@@ -109,8 +109,8 @@ const SliderForm = ({ sliderEditable, handleModal }: SliderFormProps) => {
 					</div>
 				</div>
 
-				<div className='sticky bottom-0 p-6 border-t rounded-b-xl bg-slate-50 border-slate-200'>
-					<div className='flex justify-end space-x-3'>
+				<div className='sticky bottom-0 px-6 py-4 border-t rounded-b-xl bg-slate-50 border-slate-200'>
+					<div className='flex justify-end space-x-3 text-sm'>
 						<button
 							type='button'
 							onClick={handleModal}
@@ -119,7 +119,7 @@ const SliderForm = ({ sliderEditable, handleModal }: SliderFormProps) => {
 						</button>
 						<button
 							type='submit'
-							className='px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700'>
+							className='px-4 py-2 text-white transition-colors bg-blue-700 rounded-lg hover:bg-blue-800'>
 							{sliderEditable ? 'Actualizar' : 'Crear'} Slider
 						</button>
 					</div>
