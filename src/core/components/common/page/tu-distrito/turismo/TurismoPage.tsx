@@ -69,8 +69,8 @@ export default function TurismoPage() {
 									<p className='mb-4 text-gray-600'>{lugar.description}</p>
 									<div className='flex justify-between items-center text-sm text-gray-500'>
 										<span className='flex items-center gap-1'>📍 {lugar.location}</span>
-										<a href='#' className='font-medium text-blue-600 hover:underline'>
-											Ver detalles
+										<a href='https://maps.app.goo.gl/ogW2eqYX5VgVPeyi7' className='font-medium text-blue-600 hover:underline'>
+											Quiero ir !
 										</a>
 									</div>
 								</div>

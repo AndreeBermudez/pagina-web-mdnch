@@ -2,80 +2,93 @@ import { Edit, Plus, Search, Trash2, Eye, AlertCircle, FileText } from "lucide-r
 import { useState, useEffect } from "react"
 import ModalAgregar from "../components/ModalAgregar"
 import ConfirmModal from "../components/ConfirmModal"
-import { listarPdu, type PduResponse } from "../../../../core/services/pdu/listarPdu"
-import { eliminarPdu } from "../../../../core/services/pdu/eliminarPdu"
+import { obtenerPresupuestos } from "../../../../core/services/presupuesto/obtenerPresupuesto"
+import { eliminarPresupuesto } from "../../../../core/services/presupuesto/eliminarPresupuesto"
+import type { presupuestoPayload } from "../../../../core/services/presupuesto/presupuesto.interface"
 
-export default function PduAdmin() {
+export default function PresupuestoAdmin() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pdus, setPdus] = useState<PduResponse[]>([])
-  const [editingPdu, setEditingPdu] = useState<PduResponse | null>(null)
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const [pduToDelete, setPduToDelete] = useState<number | null>(null)
+  const [presupuestos, setPresupuestos] = useState<presupuestoPayload[]>([]);
+  const [editingData, setEditingData] = useState<presupuestoPayload | null>(null);
+  
+  // Estados para el modal de confirmación
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<number | null>(null);
 
-  // Cargar PDUs al montar el componente
   useEffect(() => {
-    loadPdus()
-  }, [])
+    loadPresupuestos();
+  }, []);
 
-  const loadPdus = async () => {
-    setLoading(true)
-    setError("")
+  const loadPresupuestos = async () => {
+    setLoading(true);
+    setError("");
     try {
-      const data = await listarPdu()
-      setPdus(data)
+      const data = await obtenerPresupuestos();
+      
+      // Asegurar que data es un array
+      if (Array.isArray(data)) {
+        setPresupuestos(data);
+      } else {
+        setPresupuestos([]);
+      }
     } catch (err) {
-      setError("Error al cargar los PDUs")
-      console.error("Error:", err)
+      setError("Error al cargar los presupuestos");
+      console.error(err);
+      setPresupuestos([]); 
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
+  };
+
+
+  const filteredData = Array.isArray(presupuestos) ? presupuestos.filter((item) =>
+    item.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.tipo.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : [];
+
+  const openModal = () => {
+    setEditingData(null);
+    setIsModalOpen(true);
+  };
+
+
+  const handleEdit = (item: presupuestoPayload) => {
+    setEditingData(item);
+    setIsModalOpen(true);
   }
 
-  // Filtrar PDUs basado en el término de búsqueda
-  const filteredData = pdus.filter(pdu => 
-    pdu.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pdu.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-
-  const handleAdd = () => {
-    setEditingPdu(null)
-    setIsModalOpen(true)
-  }
-
-  const handleEdit = (pdu: PduResponse) => {
-    setEditingPdu(pdu)
-    setIsModalOpen(true)
-  }
-
-  const handleDelete = (pdu: PduResponse) => {
-    setPduToDelete(pdu.pduId)
-    setIsConfirmOpen(true)
+  const handleDelete = (id: number) => {
+    setItemToDelete(id);
+    setIsConfirmModalOpen(true);
   }
 
   const confirmDelete = async () => {
-    if (pduToDelete === null) return;
-
-    const success = await eliminarPdu(pduToDelete);
-    if (success) {
-      loadPdus(); // Recargar la lista
-    } else {
-      alert('Error al eliminar PDU.');
+    if (itemToDelete) {
+      const success = await eliminarPresupuesto(itemToDelete);
+      if (success) {
+        loadPresupuestos(); // Recargar los datos después de eliminar
+      }
     }
-    setPduToDelete(null);
   }
 
-  const handleSuccess = () => {
-    loadPdus() // Recargar la lista después de crear/editar
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+    setItemToDelete(null);
+  }
+
+  const handleModalSuccess = () => {
+    // Recargar los datos después de crear/editar
+    loadPresupuestos();
   }
 
 
 
   return (
     <div className="space-y-6">
-     
+      {/* Header */}
       <div className="bg-white border shadow-sm rounded-xl border-slate-200">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center justify-between">
@@ -84,16 +97,16 @@ export default function PduAdmin() {
                 <FileText className="w-6 h-6 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">Gestión de PDU</h1>
+                <h1 className="text-2xl font-bold text-slate-900">Gestión de Presupuesto</h1>
                 <p className="mt-1 text-slate-600">Administra los elementos del sistema municipal</p>
               </div>
             </div>
             <button
               className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"
-              onClick={handleAdd}
+              onClick={openModal}
             >
               <Plus className="w-4 h-4" />
-              <span>Nuevo PDU</span>
+              <span>Añadir presupuesto</span>
             </button>
           </div>
         </div>
@@ -104,7 +117,7 @@ export default function PduAdmin() {
               <div className="relative">
                 <Search className="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-400" />
                 <input
-                  placeholder="Buscar por título, descripción..."
+                  placeholder="Buscar por título, categoría..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full py-2.5 pl-10 pr-4 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
@@ -113,13 +126,13 @@ export default function PduAdmin() {
             </div>
             <div className="flex items-center px-3 py-2 text-sm border rounded-lg bg-slate-50 border-slate-200">
               <span className="font-medium text-slate-700">{filteredData.length}</span>
-              <span className="ml-1 text-slate-500">PDUs</span>
+              <span className="ml-1 text-slate-500">elementos</span>
             </div>
           </div>
         </div>
       </div>
 
-    
+      {/* Content */}
       <div className="overflow-hidden bg-white border shadow-sm rounded-xl border-slate-200">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -127,8 +140,8 @@ export default function PduAdmin() {
               <tr>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Fecha</th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Titulo</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Descripción</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Archivo</th>
+                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Tipo</th>
+                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Documento</th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Acciones</th>
               </tr>
             </thead>
@@ -174,11 +187,11 @@ export default function PduAdmin() {
                 </tr>
               )}
               {!loading &&
-                filteredData.map((item) => (
-                  <tr key={item.pduId} className="transition-colors hover:bg-slate-50">
+                filteredData.map((item, index) => (
+                  <tr key={item.presupuestoId || index} className="transition-colors hover:bg-slate-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-slate-900">
-                        {(item.fechaCreacion)}
+                        {item.fechaCreacion || 'Sin fecha'}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -186,44 +199,49 @@ export default function PduAdmin() {
                         <p className="text-sm font-medium text-slate-900 line-clamp-2">{item.titulo}</p>
                       </div>
                     </td>
-
                     <td className="px-6 py-4">
-                      <div className="max-w-md text-sm text-slate-600 line-clamp-2">
-                        {item.descripcion as string}
+                      <div className="max-w-xs">
+                        <span className="inline-flex px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">
+                          {item.tipo}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="max-w-xs">
-                        <a 
-                          href={item.linkDocumento as string} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-sm text-blue-600 hover:text-blue-800 underline line-clamp-2"
-                        >
-                          Ver documento
-                        </a>
+                        {item.linkDocumento ? (
+                          <a 
+                            href={item.linkDocumento} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                          >
+                            Ver documento
+                          </a>
+                        ) : (
+                          <span className="text-sm text-slate-500">Sin documento</span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center space-x-1">
                         <button
                           className="p-2 transition-colors rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50"
-                          title="Ver documento"
-                          onClick={() => window.open(item.linkDocumento as string, '_blank')}
+                          title="Ver presupuesto"
+                          onClick={() => item.linkDocumento && window.open(item.linkDocumento, '_blank')}
                         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
                           className="p-2 transition-colors rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50"
                           onClick={() => handleEdit(item)}
-                          title="Editar elemento"
+                          title="Editar presupuesto"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
                           className="p-2 transition-colors rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50"
-                          onClick={() => handleDelete(item)}
-                          title="Eliminar PDU"
+                          onClick={() => handleDelete(item.presupuestoId || 0)}
+                          title="Eliminar presupuesto"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -238,25 +256,18 @@ export default function PduAdmin() {
       </div>
       <ModalAgregar
         isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false)
-          setEditingPdu(null)
-        }}
-        onSuccess={handleSuccess}
-        initialData={editingPdu ? { ...editingPdu, id: editingPdu.pduId } : null}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleModalSuccess}
+        initialData={editingData}
       />
-
       <ConfirmModal
-        isOpen={isConfirmOpen}
-        onClose={() => {
-          setIsConfirmOpen(false)
-          setPduToDelete(null)
-        }}
+        isOpen={isConfirmModalOpen}
+        onClose={closeConfirmModal}
         onConfirm={confirmDelete}
-        title='Confirmar eliminación'
-        message='¿Estás seguro de que deseas eliminar este PDU? Esta acción no se puede deshacer.'
-        confirmText='Eliminar'
-        cancelText='Cancelar'
+        title="Eliminar Presupuesto"
+        message="¿Estás seguro de que deseas eliminar este presupuesto? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        cancelText="Cancelar"
       />
     </div>
 

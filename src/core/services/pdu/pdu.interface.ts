@@ -1,4 +1,4 @@
-export interface pdu {
+export interface Pdu {
     titulo : String;
     descripcion : String;
     linkDocumento: String;

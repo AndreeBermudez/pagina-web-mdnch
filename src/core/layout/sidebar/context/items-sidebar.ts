@@ -21,6 +21,7 @@ import {
     Menu,
     UserCog,
     KeyRound,
+    Map,
     type LucideIcon,
     Folder,
     Monitor,
@@ -86,6 +87,12 @@ export const menuItems: MenuItem[] = [
                 titulo: 'Alcalde Page',
                 link: '/admin/contenido/alcalde-page',
                 icon: User,
+                isActive: false,
+            },
+            {
+                titulo: 'Turismo',
+                link: '/admin/contenido/Turismo',
+                icon: Map,
                 isActive: false,
             },
             {
