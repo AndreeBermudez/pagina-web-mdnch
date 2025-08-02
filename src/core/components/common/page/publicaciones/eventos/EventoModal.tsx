@@ -1,6 +1,6 @@
 import { Clock, MapPin, Tag, X } from 'lucide-react';
 import { returnDay, returnMonth } from '../../../../../utils/formatDate';
-import type { Evento } from '../../../../../services/eventos/evento.interface';
+import type { Evento } from '../../../../../../features/administrador/eventos-admin/services/evento.interface';
 
 interface EventoModalProps {
 	isOpen: boolean;
@@ -106,7 +106,6 @@ const EventoModal = ({ isOpen, onClose, evento }: EventoModalProps) => {
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	);

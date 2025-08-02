@@ -1,16 +1,13 @@
 import { Clock, MapPin } from 'lucide-react';
 import { returnDay, returnMonth } from '../../../../../utils/formatDate';
-import type { Evento } from '../../../../../services/eventos/evento.interface';
+import type { EventoResponse } from '../../../../../../features/administrador/eventos-admin/schemas/evento.schema';
 
 interface CalendarEventProps {
-	evento: Evento
+	evento: EventoResponse;
 	onClick?: () => void;
 }
 
-export const CalendarEvent = ({
-	evento,
-	onClick,
-}: CalendarEventProps) => {
+export const CalendarEvent = ({ evento, onClick }: CalendarEventProps) => {
 	return (
 		<div
 			className='flex flex-col h-full overflow-hidden transition-shadow duration-300 bg-white rounded-lg shadow-md hover:shadow-lg'
@@ -44,7 +41,7 @@ export const CalendarEvent = ({
 						</h3>
 						<div className='mt-1 text-sm text-gray-500'>
 							<div className='flex items-center gap-1'>
-								<Clock className='w-4 h-4' /> <span>{evento.hora}</span>
+								<Clock className='w-4 h-4' /> <span>{evento.horaInicio} - {evento.horaFin}</span>
 							</div>
 							<div className='flex items-center gap-1 mt-1'>
 								<MapPin className='w-4 h-4' /> <span>{evento.ubicacion}</span>

@@ -1,6 +1,6 @@
 import { axiosInstance } from '../../../../core/api/axiosInstance';
 import { handleError } from '../../../../core/utils/handleError';
-import type { ResponseBase } from '../../noticias-admin/services/noticia.interface';
+import type { ResponseBase } from '../../../../core/types/response-base';
 import type { SliderRequest, SliderResponse } from '../schemas/slider.schema';
 
 export const updateSlider = async (data: Partial<SliderRequest>, id: number): Promise<SliderResponse> => {

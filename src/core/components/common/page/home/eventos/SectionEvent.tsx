@@ -1,14 +1,9 @@
+import { useEventosQuery } from '../../../../../../features/administrador/eventos-admin/hooks/useEventosQuery';
 import { CalendarEvent } from './CalendarEvent';
 import { EventHeader } from './EventHeader';
-import { useEffect } from 'react';
-import { useEventosHome } from '../../../../../../features/administrador/eventos-admin/hooks/useEventosHome';
 
 export const SectionEvent = () => {
-	const { eventos, refreshEventos } = useEventosHome();
-
-	useEffect(() => {
-		refreshEventos();
-	}, [refreshEventos]);
+	const { topEventos } = useEventosQuery();
 
 	return (
 		<section className='bg-gradient-to-b from-[#3c6fe5] to-[#0a2158] py-16'>
@@ -16,8 +11,8 @@ export const SectionEvent = () => {
 				<div className='w-full p-6 bg-gray-100 shadow-2xl rounded-2xl'>
 					<EventHeader />
 					<div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
-						{eventos && eventos.length > 0 ? (
-							eventos.map((evento) => (
+						{topEventos && topEventos.length > 0 ? (
+							topEventos?.map((evento) => (
 								<CalendarEvent
 									key={evento.eventoId}
 									evento={evento}

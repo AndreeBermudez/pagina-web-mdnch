@@ -1,15 +1,15 @@
 import { axiosInstance } from '../../../../core/api/axiosInstance';
-import type { ResponseBase } from './noticia.interface';
+import type { ResponseBase } from '../../../../core/types/response-base';
 import { handleError } from '../../../../core/utils/handleError';
 import type { NoticiaRequest, NoticiaResponse } from '../schemas/noticia.schema';
 
 export const actualizarNoticia = async (id: number, data: Partial<NoticiaRequest>): Promise<NoticiaResponse> => {
 	try {
 		const formData = new FormData();
-		if(data.titulo) formData.append('titulo', data.titulo);
-		if(data.categoria) formData.append('categoria', data.categoria);
-		if(data.descripcion) formData.append('descripcion', data.descripcion);
-		if(data.fechaManual) formData.append('fechaManual', data.fechaManual);
+		if (data.titulo) formData.append('titulo', data.titulo);
+		if (data.categoria) formData.append('categoria', data.categoria);
+		if (data.descripcion) formData.append('descripcion', data.descripcion);
+		if (data.fechaManual) formData.append('fechaManual', data.fechaManual);
 		if (data.imagen) formData.append('imagen', data.imagen);
 
 		const response = await axiosInstance.patch<ResponseBase<NoticiaResponse>>(`noticiasedit/${id}`, formData);

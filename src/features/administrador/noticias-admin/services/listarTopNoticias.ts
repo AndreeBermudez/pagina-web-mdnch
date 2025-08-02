@@ -1,5 +1,5 @@
 import { axiosInstance } from '../../../../core/api/axiosInstance';
-import type { ResponseBase } from './noticia.interface';
+import type { ResponseBase } from '../../../../core/types/response-base';
 import { handleError } from '../../../../core/utils/handleError';
 import type { NoticiaResponse } from '../schemas/noticia.schema';
 

@@ -1,6 +1,6 @@
 import { axiosInstance } from '../../../../core/api/axiosInstance';
 import { handleError } from '../../../../core/utils/handleError';
-import type { ResponseBase } from '../../noticias-admin/services/noticia.interface';
+import type { ResponseBase } from '../../../../core/types/response-base';
 
 export const deleteSlider = async (id: number): Promise<string> => {
 	try {

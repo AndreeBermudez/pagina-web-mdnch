@@ -1,6 +1,6 @@
 import { axiosInstance } from '../../../../core/api/axiosInstance';
 import { handleError } from '../../../../core/utils/handleError';
-import type { ResponseBase } from './noticia.interface';
+import type { ResponseBase } from '../../../../core/types/response-base';
 
 export const eliminarNoticia = async (id: number): Promise<boolean> => {
 	try {

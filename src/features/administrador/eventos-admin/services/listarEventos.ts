@@ -1,11 +1,11 @@
-import { axiosWithoutMultipart } from '../../../../core/api/axiosInstance';
-import { handleError } from '../../../../core/utils/handleError';
+import { axiosInstance } from '../../../../core/api/axiosInstance';
 import type { ResponseBase } from '../../../../core/types/response-base';
-import type { SliderResponse } from '../schemas/slider.schema';
+import { handleError } from '../../../../core/utils/handleError';
+import type { EventoResponse } from '../schemas/evento.schema';
 
-export const getSliders = async (): Promise<SliderResponse[]> => {
+export const listarEventos = async (): Promise<EventoResponse[]> => {
 	try {
-		const response = await axiosWithoutMultipart.get<ResponseBase<SliderResponse[]>>('banners');
+		const response = await axiosInstance.get<ResponseBase<EventoResponse[]>>('eventos');
 		console.log(response.data);
 		if (!response || response.status !== 200) {
 			throw new Error(`Error en la respuesta del servidor: ${response?.status || 'Sin respuesta'}`);

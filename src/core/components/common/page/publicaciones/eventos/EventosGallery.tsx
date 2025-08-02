@@ -1,32 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useEventosQuery } from '../../../../../../features/administrador/eventos-admin/hooks/useEventosQuery';
+import type { EventoResponse } from '../../../../../../features/administrador/eventos-admin/schemas/evento.schema';
+import { useModal } from '../../../../../hooks/useModal';
 import { CalendarEvent } from '../../home/eventos/CalendarEvent';
 import EventoModal from './EventoModal';
-import { initialEvento, type Evento } from '../../../../../services/eventos/evento.interface';
-import { useEventos } from '../../../../../../features/administrador/eventos-admin/hooks/useEventos';
 
 const EventosGallery = () => {
-	const [selectedEvento, setSelectedEvento] = useState<Evento>(initialEvento);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { eventos, refreshEventos } = useEventos();
+	const [selectedEvento, setSelectedEvento] = useState<EventoResponse | null>(null);
+	const { isModalOpen, handleModal } = useModal();
+	const { eventos  } = useEventosQuery();
 
-	useEffect(() => {
-		refreshEventos();
-	}, [refreshEventos]);
-
-	const handleEventoClick = (evento: Evento) => {
+	const handleEventoClick = (evento: EventoResponse) => {
 		setSelectedEvento(evento);
-		setIsModalOpen(true);
+		handleModal()
 	};
 
 	const handleCloseModal = () => {
-		setIsModalOpen(false);
-		setSelectedEvento(initialEvento);
+		handleModal()
+		setSelectedEvento(null);
 	};
 
 	return (
 		<div>
 			<div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
-				{eventos.map((evento, index) => (
+				{eventos?.map((evento, index) => (
 					<CalendarEvent key={index} evento={evento} onClick={() => handleEventoClick(evento)} />
 				))}
 			</div>

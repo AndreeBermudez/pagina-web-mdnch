@@ -1,7 +1,7 @@
 import { axiosInstance } from '../../../../core/api/axiosInstance';
 import { handleError } from '../../../../core/utils/handleError';
 import type { NoticiaResponse } from '../schemas/noticia.schema';
-import type { ResponseBase } from './noticia.interface';
+import type { ResponseBase } from '../../../../core/types/response-base';
 
 export const listarNoticias = async (): Promise<NoticiaResponse[]> => {
 	try {
