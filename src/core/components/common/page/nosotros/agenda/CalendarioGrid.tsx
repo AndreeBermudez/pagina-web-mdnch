@@ -1,4 +1,5 @@
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
+import type { AgendaResponse } from '../../../../../../features/administrador/agenda-admin/schemas/agenda.schema';
 
 const MESES = [
 	"enero", "febrero", "marzo", "abril", "mayo", "junio",
@@ -10,15 +11,6 @@ interface DiaCalendario {
 	esMesActual: boolean;
 }
 
-interface Evento {
-	titulo: string;
-	fecha: string;
-	horaInicio: string;
-	horaFin: string;
-	direccion: string;
-	categoria: string;
-}
-
 interface CalendarioGridProps {
 	mesActual: number;
 	anioActual: number;
@@ -27,7 +19,7 @@ interface CalendarioGridProps {
 	esFechaHoy: (fecha: Date) => boolean;
 	diaSeleccionado?: Date | null;
 	onDiaClick?: (fecha: Date) => void;
-	eventos: Evento[];
+	eventos: AgendaResponse[];
 }
 
 const CalendarioGrid = ({
@@ -43,9 +35,9 @@ const CalendarioGrid = ({
 	return (
 		<div className='w-full max-w-full overflow-hidden'>
 			{/* Encabezado */}
-			<div className='flex justify-between items-center p-2 sm:p-4 border-b border-blue-100 bg-gradient-to-r from-blue-100 to-cyan-100'>
+			<div className='flex items-center justify-between p-2 border-b border-blue-100 sm:p-4 bg-gradient-to-r from-blue-100 to-cyan-100'>
 				<button
-					className='bg-transparent text-blue-700 font-medium flex items-center p-1 sm:p-2 rounded transition-colors hover:bg-white/50'
+					className='flex items-center p-1 font-medium text-blue-700 transition-colors bg-transparent rounded sm:p-2 hover:bg-white/50'
 					onClick={() => cambiarMes(-1)}
 				>
 					<HiChevronLeft className='w-4 h-4 mr-1' />
@@ -53,11 +45,11 @@ const CalendarioGrid = ({
 						{MESES[mesActual === 0 ? 11 : mesActual - 1].toUpperCase()}
 					</span>
 				</button>
-				<h2 className='text-lg sm:text-2xl font-bold uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
+				<h2 className='text-lg font-bold text-transparent uppercase sm:text-2xl bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text'>
 					{MESES[mesActual].toUpperCase()} {anioActual}
 				</h2>
 				<button
-					className='bg-transparent text-blue-700 font-medium flex items-center p-1 sm:p-2 rounded transition-colors hover:bg-white/50'
+					className='flex items-center p-1 font-medium text-blue-700 transition-colors bg-transparent rounded sm:p-2 hover:bg-white/50'
 					onClick={() => cambiarMes(1)}
 				>
 					<span className='hidden sm:inline'>
@@ -68,9 +60,9 @@ const CalendarioGrid = ({
 			</div>
 
 			{/* Días de la semana */}
-			<div className='grid grid-cols-7 bg-blue-800 text-white text-xs sm:text-base'>
+			<div className='grid grid-cols-7 text-xs text-white bg-blue-800 sm:text-base'>
 				{['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'].map((dia) => (
-					<div key={dia} className='p-1 sm:p-3 text-center font-medium'>{dia}</div>
+					<div key={dia} className='p-1 font-medium text-center sm:p-3'>{dia}</div>
 				))}
 			</div>
 
@@ -119,7 +111,7 @@ const CalendarioGrid = ({
 								{dia.fecha.getDate()}
 							</div>
 							{tieneEvento && (
-								<div className='absolute bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500'></div>
+								<div className='absolute w-2 h-2 transform -translate-x-1/2 bg-blue-500 rounded-full bottom-1 left-1/2'></div>
 							)}
 						</div>
 					);

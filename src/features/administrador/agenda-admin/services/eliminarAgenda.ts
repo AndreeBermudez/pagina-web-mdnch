@@ -1,4 +1,4 @@
-import { axiosWithoutMultipart } from '../../api/axiosInstance';
+import { axiosWithoutMultipart } from '../../../../core/api/axiosInstance';
 
 export const eliminarAgenda = async (id: number): Promise<boolean> => {
 	try {

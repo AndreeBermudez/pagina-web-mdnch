@@ -4,7 +4,6 @@ import { AdminLayout } from '../layout/AdminLayout';
 import { LazyWrapper } from './components/LazyWrapper';
 import { PrivateGuard } from './guard/PrivateGuard';
 
-
 //* Home - Lazy loading
 const HomePage = lazy(() => import('../../pages/HomePage').then((module) => ({ default: module.HomePage })));
 
@@ -56,20 +55,18 @@ const FuncionariosAdmin = lazy(
 );
 const ConsejoAdmin = lazy(() => import('../../features/administrador/consejo-admin/pages/ConsejosAdmin'));
 const NoticiasAdmin = lazy(() => import('../../features/administrador/noticias-admin/pages/NoticiasAdmin'));
-const EventosAdmin = lazy(() => import('../../features/administrador/eventos-admin/pages/EventosAdmin'))
+const EventosAdmin = lazy(() => import('../../features/administrador/eventos-admin/pages/EventosAdmin'));
 const OrganigramaAdmin = lazy(
 	() => import('../../features/administrador/organigrama-admin/pages/OrganigramaAdmin')
 );
 const AlcaldePageAdmin = lazy(() => import('../../features/administrador/alcalde-admin/pages/AlcaldePageAdmin'));
-const CreatePaginaAdmin = lazy(() =>
-	import('../../features/administrador/paginas-admin/pages/CreatePaginaAdmin').then((module) => ({
-		default: module.CreatePaginaAdmin,
-	}))
-);
+const PagesAdmin = lazy(() => import('../../features/administrador/paginas-admin/pages/PagesAdmin'));
 const AgendaPageAdmin = lazy(() => import('../../features/administrador/agenda-admin/pages/AgendaAdmin'));
-const PduAdmin = lazy(() => import ('../../features/administrador/pdu-admin/pages/PduAdmin'));
+const PduAdmin = lazy(() => import('../../features/administrador/pdu-admin/pages/PduAdmin'));
 const TurismoAdmin = lazy(() => import('../../features/administrador/turismo-admin/pages/TurismoAdmin'));
-const PresupuestoAdmin = lazy(() => import('../../features/administrador/presupuesto-admin/pages/PresupuestoAdmin'));
+const PresupuestoAdmin = lazy(
+	() => import('../../features/administrador/presupuesto-admin/pages/PresupuestoAdmin')
+);
 
 export const routes = [
 	// Ruta principal
@@ -399,7 +396,8 @@ export const routes = [
 						<AlcaldePageAdmin />
 					</LazyWrapper>
 				),
-			},{
+			},
+			{
 				path: 'contenido/turismo',
 				element: (
 					<LazyWrapper>
@@ -414,14 +412,16 @@ export const routes = [
 						<AgendaPageAdmin />
 					</LazyWrapper>
 				),
-			},{
+			},
+			{
 				path: 'documentos/pdu',
 				element: (
 					<LazyWrapper>
 						<PduAdmin />
 					</LazyWrapper>
 				),
-			},{
+			},
+			{
 				path: 'documentos/presupuesto',
 				element: (
 					<LazyWrapper>
@@ -490,7 +490,7 @@ export const routes = [
 				element: (
 					<LazyWrapper>
 						<EventosAdmin />
-					</LazyWrapper>	
+					</LazyWrapper>
 				),
 			},
 			{
@@ -679,7 +679,7 @@ export const routes = [
 				path: 'frontend/paginas',
 				element: (
 					<LazyWrapper>
-						<CreatePaginaAdmin />
+						<PagesAdmin />
 					</LazyWrapper>
 				),
 			},

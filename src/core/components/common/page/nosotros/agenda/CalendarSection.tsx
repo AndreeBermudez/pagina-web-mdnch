@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { HiViewGrid } from 'react-icons/hi';
+import { useAgendaList } from '../../../../../../features/administrador/agenda-admin/hooks/useAgendaQuery';
+import type { AgendaResponse } from '../../../../../../features/administrador/agenda-admin/schemas/agenda.schema';
 import CalendarioGrid from './CalendarioGrid';
 import CalendarioHeader from './CalendarioHeader';
 import PanelEventos from './PanelEventos';
-import type { Evento } from './types';
 import type { DiaCalendario } from './types';
 
 const CalendarSection = () => {
@@ -12,22 +13,8 @@ const CalendarSection = () => {
 	const [busqueda, setBusqueda] = useState('');
 	const [rangoAnios, setRangoAnios] = useState<number[]>([]);
 	const [diaSeleccionado, setDiaSeleccionado] = useState<Date | null>(null);
-	const [eventos, setEventos] = useState<Evento[]>([]);
-	const [eventoSeleccionado, setEventoSeleccionado] = useState<Evento | null>(null);
-
-	useEffect(() => {
-		const cargarEventos = async () => {
-			try {
-				const res = await fetch('http://localhost:8080/api/authentication/agenda');
-				const result = await res.json();
-				setEventos(result.data); 
-
-			} catch (err) {
-				console.error('Error al cargar eventos:', err);
-			}
-		};
-		cargarEventos();
-	}, []);
+	const [eventoSeleccionado, setEventoSeleccionado] = useState<AgendaResponse | null>(null);
+	const { data: eventos = [] } = useAgendaList();
 
 	useEffect(() => {
 		const anioBase = new Date().getFullYear();
@@ -88,7 +75,7 @@ const CalendarSection = () => {
 
 	return (
 		<div className='max-w-[1200px] mx-auto'>
-			<div className='bg-gradient-to-br from-white to-blue-50 rounded-lg shadow border border-blue-100 overflow-hidden'>
+			<div className='overflow-hidden border border-blue-100 rounded-lg shadow bg-gradient-to-br from-white to-blue-50'>
 				<CalendarioHeader
 					mesActual={mesActual}
 					anioActual={anioActual}
@@ -114,14 +101,14 @@ const CalendarSection = () => {
 					<div className='border-l border-blue-100 p-4 bg-white max-h-[720px] overflow-y-auto'>
 						<div className='flex items-center gap-2 mb-4'>
 							<HiViewGrid className='w-5 h-5 text-blue-500' />
-							<h3 className='text-lg font-bold uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
+							<h3 className='text-lg font-bold text-transparent uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text'>
 								Agenda para el {diaSeleccionado?.toLocaleDateString('es-PE') ?? 'día'}
 							</h3>
 						</div>
 						<PanelEventos
 							eventoSeleccionado={eventoSeleccionado}
 							eventosFiltrados={eventosDelDia}
-							seleccionarEvento={(id) => setEventoSeleccionado(eventos.find(e => e.id === id) || null)}
+							seleccionarEvento={(id) => setEventoSeleccionado(eventos.find(e => e.agendaId === id) || null)}
 							mesActual={mesActual}
 						/>
 					</div>
