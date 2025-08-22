@@ -22,7 +22,7 @@ export const ButtonSidebar = ({ titulo, Icon, isCollapsed, isActive, onClick, cl
 			onClick={onClick}>
 				<div className='absolute w-[1px] h-full bg-white/80 left-0' />
 				<Icon size={18} className={`flex-shrink-0 md:ml-0 ${isCollapsed ? 'ml-0' : 'ml-2'}`} />
-				<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>{titulo}</span>
+				<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden text-nowrap`}>{titulo}</span>
 		</button>
 	);
 };

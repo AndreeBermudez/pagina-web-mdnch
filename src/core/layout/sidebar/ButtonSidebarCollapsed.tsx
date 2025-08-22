@@ -32,8 +32,8 @@ export const ButtonSidebarCollapsed = ({
 					 ${isActive ? 'bg-item-sidebar text-white/80 border-r-4 border-blue-600' : 'text-white/90 hover:bg-item-sidebar'}`}
 				onClick={onClick}>
 				<div className='flex items-center w-full gap-3'>
-					<Icon size={18} />
-					<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>{titulo}</span>
+					<Icon size={18} className='flex-shrink-0' />
+					<span className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden whitespace-nowrap`}>{titulo}</span>
 				</div>
 				<div className={`${isCollapsed ? 'lg:hidden' : 'lg:block'} md:hidden`}>
 					<ChevronLeft

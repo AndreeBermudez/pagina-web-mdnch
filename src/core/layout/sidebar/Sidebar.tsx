@@ -21,11 +21,11 @@ export const Sidebar: React.FC = () => {
               ${isMobileMenuOpen && isMobile ? 'z-40 fixed top-0 left-0 w-64' : 'hidden'} 
               ${isCollapsed ? 'lg:w-20' : 'lg:w-72'}`}>
 				<section className='flex flex-col items-center'>
-					<div className='flex items-center mb-3 px-5 py-3 h-[76px] min-w-full'>
+					<div className='flex items-center mb-3 px-5 py-3 h-[76px] w-full'>
 						<img src={logoMunicipalidad} alt='Logo Municipalidad' className='w-8 h-auto' />
 						<span
-							className={`ml-2 font-medium text-sm text-white md:hidden lg:block ${
-								isCollapsed && 'lg:hidden'
+							className={`ml-2 font-medium text-sm text-white whitespace-nowrap md:hidden ${
+								isCollapsed ? 'lg:hidden' : 'lg:block'
 							}`}>
 							Sistema Administrativo
 						</span>
