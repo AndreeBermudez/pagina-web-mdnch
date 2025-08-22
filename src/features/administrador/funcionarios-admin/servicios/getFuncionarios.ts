@@ -1,5 +1,5 @@
-import { axiosWithoutMultipart } from '../../api/axiosInstance';
-import type { Funcionario } from './funcionario.interface';
+import { axiosWithoutMultipart } from '../../../../core/api/axiosInstance';
+import type { Funcionario } from '../schemas/funcionario.schema';
 
 export const getFuncionarios = async (): Promise<Funcionario[]> => {
 	try {

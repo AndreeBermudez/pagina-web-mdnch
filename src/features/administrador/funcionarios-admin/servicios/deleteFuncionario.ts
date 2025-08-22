@@ -1,4 +1,4 @@
-import { axiosWithoutMultipart } from '../../api/axiosInstance';
+import { axiosWithoutMultipart } from '../../../../core/api/axiosInstance';
 
 export const deleteFuncionario = async (id: number): Promise<boolean> => {
 	try {
