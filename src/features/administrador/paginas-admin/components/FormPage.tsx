@@ -5,30 +5,32 @@ import { FormFileInput, FormInput, FormLabel, ImagePreview } from '../../../../c
 import { useFormatErrors } from '../../../../core/hooks/useFormatErrors';
 import { useImagePreview } from '../../../../core/hooks/useImagePreview';
 import { useNotifications } from '../../../../core/hooks/useNotifications';
+import { paginaRequestSchema, type PaginaRequest, type PaginaResponse } from '../schemas/page.schema';
+import { useCreatePage, useUpdatePage } from '../hooks/usePagesMutation';
 
 
 interface FormPageProps {
     handleModal: () => void;
-    paginaEditable?: null;
+    paginaEditable?: PaginaResponse | null;
 }
 
 export const FormPage = ({ handleModal, paginaEditable }: FormPageProps) => {
     const isEditing = Boolean(paginaEditable);
-    const { register, handleSubmit, reset, setValue, watch } = useForm<NoticiaForm | NoticiaEditForm>({
-        resolver: zodResolver(isEditing ? noticiaEditForm : noticiaRequest),
+    const { register, handleSubmit, reset, setValue, watch } = useForm<PaginaRequest>({
+        resolver: zodResolver(paginaRequestSchema),
         defaultValues: {
             titulo: paginaEditable?.titulo || '',
-            categoria: paginaEditable?.categoria || '',
-            descripcion: paginaEditable?.descripcion || '',
-            fechaManual: paginaEditable?.fechaManualCruda || '',
+            slug: paginaEditable?.slug || '',
+            contenido: paginaEditable?.contenido || '',
         },
     });
     const { success, error } = useNotifications();
     const { onError } = useFormatErrors();
-    const { crearNoticia, actualizarNoticia } = useNoticiasMutations();
+    const {mutate: crearPagina } = useCreatePage();
+    const { mutate: actualizarPagina } = useUpdatePage();
     const { previewImage, handleImageChange, removeImage } = useImagePreview({
         setValue: setImageHookForm,
-        initialImage: paginaEditable?.direccionImagen,
+        initialImage: paginaEditable?.url,
     });
 
     function setImageHookForm(file: File | null) {
@@ -37,36 +39,30 @@ export const FormPage = ({ handleModal, paginaEditable }: FormPageProps) => {
         }
     }
 
-    function onSubmit(data: NoticiaForm | NoticiaEditForm) {
-        const noticiaData = {
-            titulo: data.titulo,
-            categoria: data.categoria,
-            descripcion: data.descripcion,
-            fechaManual: data.fechaManual,
-        };
+    function onSubmit(data: PaginaRequest) {
         if (isEditing && paginaEditable) {
-            const updateData = data.imagen ? { ...noticiaData, imagen: data.imagen } : noticiaData;
-            actualizarNoticia.mutate(
-                { id: paginaEditable.noticiaId, data: updateData },
+            const updateData = data.imagen ? { ...data, imagen: data.imagen } : data;
+            actualizarPagina(
+                { id: paginaEditable.id, data: updateData },
                 {
                     onSuccess: () => {
-                        success('Noticia actualizada exitosamente');
+                        success('Página actualizada exitosamente');
                         handleModal();
                     },
-                    onError: () => error('Error al actualizar la noticia'),
+                    onError: () => error('Error al actualizar la página'),
                 }
             );
         } else {
-            crearNoticia.mutate(
-                { ...noticiaData, imagen: data.imagen as File },
+            crearPagina(
+                { ...data, imagen: data.imagen as File },
                 {
                     onSuccess: () => {
                         reset();
                         removeImage();
-                        success('Noticia creada exitosamente');
+                        success('Página creada exitosamente');
                         handleModal();
                     },
-                    onError: () => error('Error al crear la noticia'),
+                    onError: () => error('Error al crear la página'),
                 }
             );
         }
@@ -83,16 +79,20 @@ export const FormPage = ({ handleModal, paginaEditable }: FormPageProps) => {
                                     <FormLabel label='Título' required />
                                     <FormInput {...register('titulo')} placeholder='Ingrese el título de la página' />
                                 </div>
+                                <div>
+                                    <FormLabel label='Slug' required />
+                                    <FormInput {...register('slug')} placeholder='Ingrese el slug de la página' />
+                                </div>
                             </div>
                             <div>
                                 <RichTextEditor
-                                    value={watch('descripcion') || ''}
-                                    onBlur={(content) => setValue('descripcion', content, { shouldValidate: true })}
+                                    value={watch('contenido') || ''}
+                                    onBlur={(content) => setValue('contenido', content, { shouldValidate: true })}
                                     label='Descripción'
                                     required
-                                    height={250}
+                                    height={400}
                                     showPreview={false}
-                                    placeholder='Escriba el contendio de la página...'
+                                    placeholder='Escriba el contenido de la página...'
                                 />
                             </div>
                             <div>
@@ -115,7 +115,7 @@ export const FormPage = ({ handleModal, paginaEditable }: FormPageProps) => {
                             <button
                                 type='submit'
                                 className='px-4 py-2 text-white transition-colors bg-blue-700 rounded-lg hover:bg-blue-800'>
-                                {paginaEditable ? 'Actualizar' : 'Crear'} Noticia
+                                {paginaEditable ? 'Actualizar' : 'Crear'} Página
                             </button>
                         </div>
                     </div>

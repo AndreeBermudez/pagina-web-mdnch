@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { crearPresupuesto } from '../../../../core/services/presupuesto/crearPresupuesto';
-import { editarPresupuesto } from '../../../../core/services/presupuesto/editarPresupuesto';
-import type { presupuestoPayload } from '../../../../core/services/presupuesto/presupuesto.interface';
+import { crearPresupuesto } from '../services/crearPresupuesto';
+import { editarPresupuesto } from '../services/editarPresupuesto';
+import type { presupuestoPayload } from '../services/presupuesto.interface';
 
 interface PresupuestoModalProps {
 	isOpen: boolean;
@@ -42,7 +42,7 @@ export default function ModalAgregar({ isOpen, onClose, onSave, initialData }: P
 		}
 
 		let success = false;
-		
+
 		if (initialData && initialData.presupuestoId) {
 			// Editar presupuesto existente
 			success = await editarPresupuesto(initialData.presupuestoId, form);
@@ -117,14 +117,13 @@ export default function ModalAgregar({ isOpen, onClose, onSave, initialData }: P
 								Documento (PDF o Word) <span className='text-red-500'>*</span>
 							</label>
 							<input
-								type="file"
-								accept=".pdf,.doc,.docx"
+								type='file'
+								accept='.pdf,.doc,.docx'
 								onChange={(e) => setDocumento(e.target.files?.[0] ?? null)}
 								required={!initialData} // Solo requerido si no hay datos iniciales
-								className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+								className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
 							/>
 						</div>
-
 					</form>
 				</div>
 

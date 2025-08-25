@@ -1,264 +1,150 @@
-import { Edit, Plus, Search, Trash2, Eye, AlertCircle, FileText } from "lucide-react"
-import { useState, useEffect } from "react"
-import ModalAgregar from "../components/ModalAgregar"
-import ConfirmModal from "../components/ConfirmModal"
-import { listarPdu, type PduResponse } from "../../../../core/services/pdu/listarPdu"
-import { eliminarPdu } from "../../../../core/services/pdu/eliminarPdu"
+import type { ColumnDef } from '@tanstack/react-table';
+import { Edit, FileText, Trash2 } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Modal } from '../../../../core/components/common/modal/Modal';
+import { AdminDataTable, type TableAction } from '../../../../core/components/common/table/AdminDataTable';
+import { useModal } from '../../../../core/hooks/useModal';
+import { useNotifications } from '../../../../core/hooks/useNotifications';
+import { formatDate } from '../../../../core/utils/formatDate';
+import { PduForm } from '../components/PduForm';
+import { usePduMutations } from '../hooks/usePduMutations';
+import { usePduQuery } from '../hooks/usePduQuery';
+import type { Pdu } from '../schemas/pdu.schema';
 
 export default function PduAdmin() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pdus, setPdus] = useState<PduResponse[]>([])
-  const [editingPdu, setEditingPdu] = useState<PduResponse | null>(null)
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const [pduToDelete, setPduToDelete] = useState<number | null>(null)
+    const { isModalOpen, handleModal } = useModal();
+    const { success, error } = useNotifications();
+    const { pdus, isLoading, error: queryError } = usePduQuery();
+    const { eliminarPdu } = usePduMutations();
+    const [pduEdit, setPduEdit] = useState<Pdu | null>(null);
 
-  // Cargar PDUs al montar el componente
-  useEffect(() => {
-    loadPdus()
-  }, [])
+    const handleEdit = (pdu: Pdu) => {
+        setPduEdit(pdu);
+        handleModal();
+    };
 
-  const loadPdus = async () => {
-    setLoading(true)
-    setError("")
-    try {
-      const data = await listarPdu()
-      setPdus(data)
-    } catch (err) {
-      setError("Error al cargar los PDUs")
-      console.error("Error:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
+    const handleNew = () => {
+        setPduEdit(null);
+        handleModal();
+    };
 
-  // Filtrar PDUs basado en el término de búsqueda
-  const filteredData = pdus.filter(pdu => 
-    pdu.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pdu.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+    const handleDelete = (pdu: Pdu) => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este PDU?')) {
+            eliminarPdu.mutate(pdu.pduId, {
+                onSuccess: () => {
+                    success('PDU eliminado exitosamente');
+                },
+                onError: () => {
+                    error('Error al eliminar el PDU');
+                },
+            });
+        }
+    };
 
-  const handleAdd = () => {
-    setEditingPdu(null)
-    setIsModalOpen(true)
-  }
-
-  const handleEdit = (pdu: PduResponse) => {
-    setEditingPdu(pdu)
-    setIsModalOpen(true)
-  }
-
-  const handleDelete = (pdu: PduResponse) => {
-    setPduToDelete(pdu.pduId)
-    setIsConfirmOpen(true)
-  }
-
-  const confirmDelete = async () => {
-    if (pduToDelete === null) return;
-
-    const success = await eliminarPdu(pduToDelete);
-    if (success) {
-      loadPdus(); // Recargar la lista
-    } else {
-      alert('Error al eliminar PDU.');
-    }
-    setPduToDelete(null);
-  }
-
-  const handleSuccess = () => {
-    loadPdus() // Recargar la lista después de crear/editar
-  }
-
-
-
-  return (
-    <div className="space-y-6">
-     
-      <div className="bg-white border shadow-sm rounded-xl border-slate-200">
-        <div className="p-6 border-b border-slate-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-blue-50">
-                <FileText className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900">Gestión de PDU</h1>
-                <p className="mt-1 text-slate-600">Administra los elementos del sistema municipal</p>
-              </div>
-            </div>
-            <button
-              className="flex items-center px-4 py-2 space-x-2 text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"
-              onClick={handleAdd}
-            >
-              <Plus className="w-4 h-4" />
-              <span>Nuevo PDU</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="p-6">
-          <div className="flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-400" />
-                <input
-                  placeholder="Buscar por título, descripción..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full py-2.5 pl-10 pr-4 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                />
-              </div>
-            </div>
-            <div className="flex items-center px-3 py-2 text-sm border rounded-lg bg-slate-50 border-slate-200">
-              <span className="font-medium text-slate-700">{filteredData.length}</span>
-              <span className="ml-1 text-slate-500">PDUs</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    
-      <div className="overflow-hidden bg-white border shadow-sm rounded-xl border-slate-200">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="border-b bg-slate-50 border-slate-200">
-              <tr>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Fecha</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Titulo</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Descripción</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Archivo</th>
-                <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left uppercase text-slate-600">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200">
-              {loading && (
-                <tr>
-                  <td colSpan={6} className="py-16 text-center">
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="w-8 h-8 border-2 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
-                      <p className="text-slate-600">Cargando elementos...</p>
+    const columns: ColumnDef<Pdu>[] = useMemo(
+        () => [
+            {
+                accessorKey: 'fechaCreacion',
+                header: 'Fecha',
+                cell: ({ getValue }) => (
+                    <div className='text-sm font-medium text-slate-900 whitespace-nowrap'>
+                        {formatDate(getValue() as string)}
                     </div>
-                  </td>
-                </tr>
-              )}
-              {error && (
-                <tr>
-                  <td colSpan={6} className="py-16 text-center">
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="p-3 rounded-full bg-red-50">
-                        <AlertCircle className="w-6 h-6 text-red-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-red-900">Error al cargar los elementos</p>
-                        <p className="mt-1 text-sm text-red-600">{error}</p>
-                      </div>
+                ),
+                enableColumnFilter: true,
+            },
+            {
+                accessorKey: 'titulo',
+                header: 'Título',
+                cell: ({ getValue }) => (
+                    <div className='max-w-xs'>
+                        <p className='text-sm font-medium text-slate-900 line-clamp-2'>
+                            {getValue() as string}
+                        </p>
                     </div>
-                  </td>
-                </tr>
-              )}
-              {!loading && !error && filteredData.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="py-16 text-center">
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="p-3 rounded-full bg-slate-100">
-                        <Search className="w-6 h-6 text-slate-400" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-slate-700">No se encontraron elementos</p>
-                        <p className="mt-1 text-sm text-slate-500">Intenta con otros términos de búsqueda</p>
-                      </div>
+                ),
+                enableSorting: false,
+            },
+            {
+                accessorKey: 'descripcion',
+                header: 'Descripción',
+                cell: ({ getValue }) => (
+                    <div className='max-w-xs'>
+                        <p className='text-sm text-slate-900 line-clamp-2'>
+                            {getValue() as string}
+                        </p>
                     </div>
-                  </td>
-                </tr>
-              )}
-              {!loading &&
-                filteredData.map((item) => (
-                  <tr key={item.pduId} className="transition-colors hover:bg-slate-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-slate-900">
-                        {(item.fechaCreacion)}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="max-w-xs">
-                        <p className="text-sm font-medium text-slate-900 line-clamp-2">{item.titulo}</p>
-                      </div>
-                    </td>
-
-                    <td className="px-6 py-4">
-                      <div className="max-w-md text-sm text-slate-600 line-clamp-2">
-                        {item.descripcion as string}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="max-w-xs">
-                        <a 
-                          href={item.linkDocumento as string} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-sm text-blue-600 hover:text-blue-800 underline line-clamp-2"
-                        >
-                          Ver documento
+                ),
+                enableSorting: false,
+            },
+            {
+                accessorKey: 'linkDocumento',
+                header: 'Documento',
+                cell: ({ getValue }) => (
+                    <div className='max-w-xs'>
+                        <a
+                            href={getValue() as string}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='text-sm text-blue-600 underline hover:text-blue-800 line-clamp-2'>
+                            Ver documento
                         </a>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center space-x-1">
-                        <button
-                          className="p-2 transition-colors rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50"
-                          title="Ver documento"
-                          onClick={() => window.open(item.linkDocumento as string, '_blank')}
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button
-                          className="p-2 transition-colors rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50"
-                          onClick={() => handleEdit(item)}
-                          title="Editar elemento"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button
-                          className="p-2 transition-colors rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50"
-                          onClick={() => handleDelete(item)}
-                          title="Eliminar PDU"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                    </div>
+                ),
+                enableSorting: false,
+            },
+            {
+                accessorKey: 'responsable',
+                header: 'Responsable',
+                cell: ({ getValue }) => (
+                    <span className='inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 border border-slate-200'>
+                        {getValue() as string}
+                    </span>
+                ),
+                enableSorting: false,
+            },
+        ],
+        []
+    );
 
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <ModalAgregar
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false)
-          setEditingPdu(null)
-        }}
-        onSuccess={handleSuccess}
-        initialData={editingPdu ? { ...editingPdu, id: editingPdu.pduId } : null}
-      />
+    const actions: TableAction<Pdu>[] = [
+        {
+            icon: Edit,
+            label: 'Editar PDU',
+            onClick: handleEdit,
+            variant: 'edit',
+        },
+        {
+            icon: Trash2,
+            label: 'Eliminar PDU',
+            onClick: handleDelete,
+            variant: 'delete',
+            disabled: () => eliminarPdu.isPending,
+        },
+    ];
 
-      <ConfirmModal
-        isOpen={isConfirmOpen}
-        onClose={() => {
-          setIsConfirmOpen(false)
-          setPduToDelete(null)
-        }}
-        onConfirm={confirmDelete}
-        title='Confirmar eliminación'
-        message='¿Estás seguro de que deseas eliminar este PDU? Esta acción no se puede deshacer.'
-        confirmText='Eliminar'
-        cancelText='Cancelar'
-      />
-    </div>
-
-  )
+    return (
+        <>
+            <AdminDataTable
+                title='Gestión de PDU'
+                description='Administra los documentos PDU municipales'
+                icon={FileText}
+                data={pdus || []}
+                columns={columns}
+                actions={actions}
+                isLoading={isLoading}
+                error={queryError}
+                searchPlaceholder='Buscar por título, descripción...'
+                onNew={handleNew}
+                newButtonText='Nuevo PDU'
+                enablePagination={true}
+                initialPageSize={10}
+            />
+            {isModalOpen && (
+                <Modal isOpen={isModalOpen} onClose={handleModal} title={pduEdit ? 'Editar PDU' : 'Nuevo PDU'}>
+                    <PduForm handleModal={handleModal} pduEditable={pduEdit} />
+                </Modal>
+            )}
+        </>
+    );
 }

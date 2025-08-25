@@ -1,12 +1,27 @@
 import { FilePlus2, Monitor } from 'lucide-react';
-import { CardPage } from '../components/CardPage';
-import exampleImage from '../../../../assets/imagen-plaza.webp';
-import { useModal } from '../../../../core/hooks/useModal';
 import { Modal } from '../../../../core/components/common/modal/Modal';
+import { useModal } from '../../../../core/hooks/useModal';
+import { CardPage } from '../components/CardPage';
 import { FormPage } from '../components/FormPage';
+import { usePages } from '../hooks/usePagesQuery';
+import type { PaginaResponse } from '../schemas/page.schema';
+import { useDeletePage } from '../hooks/usePagesMutation';
+import { useState } from 'react';
 
 const PagesAdmin = () => {
 	const { isModalOpen, handleModal } = useModal();
+	const { data: paginas = [] } = usePages();
+	const { mutate: deletePage } = useDeletePage();
+	const [paginaEditable, setPaginaEditable] = useState<PaginaResponse | null>(null);
+	const handleEdit = (pagina: PaginaResponse) => {
+		setPaginaEditable(pagina);
+		handleModal();
+	};
+	const handleDelete = (id: number) => {
+		if (confirm('¿Estás seguro de que deseas eliminar esta página?')) {
+			deletePage(id);
+		}
+	};
 	return (
 		<div className='px-2 space-y-6 '>
 			<div className='flex flex-col gap-6'>
@@ -29,21 +44,23 @@ const PagesAdmin = () => {
 						<span className='hidden md:block'>Nueva Página</span>
 					</button>
 				</div>
-				{/* Contenido de Paginas */}
 				<div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-					<CardPage
-						title='Noticia'
-						path='/inicio'
-						date='2025-08-14'
-						image={exampleImage}
-						menus={['inicio', 'nosotros']}
-						onEdit={() => {}}
-					/>
+					{paginas.map((pagina: PaginaResponse) => (
+						<CardPage
+							key={pagina.id}
+							title={pagina.titulo}
+							path={`/${pagina.slug}`}
+							date={pagina.fechaCreacion}
+							image={pagina.url}
+							onDelete={() => handleDelete(pagina.id)}
+							onEdit={() => handleEdit(pagina)}
+						/>
+					))}
 				</div>
 			</div>
 			{isModalOpen && (
-				<Modal isOpen={isModalOpen} onClose={handleModal} title={'Nueva Pagina'}>
-					<FormPage handleModal={handleModal} />
+				<Modal isOpen={isModalOpen} onClose={handleModal} title={'Nueva Pagina'} >
+					<FormPage handleModal={handleModal} paginaEditable={paginaEditable} />
 				</Modal>
 			)}
 		</div>

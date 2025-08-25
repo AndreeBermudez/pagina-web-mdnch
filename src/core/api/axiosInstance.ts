@@ -9,6 +9,9 @@ export const axiosInstance = axios.create({
 
 export const axiosWithoutMultipart = axios.create({
 	baseURL: 'http://localhost:8080/api/authentication/',
+	headers: {
+		'Content-Type': 'application/json',
+	},
 });
 
 // --> Descomentar cuando este implementado el token de autenticación <--

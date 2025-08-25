@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { CrearPdu } from '../../../../core/services/pdu/crearPdu';
-import { editarPdu } from '../../../../core/services/pdu/editarPdu';
-import type { Pdu } from '../../../../core/services/pdu/pdu.interface';
+import { CrearPdu } from '../services/crearPdu';
+import { editarPdu } from '../services/editarPdu';
+import type { Pdu } from '../services/pdu.interface';
 
 interface PduModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 	onSuccess: () => void;
-	initialData?: Pdu & { id?: number } | null;
+	initialData?: (Pdu & { id?: number }) | null;
 }
 
 export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }: PduModalProps) {
@@ -26,7 +26,6 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 		}
 	}, [initialData]);
 	if (!isOpen) return null;
-
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -63,9 +62,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 			<div className='bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col'>
 				{/* Header */}
 				<div className='flex items-center justify-between p-6 border-b border-slate-200'>
-					<h3 className='text-xl font-semibold text-slate-900'>
-						{initialData ? 'Editar PDU' : 'Nuevo PDU'}
-					</h3>
+					<h3 className='text-xl font-semibold text-slate-900'>{initialData ? 'Editar PDU' : 'Nuevo PDU'}</h3>
 					<button onClick={handleClose} className='p-2 transition-colors rounded-lg hover:bg-slate-100'>
 						<X className='w-5 h-5 text-slate-500' />
 					</button>
@@ -93,11 +90,11 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 									Documento (PDF o Word) <span className='text-red-500'>*</span>
 								</label>
 								<input
-									type="file"
-									accept=".pdf,.doc,.docx"
+									type='file'
+									accept='.pdf,.doc,.docx'
 									onChange={(e) => setDocumento(e.target.files?.[0] ?? null)}
 									required={!initialData}
-									className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+									className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
 								/>
 							</div>
 						</div>

@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPages, getPageById } from '../services/getPages';
-import type { PaginaResponse } from '../schemas/page.schema';
+import { getPages } from '../services/getPages';
+import { getPageById } from '../services/getPageById';
 
-export const usePagesQuery = () => {
-  return useQuery<PaginaResponse[], Error>({
-    queryKey: ['paginas'],
-    queryFn: getPages,
-  });
+export const usePages = () => {
+	return useQuery({
+		queryKey: ['paginas'],
+		queryFn: () => getPages(),
+	});
 };
 
-export const usePageByIdQuery = (id: number, enabled = true) => {
-  return useQuery<PaginaResponse, Error>({
-    queryKey: ['pagina', id],
-    queryFn: () => getPageById(id),
-    enabled,
-  });
+export const usePageById = (id: number) => {
+	return useQuery({
+		queryKey: ['pagina', id],
+		queryFn: () => getPageById(id),
+		enabled: !!id && id > 0,
+	});
 };

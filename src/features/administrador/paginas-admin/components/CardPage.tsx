@@ -1,15 +1,16 @@
-import { ExternalLink, ImageOff, Pencil } from 'lucide-react';
+import { ExternalLink, ImageOff, Pencil, X } from 'lucide-react';
 import { formatDate } from '../../../../core/utils/formatDate';
 
 interface CardPageProps {
 	title: string;
 	path: string;
 	date: string;
-	image: string;
+	image?: string;
 	menus?: string[];
 	onEdit?: () => void;
+	onDelete?: () => void;
 }
-export const CardPage = ({ title, path, date, image, menus, onEdit }: CardPageProps) => {
+export const CardPage = ({ title, path, date, image, menus, onEdit, onDelete }: CardPageProps) => {
 	return (
 		<div className='flex flex-col overflow-hidden transition-shadow duration-300 bg-white border border-gray-200 shadow-sm rounded-2xl hover:shadow-lg'>
 			<div className='relative flex items-center justify-center bg-gray-100 h-36 sm:h-40 md:h-44 group'>
@@ -25,6 +26,15 @@ export const CardPage = ({ title, path, date, image, menus, onEdit }: CardPagePr
 						<span className='text-xs'>Sin imagen</span>
 					</span>
 				)}
+				{onDelete && (
+					<button
+						onClick={onDelete}
+						className='absolute p-2 text-red-600 transition-colors rounded-full shadow top-2 left-2 bg-white/80 hover:bg-red-600 hover:text-white'
+						title='Eliminar'>
+						<X className='w-4 h-4' />
+					</button>
+				)
+				}
 				{onEdit && (
 					<button
 						onClick={onEdit}

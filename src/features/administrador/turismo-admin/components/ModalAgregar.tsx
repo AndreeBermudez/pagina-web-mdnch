@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { X,Upload,Trash2 } from 'lucide-react';
-import { crearTurismo } from "../../../../core/services/turismo/crearTurismo";
-import { editarTurismo } from "../../../../core/services/turismo/editarTurismo";
-import type { Turismo } from "../../../../core/services/turismo/turismo.interface";
+import { X, Upload, Trash2 } from 'lucide-react';
+import { crearTurismo } from '../services/crearTurismo';
+import { editarTurismo } from '../services/editarTurismo';
+import type { Turismo } from '../services/turismo.interface';
 interface TurismoModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: () => void;
-  initialData?: Turismo | null;
+	isOpen: boolean;
+	onClose: () => void;
+	onSuccess: () => void;
+	initialData?: Turismo | null;
 }
 
 export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }: TurismoModalProps) {
@@ -58,26 +58,24 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 		form.append('ubicacion', ubicacion);
 		if (file) form.append('direccionImagen', file);
 
-		console.log("Enviando datos:", {
+		console.log('Enviando datos:', {
 			titulo,
 			descripcion,
 			lugar,
 			ubicacion,
-			file: file?.name || 'No file'
+			file: file?.name || 'No file',
 		});
 
-		const success = initialData ? 
-			await editarTurismo(initialData.turismoId!, form) : 
-			await crearTurismo(form);
+		const success = initialData ? await editarTurismo(initialData.turismoId!, form) : await crearTurismo(form);
 
-		console.log("Resultado de la operación:", success);
+		console.log('Resultado de la operación:', success);
 
 		if (success) {
 			resetForm();
 			onSuccess();
 			onClose();
 		} else {
-			alert("Error al guardar. Por favor intenta de nuevo.");
+			alert('Error al guardar. Por favor intenta de nuevo.');
 		}
 	};
 
@@ -137,7 +135,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 									placeholder='Ingrese la descripción'
 								/>
 							</div>
-                            <div>
+							<div>
 								<label className='block mb-2 text-sm font-medium text-slate-700'>
 									Lugar <span className='text-red-500'>*</span>
 								</label>
@@ -149,7 +147,7 @@ export default function ModalAgregar({ isOpen, onClose, onSuccess, initialData }
 									placeholder='Ingrese el lugar'
 								/>
 							</div>
-                            <div>
+							<div>
 								<label className='block mb-2 text-sm font-medium text-slate-700'>
 									Ubicación <span className='text-red-500'>*</span>
 								</label>
