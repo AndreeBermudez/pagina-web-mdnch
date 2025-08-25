@@ -32,16 +32,10 @@ export const navLinks: NavLink[] = [
 			{ href: '/tudistrito/reseñaHistorica', label: 'Reseña Histórica' },
 			{ href: '/tudistrito/himno', label: 'Himno' },
 			{ href: '/tudistrito/escudo', label: 'Escudo y bandera' },
+			{ href: '/tudistrito/noticias', label: 'Noticias' },
 		],
 	},
-	{
-		label: 'Publicaciones',
-		hasDropdown: true,
-		dropdownItems: [
-			{ href: '/publicaciones/noticias', label: 'Noticias' },
-			{ href: '/publicaciones/eventos', label: 'Eventos' },
-		],
-	},
+
 	{
 		label: 'Servicios',
 		hasDropdown: true,

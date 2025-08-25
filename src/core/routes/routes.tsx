@@ -21,9 +21,7 @@ const DirectorioPage = lazy(() =>
 const MapaPage = lazy(() => import('../../pages/nosotros/MapaPage'));
 const OrganigramaPage = lazy(() => import('../../pages/nosotros/OrganigramaPage'));
 
-//* Publicaciones - Lazy loading
-const NoticiasPage = lazy(() => import('../../pages/publicaciones/NoticiasPage'));
-const EventosPage = lazy(() => import('../../pages/publicaciones/EventosPage'));
+
 
 //* Servicios - Lazy loading
 const BibliotecaPage = lazy(() => import('../../pages/servicios/BibliotecaPage'));
@@ -47,6 +45,7 @@ const MisionVisionPage = lazy(() => import('../../pages/tuDistrito/MisionVisionP
 const PDUPage = lazy(() => import('../../pages/tuDistrito/PDUPage'));
 const ReseñaHistoricaPage = lazy(() => import('../../pages/tuDistrito/ReseñaHistoricaPage'));
 const TurismoPage = lazy(() => import('../../pages/tuDistrito/TurismoPage'));
+const NoticiaPage = lazy(() => import('../../pages/tuDistrito/NoticiaPage'));
 
 //* Admin - Lazy loading
 const SliderAdmin = lazy(() => import('../../features/administrador/slider-admin/pages/SliderAdmin'));
@@ -197,32 +196,18 @@ export const routes = [
 					</LazyWrapper>
 				),
 			},
-		],
-	},
-
-	//Publicaciones
-	{
-		path: '/publicaciones',
-		element: <Outlet />,
-		children: [
 			{
 				path: 'noticias',
 				element: (
 					<LazyWrapper>
-						<NoticiasPage />
-					</LazyWrapper>
-				),
-			},
-			{
-				path: 'eventos',
-				element: (
-					<LazyWrapper>
-						<EventosPage />
+						<NoticiaPage />
 					</LazyWrapper>
 				),
 			},
 		],
 	},
+
+
 
 	// Servicios
 	{
