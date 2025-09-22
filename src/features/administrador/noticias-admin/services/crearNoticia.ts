@@ -9,8 +9,10 @@ export const crearNoticia = async (data: NoticiaRequest): Promise<NoticiaRespons
 		formData.append('titulo', data.titulo);
 		formData.append('categoria', data.categoria);
 		formData.append('descripcion', data.descripcion);
+		formData.append('resumen', data.resumen);
 		formData.append('fechaManual', data.fechaManual);
 		formData.append('imagen', data.imagen);
+		formData.append('lugar', data.lugar);
 
 		const response = await axiosInstance.post<ResponseBase<NoticiaResponse>>('noticias/crear', formData);
 		console.log(response.data);

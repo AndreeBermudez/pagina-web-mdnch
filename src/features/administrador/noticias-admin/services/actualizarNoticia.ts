@@ -9,8 +9,10 @@ export const actualizarNoticia = async (id: number, data: Partial<NoticiaRequest
 		if (data.titulo) formData.append('titulo', data.titulo);
 		if (data.categoria) formData.append('categoria', data.categoria);
 		if (data.descripcion) formData.append('descripcion', data.descripcion);
+		if (data.resumen) formData.append('resumen', data.resumen);
 		if (data.fechaManual) formData.append('fechaManual', data.fechaManual);
 		if (data.imagen) formData.append('imagen', data.imagen);
+		if (data.lugar) formData.append('lugar', data.lugar);
 
 		const response = await axiosInstance.patch<ResponseBase<NoticiaResponse>>(`noticiasedit/${id}`, formData);
 		console.log(response.data);

@@ -3,12 +3,12 @@ import { CalendarClock } from 'lucide-react';
 interface MainNewsProps {
 	category: string;
 	title: string;
-	description: string;
+	resumen: string;
 	date: string;
 	image: string;
 }
 
-export const MainNews = ({ category, title, description, date, image }: MainNewsProps) => {
+export const MainNews = ({ category, title, resumen, date, image }: MainNewsProps) => {
 	return (
 		<div className='relative text-white rounded-xl p-8 overflow-hidden transition-all duration-300 hover:shadow-xl group'>
 			<div className='absolute inset-0'>
@@ -24,7 +24,7 @@ export const MainNews = ({ category, title, description, date, image }: MainNews
 					{category}
 				</span>
 				<h2 className='text-3xl font-bold mt-4 mb-2 transition-colors group-hover:text-blue-200'>{title}</h2>
-				<p className='text-gray-300 mb-4'>{description}</p>
+				<p className='text-gray-300 mb-4'>{resumen}</p>
 				<div className='flex items-center text-gray-400 gap-1'>
 					<CalendarClock size={16} /> {date}
 				</div>
@@ -32,3 +32,4 @@ export const MainNews = ({ category, title, description, date, image }: MainNews
 		</div>
 	);
 };
+
