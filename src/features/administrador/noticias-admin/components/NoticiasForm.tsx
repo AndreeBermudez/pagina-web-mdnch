@@ -29,6 +29,8 @@ export const NoticiasForm = ({ handleModal, noticiaEditable }: NoticiaModalProps
 			titulo: noticiaEditable?.titulo || '',
 			categoria: noticiaEditable?.categoria || '',
 			descripcion: noticiaEditable?.descripcion || '',
+			resumen: noticiaEditable?.resumen || '',
+			lugar: noticiaEditable?.lugar || '',
 			fechaManual: noticiaEditable?.fechaManualCruda || '',
 		},
 	});
@@ -39,6 +41,9 @@ export const NoticiasForm = ({ handleModal, noticiaEditable }: NoticiaModalProps
 		setValue: setImageHookForm,
 		initialImage: noticiaEditable?.direccionImagen,
 	});
+
+	const resumenValue = watch('resumen') || '';
+	const resumenLength = resumenValue.length;
 
 	function setImageHookForm(file: File | null) {
 		if (file) {
@@ -51,7 +56,9 @@ export const NoticiasForm = ({ handleModal, noticiaEditable }: NoticiaModalProps
 			titulo: data.titulo,
 			categoria: data.categoria,
 			descripcion: data.descripcion,
+			resumen: data.resumen,
 			fechaManual: data.fechaManual,
+			lugar: data.lugar,
 		};
 		if (isEditing && noticiaEditable) {
 			const updateData = data.imagen ? { ...noticiaData, imagen: data.imagen } : noticiaData;
@@ -106,6 +113,22 @@ export const NoticiasForm = ({ handleModal, noticiaEditable }: NoticiaModalProps
 										<option value='Educación'>Educación</option>
 									</FormSelect>
 								</div>
+							<div className='md:col-span-2'>
+								<FormLabel label='Lugar' required />
+								<FormInput {...register('lugar')} placeholder='Ingrese el lugar del evento o referencia' />
+							</div>
+							<div className='md:col-span-2'>
+								<div className='flex items-center justify-between'>
+									<FormLabel label='Resumen' required htmlFor='resumen' />
+									<span className='text-xs text-slate-500'>{resumenLength}/70</span>
+								</div>
+								<FormInput
+									{...register('resumen')}
+									id='resumen'
+									maxLength={70}
+									placeholder='Ingrese el resumen de la noticia'
+								/>
+							</div>
 							</div>
 							<div>
 								<FormLabel label='Fecha de Publicación' required />
@@ -151,3 +174,4 @@ export const NoticiasForm = ({ handleModal, noticiaEditable }: NoticiaModalProps
 		</>
 	);
 };
+

@@ -95,6 +95,18 @@ export default function NoticiasAdmin() {
                 enableSorting: false,
             },
             {
+                accessorKey: 'lugar',
+                header: 'Lugar',
+                cell: ({ getValue }) => (
+                    <div className='max-w-xs'>
+                        <p className='text-sm font-medium text-slate-900 line-clamp-2'>
+                            {getValue() as string}
+                        </p>
+                    </div>
+                ),
+                enableSorting: false,
+            },
+            {
                 accessorKey: 'categoria',
                 header: 'Categoría',
                 cell: ({ getValue }) => (
@@ -110,6 +122,16 @@ export default function NoticiasAdmin() {
                 cell: ({ getValue }) => (
                     <div className='max-w-xs'>
                         <div className='text-sm font-medium text-slate-900 line-clamp-2' dangerouslySetInnerHTML={{ __html: getValue() as string }}/>
+                    </div>
+                ),
+                enableSorting: false,
+            },
+            {
+                accessorKey: 'resumen',
+                header: 'Resumen',
+                cell: ({ getValue }) => (
+                    <div className='max-w-xs'>
+                        <p className='text-sm text-slate-700 line-clamp-2'>{getValue() as string}</p>
                     </div>
                 ),
                 enableSorting: false,

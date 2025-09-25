@@ -4,7 +4,12 @@ export const noticiaSchemaBase = z.object({
 	titulo: z.string().min(1, { message: 'El título no puede estar vacío' }),
 	categoria: z.string().min(1, { message: 'La categoría no puede estar vacía' }),
 	descripcion: z.string().min(1, { message: 'La descripción no puede estar vacía' }),
-	fechaManual: z.string().min(1, { message: 'La fecha no puede estar vacía' })
+	resumen: z
+		.string()
+		.min(1, { message: 'El resumen no puede estar vacío' })
+		.max(70, { message: 'El resumen no puede superar 70 caracteres' }),
+	fechaManual: z.string().min(1, { message: 'La fecha no puede estar vacía' }),
+	lugar : z.string().min(1, { message: 'El lugar no puede estar vacío' }),
 });
 
 export const noticiaEditForm = noticiaSchemaBase.extend({
@@ -28,3 +33,4 @@ export type NoticiaEditForm = z.infer<typeof noticiaEditForm>;
 export type NoticiaForm = z.infer<typeof noticiaRequest>
 export type NoticiaRequest = z.infer<typeof noticiaRequest>;
 export type NoticiaResponse = z.infer<typeof noticiaReponse>;
+
