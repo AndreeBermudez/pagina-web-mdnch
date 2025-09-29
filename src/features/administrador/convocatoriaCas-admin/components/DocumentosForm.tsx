@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, FileText, Link as LinkIcon, Presentation, Settings, ToggleLeft, ToggleRight } from 'lucide-react';
+import { configurarDocumentosConvocatoria } from '../services/configurarDocumentosConvocatoria';
 import { Button } from '../../../../core/components/ui/Button';
 import { Modal } from '../../../../core/components/common/modal/Modal';
 import { ConfigurarForm } from './ConfigurarForm';
@@ -10,7 +11,7 @@ interface DocumentoItem {
   titulo: string;
   descripcion: string;
   habilitado: boolean;
-  url?: string;
+  url?: string | null;
   archivo?: File | null;
   archivoNombre?: string;
 }
@@ -24,6 +25,7 @@ interface DocumentoGrupo {
 }
 
 interface DocumentosFormProps {
+  convocatoriaId: number;
   codigoConvocatoria: string;
   nombreConvocatoria: string;
   area: string;
@@ -48,8 +50,8 @@ const initialDocumentos: DocumentoGrupo[] = [
         tipo: 'documento',
         titulo: 'Bases',
         descripcion: 'Documento PDF',
-        habilitado: true,
-        url: 'https://ejemplo.com/bases.pdf',
+        habilitado: false,
+        url: null,
       },
       {
         id: 'anexos',
@@ -57,15 +59,15 @@ const initialDocumentos: DocumentoGrupo[] = [
         titulo: 'Anexos',
         descripcion: 'Documento PDF',
         habilitado: false,
-        url: 'https://ejemplo.com/anexos.pdf',
+        url: null,
       },
       {
         id: 'postulacion',
         tipo: 'enlace',
         titulo: 'Postulacion',
         descripcion: 'Enlace externo',
-        habilitado: true,
-        url: 'https://ejemplo.com/postulacion',
+        habilitado: false,
+        url: null,
       },
     ],
   },
@@ -79,14 +81,14 @@ const initialDocumentos: DocumentoGrupo[] = [
         tipo: 'comunicado',
         titulo: 'Comunicado 1',
         descripcion: 'Documento PDF',
-        habilitado: true,
+        habilitado: false,
       },
       {
         id: 'comunicado-2',
         tipo: 'comunicado',
         titulo: 'Comunicado 2',
         descripcion: 'Documento PDF',
-        habilitado: true,
+        habilitado: false,
       },
     ],
   },
@@ -100,28 +102,28 @@ const initialDocumentos: DocumentoGrupo[] = [
         tipo: 'evaluacion',
         titulo: 'Evaluacion Curricular',
         descripcion: 'Disponible',
-        habilitado: true,
+        habilitado: false,
       },
       {
         id: 'absolucion-reclamos',
         tipo: 'evaluacion',
         titulo: 'Absolucion de Reclamos',
         descripcion: 'Disponible',
-        habilitado: true,
+        habilitado: false,
       },
       {
         id: 'entrevista',
         tipo: 'evaluacion',
         titulo: 'Evaluacion de Entrevista',
         descripcion: 'Disponible',
-        habilitado: true,
+        habilitado: false,
       },
       {
         id: 'resultados-finales',
         tipo: 'evaluacion',
         titulo: 'Resultados Finales',
         descripcion: 'Disponible',
-        habilitado: true,
+        habilitado: false,
       },
     ],
   },
@@ -172,6 +174,9 @@ const GrupoDocumentos = ({ grupo, onToggleItem, onConfigure }: GrupoDocumentosPr
                 <div>
                   <p className='text-sm font-semibold text-slate-900'>{item.titulo}</p>
                   <p className='text-xs text-slate-500'>{item.descripcion}</p>
+                  {item.archivoNombre && (
+                    <p className='text-xs text-blue-600 mt-1'>📄 {item.archivoNombre}</p>
+                  )}
                 </div>
               </div>
 
@@ -194,38 +199,131 @@ const GrupoDocumentos = ({ grupo, onToggleItem, onConfigure }: GrupoDocumentosPr
   );
 };
 
-export const DocumentosForm = ({ codigoConvocatoria, nombreConvocatoria, area, handleClose }: DocumentosFormProps) => {
+export const DocumentosForm = ({ convocatoriaId, codigoConvocatoria, nombreConvocatoria, area, handleClose }: DocumentosFormProps) => {
   const [grupos, setGrupos] = useState(initialDocumentos);
   const [configuracionAbierta, setConfiguracionAbierta] = useState<{ grupoId: string; item: DocumentoItem } | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleToggle = (grupoId: string, itemId: string) => {
-    setGrupos((current) =>
-      current.map((grupo) =>
-        grupo.id === grupoId
-          ? {
-              ...grupo,
-              items: grupo.items.map((item) =>
-                item.id === itemId ? { ...item, habilitado: !item.habilitado } : item
-              ),
-            }
-          : grupo
-      )
-    );
+  const handleSaveAll = async () => {
+    try {
+      setIsSaving(true);
+      const documentosParaGuardar = grupos.flatMap(grupo =>
+        grupo.items.map(item => ({
+          tipo: mapTipoDocumento(item.tipo, item.id),
+          habilitado: item.habilitado,
+          titulo: item.titulo,
+          descripcion: item.descripcion,
+          url: item.url || null,
+          orden: grupo.items.findIndex(i => i.id === item.id)
+        }))
+      );
+
+      await configurarDocumentosConvocatoria(convocatoriaId, documentosParaGuardar);
+      alert('Cambios guardados correctamente');
+      handleClose();
+    } catch (error) {
+      console.error('Error al guardar cambios:', error);
+      alert('Error al guardar los cambios');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const mapTipoDocumento = (tipo: string, itemId: string): "BASES" | "ANEXOS" | "COMUNICADO1" | "COMUNICADO2" | "EVAL_CURRICULAR" | "EVAL_ENTREVISTA" | "ABSOLUCION_RECLAMOS" | "RESULTADOS_FINALES" => {
+    switch (tipo) {
+      case 'documento':
+        if (itemId === 'bases') return 'BASES';
+        if (itemId === 'anexos') return 'ANEXOS';
+        return 'BASES';
+      case 'comunicado':
+        if (itemId === 'comunicado-1') return 'COMUNICADO1';
+        if (itemId === 'comunicado-2') return 'COMUNICADO2';
+        return 'COMUNICADO1';
+      case 'evaluacion':
+        if (itemId === 'evaluacion-curricular') return 'EVAL_CURRICULAR';
+        if (itemId === 'absolucion-reclamos') return 'ABSOLUCION_RECLAMOS';
+        if (itemId === 'entrevista') return 'EVAL_ENTREVISTA';
+        if (itemId === 'resultados-finales') return 'RESULTADOS_FINALES';
+        return 'EVAL_CURRICULAR';
+      default:
+        return 'BASES';
+    }
+  };
+
+  const handleToggle = async (grupoId: string, itemId: string) => {
+    const grupo = grupos.find(g => g.id === grupoId);
+    const item = grupo?.items.find(i => i.id === itemId);
+    
+    if (!item) return;
+
+    const nuevoEstado = !item.habilitado;
+
+    try {
+      // Actualizar en la base de datos
+      // El ID ya es un número válido
+
+      const payload = [{
+        tipo: mapTipoDocumento(item.tipo, itemId),
+        habilitado: nuevoEstado,
+        titulo: item.titulo,
+        descripcion: item.descripcion,
+        url: item.url || null,
+        orden: grupo?.items.findIndex(i => i.id === itemId) ?? 0
+      }];
+
+      console.log('Enviando al backend:', {
+        convocatoriaId,
+        payload
+      });
+
+      await configurarDocumentosConvocatoria(
+        convocatoriaId,
+        payload
+      );
+
+      // Actualizar estado local
+      setGrupos(current =>
+        current.map(grupo =>
+          grupo.id === grupoId
+            ? {
+                ...grupo,
+                items: grupo.items.map(item =>
+                  item.id === itemId ? { ...item, habilitado: nuevoEstado } : item
+                ),
+              }
+            : grupo
+        )
+      );
+    } catch (error) {
+      console.error('Error al actualizar estado:', error);
+    }
   };
 
   const handleConfigure = (grupoId: string, item: DocumentoItem) => {
     setConfiguracionAbierta({ grupoId, item });
   };
 
-  const handleSaveConfig = (updatedItem: DocumentoItem) => {
+  const handleSaveConfig = (updatedItem: any) => {
     if (!configuracionAbierta) return;
+
+    // Ensure updatedItem has all DocumentoItem properties
+    const itemToSave: DocumentoItem = {
+      id: updatedItem.id,
+      tipo: updatedItem.tipo ?? (configuracionAbierta.item.tipo),
+      titulo: updatedItem.titulo,
+      descripcion: updatedItem.descripcion,
+      habilitado: updatedItem.habilitado,
+      url: updatedItem.url,
+      archivo: updatedItem.archivo ?? null,
+      archivoNombre: updatedItem.archivoNombre,
+    };
 
     setGrupos((current) =>
       current.map((grupo) =>
         grupo.id === configuracionAbierta.grupoId
           ? {
               ...grupo,
-              items: grupo.items.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
+              items: grupo.items.map((item) => (item.id === itemToSave.id ? itemToSave : item)),
             }
           : grupo
       )
@@ -269,8 +367,8 @@ export const DocumentosForm = ({ codigoConvocatoria, nombreConvocatoria, area, h
         <Button variant='outline' onClick={handleClose}>
           Cerrar
         </Button>
-        <Button>
-          Guardar cambios
+        <Button variant='primary' onClick={handleSaveAll}>
+          Guardar Cambios
         </Button>
       </div>
 
@@ -282,7 +380,15 @@ export const DocumentosForm = ({ codigoConvocatoria, nombreConvocatoria, area, h
           size='lg'
         >
           <ConfigurarForm
-            item={configuracionAbierta.item}
+            item={{
+              ...configuracionAbierta.item,
+              categoria: grupos.find(g => g.id === configuracionAbierta.grupoId)?.icono ?? 'documento',
+              orden: grupos
+                .find(g => g.id === configuracionAbierta.grupoId)
+                ?.items.findIndex(i => i.id === configuracionAbierta.item.id) ?? 0,
+              url: configuracionAbierta.item.url ?? null,
+            }}
+            convocatoriaId={convocatoriaId}
             onClose={() => setConfiguracionAbierta(null)}
             onSave={handleSaveConfig}
           />

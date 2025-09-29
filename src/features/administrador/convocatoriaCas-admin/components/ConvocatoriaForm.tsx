@@ -1,7 +1,10 @@
 ﻿import { useForm } from 'react-hook-form';
 import { FormInput, FormLabel } from '../../../../core/components/common/form';
+import { useConvocatoriaMutations } from '../hooks/useConvocatoriaMutations';
+import type { ConvocatoriaPayload } from '../services/types';
 
 interface ConvocatoriaFormValues {
+  codigo: string;
   convocatoria: string;
   area: string;
   vacantes: number;
@@ -11,6 +14,7 @@ interface ConvocatoriaFormProps {
   handleModal: () => void;
   convocatoriaEditable?: {
     id: number;
+    codigo: string;
     convocatoria: string;
     area: string;
     vacantes: number;
@@ -20,20 +24,37 @@ interface ConvocatoriaFormProps {
 export const ConvocatoriaForm = ({ handleModal, convocatoriaEditable }: ConvocatoriaFormProps) => {
   const isEditing = Boolean(convocatoriaEditable);
 
+  const { crearConvocatoria, actualizarConvocatoria } = useConvocatoriaMutations();
+
   const { register, handleSubmit, reset } = useForm<ConvocatoriaFormValues>({
     defaultValues: {
+      codigo: convocatoriaEditable?.codigo ?? '',
       convocatoria: convocatoriaEditable?.convocatoria ?? '',
       area: convocatoriaEditable?.area ?? '',
       vacantes: convocatoriaEditable?.vacantes ?? 1,
     },
   });
 
-  const onSubmit = (data: ConvocatoriaFormValues) => {
-    console.log(isEditing ? 'Actualizar convocatoria' : 'Crear convocatoria', data);
-    if (!isEditing) {
-      reset();
+  const onSubmit = async (data: ConvocatoriaFormValues) => {
+    try {
+      if (isEditing && convocatoriaEditable) {
+        await actualizarConvocatoria.mutateAsync({
+          id: convocatoriaEditable.id,
+          data: {
+            codigo: data.codigo,
+            convocatoria: data.convocatoria,
+            area: data.area,
+            vacantes: data.vacantes
+          }
+        });
+      } else {
+        await crearConvocatoria.mutateAsync(data as ConvocatoriaPayload);
+        reset();
+      }
+      handleModal();
+    } catch (error) {
+      console.error('Error al guardar la convocatoria:', error);
     }
-    handleModal();
   };
 
   return (
@@ -42,6 +63,13 @@ export const ConvocatoriaForm = ({ handleModal, convocatoriaEditable }: Convocat
         <div className='flex-1 overflow-y-auto'>
           <div className='p-6 space-y-6'>
             <div className='space-y-4'>
+              <div>
+                <FormLabel label='Código' required />
+                <FormInput
+                  {...register('codigo', { required: true })}
+                  placeholder='Ej: CAS-001-2025'
+                />
+              </div>
               <div>
                 <FormLabel label='Convocatoria' required />
                 <FormInput
