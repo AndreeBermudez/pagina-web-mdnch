@@ -22,6 +22,7 @@ export interface DocumentoBase {
 
 export interface DocumentoUI extends Omit<DocumentoBase, 'tipo'> {
   id: string;
+   tipo: DocumentoTipo;
   categoria: DocumentoCategoria;
   archivo?: File | null;
   archivoNombre?: string;
@@ -31,9 +32,7 @@ export interface DocumentoUI extends Omit<DocumentoBase, 'tipo'> {
 export interface DocumentoConfig {
   tipo: DocumentoTipo;
   habilitado: boolean;
-  titulo?: string | null;
-  descripcion?: string | null;
-  orden?: number | null;
+  url?: string | null;
 }
 
 export const DOCUMENTO_TIPOS: Record<DocumentoTipo, { categoria: DocumentoCategoria; titulo: string }> = {

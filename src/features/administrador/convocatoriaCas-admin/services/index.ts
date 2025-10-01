@@ -9,6 +9,5 @@ export type {
   ConvocatoriaUpdatePayload,
   ConvocatoriaResponse,
   ConvocatoriaId,
-  ConvocatoriaDocumento,
   ConvocatoriaDocumentosConfigPayload,
 } from './types';

@@ -1,4 +1,4 @@
-﻿import z from 'zod';
+import z from 'zod';
 
 const convocatoriaBaseSchema = z.object({
   codigo: z.string().trim().min(1, { message: 'Ingresa el codigo de la convocatoria.' }),
@@ -16,6 +16,7 @@ const convocatoriaPostulacionSchema = z.object({
 
 export const DOCUMENTO_TIPOS = [
   'BASES',
+  'POSTULACION',
   'ANEXOS',
   'COMUNICADO1',
   'COMUNICADO2',
@@ -62,11 +63,8 @@ export const convocatoriaUpdateSchema = convocatoriaRequestSchema.partial();
 
 export const convocatoriaDocumentoConfigSchema = z.object({
   tipo: documentoTipoSchema,
-  titulo: z.string().trim().nullable().optional(),
-  descripcion: z.string().trim().nullable().optional(),
+  habilitado: z.boolean(),
   url: z.string().trim().nullable().optional(),
-  habilitado: z.boolean().optional(),
-  orden: z.number().nullable().optional(),
 });
 
 export const convocatoriaDocumentosConfigSchema = z.object({
@@ -80,3 +78,4 @@ export type ConvocatoriaResponse = z.infer<typeof convocatoriaResponseSchema>;
 export type ConvocatoriaDocumento = z.infer<typeof convocatoriaDocumentoSchema>;
 export type ConvocatoriaDocumentoConfigPayload = z.infer<typeof convocatoriaDocumentosConfigSchema>;
 export type ConvocatoriaDocumentoTipo = (typeof DOCUMENTO_TIPOS)[number];
+

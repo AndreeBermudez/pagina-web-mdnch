@@ -1,4 +1,5 @@
 import type { FormEvent } from "react";
+import { useState } from "react";
 import { Info } from "lucide-react";
 import { Button } from "../../../../core/components/ui/Button";
 import type { DocumentoUI } from '../types/documento.types';
@@ -20,6 +21,8 @@ export const ConfigurarForm = ({ item, convocatoriaId, onClose, onSave }: Config
     guardarDocumento
   } = useDocumento(item);
 
+  const [urlEnlace, setUrlEnlace] = useState(item.url ?? '');
+
   const shouldUseFileUpload = item.categoria !== "enlace";
   const isFileRequired = shouldUseFileUpload && item.categoria !== "comunicado";
 
@@ -27,20 +30,39 @@ export const ConfigurarForm = ({ item, convocatoriaId, onClose, onSave }: Config
     ? isFileRequired
       ? "Sube un archivo en formato PDF u otro permitido (máximo 10 MB)."
       : "Opcional. Adjunta un archivo si deseas compartir un documento."
-    : "";
+    : "Pega el enlace de Google Forms u otro servicio externo.";
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      await guardarDocumento(item, convocatoriaId);
+      // Para enlaces, guardar la URL directamente usando la función de configuración
+      if (!shouldUseFileUpload) {
+        // Crear un item temporal con la URL actualizada para que guardarDocumento la procese
+        const itemConUrl = { ...item, url: urlEnlace || null };
+        await guardarDocumento(itemConUrl, convocatoriaId);
+        
+        onSave({
+          ...item,
+          url: urlEnlace || null,
+        });
+        return;
+      }
+
+      // Para archivos, usar la función guardarDocumento
+      const nuevaUrl = await guardarDocumento(item, convocatoriaId);
+
       onSave({
         ...item,
         archivo,
-        archivoNombre: archivo?.name ?? archivoNombre
+        archivoNombre: archivo?.name ?? archivoNombre,
+        url: nuevaUrl ?? item.url ?? null,
       });
     } catch (error) {
       console.error('Error al configurar documento:', error);
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 
@@ -62,33 +84,57 @@ export const ConfigurarForm = ({ item, convocatoriaId, onClose, onSave }: Config
 
         <div className="space-y-4">
           <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700" htmlFor="cfg-archivo">
-              Archivo del documento {isFileRequired && <span className="text-red-500">*</span>}
-            </label>
-            <input
-              id="cfg-archivo"
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleArchivoChange}
-              disabled={!item.habilitado}
-              className={`w-full rounded-2xl border px-3 py-2 text-sm bg-white file:mr-4 file:rounded-xl file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 ${
-                errors.archivo ? "border-red-300" : "border-slate-200"
-              }`}
-            />
-            {archivoNombre && (
-              <p className="text-xs text-slate-500">Archivo seleccionado: {archivoNombre}</p>
+            {shouldUseFileUpload ? (
+              <>
+                <label className="text-sm font-medium text-slate-700" htmlFor="cfg-archivo">
+                  Archivo del documento {isFileRequired && <span className="text-red-500">*</span>}
+                </label>
+                <input
+                  id="cfg-archivo"
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={handleArchivoChange}
+                  disabled={!item.habilitado}
+                  className={`w-full rounded-2xl border px-3 py-2 text-sm bg-white file:mr-4 file:rounded-xl file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 ${
+                    errors.archivo ? "border-red-300" : "border-slate-200"
+                  }`}
+                />
+                {archivoNombre && (
+                  <p className="text-xs text-slate-500">Archivo seleccionado: {archivoNombre}</p>
+                )}
+                <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                  <Info className="w-3.5 h-3.5 text-slate-400" />
+                  <p>{helperText}</p>
+                </div>
+                {errors.archivo && <p className="text-xs text-red-600">{errors.archivo}</p>}
+              </>
+            ) : (
+              <>
+                <label className="text-sm font-medium text-slate-700" htmlFor="cfg-enlace">
+                  Enlace externo <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="cfg-enlace"
+                  type="url"
+                  value={urlEnlace}
+                  onChange={e => setUrlEnlace(e.target.value)}
+                  disabled={!item.habilitado}
+                  placeholder="Pega aquí el enlace de Google Forms"
+                  className="w-full rounded-2xl border px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 border-slate-200"
+                  required
+                />
+                <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                  <Info className="w-3.5 h-3.5 text-slate-400" />
+                  <p>{helperText}</p>
+                </div>
+              </>
             )}
-            <div className="flex items-center gap-1.5 text-xs text-slate-500">
-              <Info className="w-3.5 h-3.5 text-slate-400" />
-              <p>{helperText}</p>
-            </div>
-            {errors.archivo && <p className="text-xs text-red-600">{errors.archivo}</p>}
           </div>
         </div>
 
         {!item.habilitado && (
           <div className="rounded-2xl border border-slate-200 bg-slate-100/80 p-3 text-sm text-slate-600">
-            Este elemento está deshabilitado. No se pueden subir archivos mientras esté en este estado.
+            Este elemento está deshabilitado. No se pueden subir archivos ni enlaces mientras esté en este estado.
           </div>
         )}
       </section>
@@ -104,4 +150,5 @@ export const ConfigurarForm = ({ item, convocatoriaId, onClose, onSave }: Config
     </form>
   );
 };
+
 

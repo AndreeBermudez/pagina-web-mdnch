@@ -6,6 +6,7 @@ import { DocumentosForm } from "../components/DocumentosForm";
 import { Modal } from "../../../../core/components/common/modal/Modal";
 import { useModal } from "../../../../core/hooks/useModal";
 import { ConvocatoriaForm } from "../components/ConvocatoriaForm";
+import ConfirmModal from "../components/ConfirmModal";
 import { useConvocatoriasQuery } from "../hooks/useConvocatoriaQueries";
 import { useConvocatoriaMutations } from "../hooks/useConvocatoriaMutations";
 import type { ConvocatoriaResponse } from "../services/types";
@@ -16,11 +17,13 @@ export default function ConvocatoriaAdmin() {
   const { isModalOpen, handleModal } = useModal();
   const [convocatoriaEditable, setConvocatoriaEditable] = useState<ConvocatoriaRecord | null>(null);
   const [documentosOpen, setDocumentosOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [convocatoriaToDelete, setConvocatoriaToDelete] = useState<ConvocatoriaRecord | null>(null);
   
   const { data: convocatorias, isLoading } = useConvocatoriasQuery();
   // Removed incorrect destructuring of mutations
 
-  const { crearConvocatoria, actualizarConvocatoria, eliminarConvocatoria } = useConvocatoriaMutations();
+  const {eliminarConvocatoria } = useConvocatoriaMutations();
 
   const handleDocuments = (record: ConvocatoriaRecord) => {
     setConvocatoriaEditable(record);
@@ -37,10 +40,21 @@ export default function ConvocatoriaAdmin() {
     handleModal();
   };
 
-  const handleDelete = async (record: ConvocatoriaRecord) => {
-    if (window.confirm(`¿Estás seguro de eliminar la convocatoria ${record.codigo}?`)) {
-      await eliminarConvocatoria.mutateAsync(record.id);
+  const handleDelete = (record: ConvocatoriaRecord) => {
+    setConvocatoriaToDelete(record);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (convocatoriaToDelete) {
+      await eliminarConvocatoria.mutateAsync(convocatoriaToDelete.id);
+      setConvocatoriaToDelete(null);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setConvocatoriaToDelete(null);
   };
 
   const columns: ColumnDef<ConvocatoriaRecord>[] = useMemo(
@@ -155,6 +169,17 @@ export default function ConvocatoriaAdmin() {
           />
         </Modal>
       )}
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar Eliminación"
+        message={`¿Estás seguro de eliminar la convocatoria ${convocatoriaToDelete?.codigo}?`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="error"
+      />
     </>
   );
 }

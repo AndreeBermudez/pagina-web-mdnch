@@ -24,8 +24,18 @@ export interface ConvocatoriaResponse extends ConvocatoriaBase {
   documentos: DocumentoBase[];
 }
 
+
 export interface ConvocatoriaUpdatePayload extends Partial<ConvocatoriaBase> {
   estado?: boolean;
+  bases?: File;
+  anexos?: File;
+  comunicado1?: File;
+  comunicado2?: File;
+  evaluacionCurricular?: File;
+  evaluacionEntrevista?: File;
+  absolucionReclamos?: File;
+  resultadosFinales?: File;
+  postulacion?: string; // Para enlaces de Google Forms
 }
 
 export type ConvocatoriaDocumentosConfigPayload = DocumentoConfig[];

@@ -1,21 +1,57 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import type { DocumentoUI } from '../types/documento.types';
 import { configurarDocumentosConvocatoria } from '../services/configurarDocumentosConvocatoria';
+import { actualizarConvocatoria } from '../services/actualizarConvocatoria';
+import { obtenerDocumentosConvocatoria } from '../services/obtenerDocumentosConvocatoria';
+import type { DocumentoTipo, DocumentoUI } from '../types/documento.types';
 import { mapUIToTipo } from '../types/documento.types';
+import type { ConvocatoriaUpdatePayload } from '../services/types';
 
 interface UseDocumentoReturn {
   archivo: File | null;
   archivoNombre: string;
   errors: { archivo?: string };
   setArchivo: (file: File | null) => void;
+  setArchivoNombre: (name: string) => void;
   handleArchivoChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  guardarDocumento: (documento: DocumentoUI, convocatoriaId: number | string) => Promise<void>;
+  guardarDocumento: (documento: DocumentoUI, convocatoriaId: number | string) => Promise<string | null | void>;
 }
+
+// Mapear tipos de documento a campos del FormData
+const mapTipoToFormField = (tipo: DocumentoTipo): keyof ConvocatoriaUpdatePayload => {
+  switch (tipo) {
+    case 'BASES': return 'bases';
+    case 'ANEXOS': return 'anexos';
+    case 'COMUNICADO1': return 'comunicado1';
+    case 'COMUNICADO2': return 'comunicado2';
+    case 'EVAL_CURRICULAR': return 'evaluacionCurricular';
+    case 'EVAL_ENTREVISTA': return 'evaluacionEntrevista';
+    case 'ABSOLUCION_RECLAMOS': return 'absolucionReclamos';
+    case 'RESULTADOS_FINALES': return 'resultadosFinales';
+    case 'POSTULACION': return 'postulacion';
+    default: throw new Error(`Tipo de documento no soportado: ${tipo}`);
+  }
+};
+
+// Función para extraer el nombre del archivo de una URL
+const extractFileNameFromUrl = (url: string): string => {
+  try {
+    const urlParts = url.split('/');
+    const fileName = urlParts[urlParts.length - 1];
+    // Remover timestamp si existe (formato: timestamp_filename)
+    const cleanFileName = fileName.includes('_') ? fileName.split('_').slice(1).join('_') : fileName;
+    return decodeURIComponent(cleanFileName);
+  } catch {
+    return url;
+  }
+};
 
 export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
   const [archivo, setArchivo] = useState<File | null>(null);
-  const [archivoNombre, setArchivoNombre] = useState(documento.archivoNombre ?? documento.url ?? '');
+  const [archivoNombre, setArchivoNombre] = useState(
+    documento.archivoNombre ?? 
+    (documento.url ? extractFileNameFromUrl(documento.url) : '')
+  );
   const [errors, setErrors] = useState<{ archivo?: string }>({});
 
   const queryClient = useQueryClient();
@@ -24,7 +60,7 @@ export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
     const allowedTypes = [
       'application/pdf',
       'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     ];
 
     if (!allowedTypes.includes(file.type)) {
@@ -40,7 +76,7 @@ export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
 
   const handleArchivoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
-    
+
     if (!file) {
       setArchivo(null);
       setErrors({});
@@ -58,29 +94,73 @@ export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
     setErrors({});
   };
 
-  const guardarDocumento = async (documento: DocumentoUI, convocatoriaId: number | string) => {
+  const guardarDocumento = async (documentoUI: DocumentoUI, convocatoriaId: number | string) => {
     const idNumerico = typeof convocatoriaId === 'string' ? parseInt(convocatoriaId, 10) : convocatoriaId;
-    
-    if (isNaN(idNumerico)) {
-      throw new Error('ID de convocatoria inválido');
+
+    if (Number.isNaN(idNumerico)) {
+      throw new Error('ID de convocatoria invalido');
     }
 
-    if (archivo) {
-      const formData = new FormData();
-      formData.append('file', archivo);
+    const tipoDocumento = mapUIToTipo(documentoUI.titulo);
+
+    // Si hay un archivo o una URL (para POSTULACION), usar actualizarConvocatoria (FormData)
+    if (archivo || (tipoDocumento === 'POSTULACION' && documentoUI.url)) {
+      const formField = mapTipoToFormField(tipoDocumento);
+      const updatePayload: ConvocatoriaUpdatePayload = {};
+
+      if (tipoDocumento === 'POSTULACION') {
+        // Para POSTULACION, enviar la URL como string
+        (updatePayload as any)[formField] = documentoUI.url || '';
+      } else {
+        // Para otros tipos, enviar el archivo
+        (updatePayload as any)[formField] = archivo;
+      }
+
+      const response = await actualizarConvocatoria(idNumerico, updatePayload);
       
-      // Configurar el documento
-      await configurarDocumentosConvocatoria(idNumerico, [{
-        tipo: mapUIToTipo(documento.titulo),
-        titulo: documento.titulo,
-        descripcion: documento.descripcion,
-        habilitado: documento.habilitado,
-        orden: documento.orden
-      }]);
-
-      // Invalidar queries para refrescar datos
       queryClient.invalidateQueries({ queryKey: ['convocatorias', convocatoriaId] });
+      
+      const documentoActualizado = response.documentos?.find(doc => doc.tipo === tipoDocumento);
+      
+      // Actualizar archivoNombre después de guardar exitosamente (solo para archivos)
+      if (documentoActualizado?.url && archivo) {
+        setArchivoNombre(archivo.name);
+      }
+      
+      return documentoActualizado?.url ?? null;
     }
+
+    // Si no hay archivo, solo configurar el estado (habilitado/deshabilitado)
+    const documentosActuales = await obtenerDocumentosConvocatoria(idNumerico);
+
+    const payload = documentosActuales.map(doc => ({
+      tipo: doc.tipo as DocumentoTipo,
+      habilitado: Boolean(doc.habilitado),
+      url: doc.url ?? null,
+    }));
+
+    const updatedDocumento = {
+      tipo: tipoDocumento,
+      habilitado: documentoUI.habilitado,
+      url: documentoUI.url ?? null,
+    };
+
+    const existingIndex = payload.findIndex(doc => doc.tipo === tipoDocumento);
+    if (existingIndex >= 0) {
+      payload[existingIndex] = updatedDocumento;
+    } else {
+      payload.push(updatedDocumento);
+    }
+
+    const response = await configurarDocumentosConvocatoria(
+      idNumerico,
+      payload,
+    );
+
+    queryClient.invalidateQueries({ queryKey: ['convocatorias', convocatoriaId] });
+
+    const documentoActualizado = response.documentos?.find(doc => doc.tipo === tipoDocumento);
+    return documentoActualizado?.url ?? null;
   };
 
   return {
@@ -88,7 +168,9 @@ export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
     archivoNombre,
     errors,
     setArchivo,
+    setArchivoNombre,
     handleArchivoChange,
-    guardarDocumento
+    guardarDocumento,
   };
 };
+
