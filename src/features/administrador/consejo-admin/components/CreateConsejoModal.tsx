@@ -20,12 +20,21 @@ export default function CreateConsejoModal({ isOpen, onClose, onSave, initialDat
 
 	useEffect(() => {
 		if (initialData) {
+			// Modo edición: cargar datos
 			setNombre(initialData.nombre || '');
 			setApellido(initialData.apellido || '');
 			setCargo(initialData.cargo || '');
 			setArea(initialData.area || '');
 			setPreviewImage(initialData.direccionImagen || null);
 			setFile(null); // limpiamos el file seleccionado
+		} else {
+			// Modo crear: limpiar campos
+			setNombre('');
+			setApellido('');
+			setCargo('');
+			setArea('');
+			setPreviewImage(null);
+			setFile(null);
 		}
 	}, [initialData]);
 

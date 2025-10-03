@@ -19,10 +19,7 @@ export default function ConvocatoriaAdmin() {
   const [documentosOpen, setDocumentosOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [convocatoriaToDelete, setConvocatoriaToDelete] = useState<ConvocatoriaRecord | null>(null);
-  
   const { data: convocatorias, isLoading } = useConvocatoriasQuery();
-  // Removed incorrect destructuring of mutations
-
   const {eliminarConvocatoria } = useConvocatoriaMutations();
 
   const handleDocuments = (record: ConvocatoriaRecord) => {

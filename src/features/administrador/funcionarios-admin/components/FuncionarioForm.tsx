@@ -18,6 +18,7 @@ interface FuncionarioModalProps {
 	funcionarioEditable?: Funcionario | null;
 }
 
+
 export const FuncionarioForm = ({ handleModal, funcionarioEditable }: FuncionarioModalProps) => {
 	const isEditing = Boolean(funcionarioEditable);
 	const { register, handleSubmit, reset, setValue } = useForm<FuncionarioRequest | FuncionarioEdit>({

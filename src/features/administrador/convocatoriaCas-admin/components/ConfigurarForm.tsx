@@ -36,9 +36,9 @@ export const ConfigurarForm = ({ item, convocatoriaId, onClose, onSave }: Config
     event.preventDefault();
 
     try {
-      // Para enlaces, guardar la URL directamente usando la función de configuración
+      
       if (!shouldUseFileUpload) {
-        // Crear un item temporal con la URL actualizada para que guardarDocumento la procese
+       
         const itemConUrl = { ...item, url: urlEnlace || null };
         await guardarDocumento(itemConUrl, convocatoriaId);
         
@@ -49,7 +49,7 @@ export const ConfigurarForm = ({ item, convocatoriaId, onClose, onSave }: Config
         return;
       }
 
-      // Para archivos, usar la función guardarDocumento
+      
       const nuevaUrl = await guardarDocumento(item, convocatoriaId);
 
       onSave({

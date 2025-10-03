@@ -10,6 +10,7 @@ import { AlcaldeForm } from '../components/AlcaldeForm';
 import { useAlcaldeMutations } from '../hooks/useAlcaldeMutations';
 import { useAlcaldeQuery } from '../hooks/useAlcaldeQuery';
 import type { Alcalde } from '../schemas/alcalde.schema';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function AlcaldeAdmin() {
 	const { isModalOpen, handleModal } = useModal();
@@ -17,6 +18,8 @@ export default function AlcaldeAdmin() {
 	const { alcaldes, isLoading, error: queryError } = useAlcaldeQuery();
 	const { deleteAlcalde } = useAlcaldeMutations();
 	const [alcaldeEdit, setAlcaldeEdit] = useState<Alcalde | null>(null);
+	const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+	const [alcaldeToDelete, setAlcaldeToDelete] = useState<Alcalde | null>(null);
 
 	const handleEdit = (alcalde: Alcalde) => {
 		setAlcaldeEdit(alcalde);
@@ -29,8 +32,13 @@ export default function AlcaldeAdmin() {
 	};
 
 	const handleDelete = (alcalde: Alcalde) => {
-		if (window.confirm('¿Estás seguro de que deseas eliminar este alcalde?')) {
-			deleteAlcalde.mutate(alcalde.alcaldeId, {
+		setAlcaldeToDelete(alcalde);
+		setIsConfirmOpen(true);
+	};
+
+	const confirmDelete = () => {
+		if (alcaldeToDelete) {
+			deleteAlcalde.mutate(alcaldeToDelete.alcaldeId, {
 				onSuccess: () => {
 					success('Alcalde eliminado exitosamente');
 				},
@@ -160,6 +168,17 @@ export default function AlcaldeAdmin() {
 
 	return (
 		<>
+			{isConfirmOpen && alcaldeToDelete && (
+				<ConfirmModal
+					isOpen={isConfirmOpen}
+					onClose={() => setIsConfirmOpen(false)}
+					onConfirm={confirmDelete}
+					title="Eliminar registro"
+					message={`¿Estás seguro de que deseas eliminar al alcalde ${alcaldeToDelete.nombre} ${alcaldeToDelete.apellido}? Esta acción no se puede deshacer.`}
+					confirmText="Eliminar"
+					cancelText="Cancelar"
+				/>
+			)}
 			<AdminDataTable
 				title='Gestión de Alcalde'
 				description='Administra la información del alcalde municipal'

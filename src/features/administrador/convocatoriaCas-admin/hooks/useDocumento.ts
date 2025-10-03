@@ -17,7 +17,6 @@ interface UseDocumentoReturn {
   guardarDocumento: (documento: DocumentoUI, convocatoriaId: number | string) => Promise<string | null | void>;
 }
 
-// Mapear tipos de documento a campos del FormData
 const mapTipoToFormField = (tipo: DocumentoTipo): keyof ConvocatoriaUpdatePayload => {
   switch (tipo) {
     case 'BASES': return 'bases';
@@ -33,12 +32,10 @@ const mapTipoToFormField = (tipo: DocumentoTipo): keyof ConvocatoriaUpdatePayloa
   }
 };
 
-// Función para extraer el nombre del archivo de una URL
 const extractFileNameFromUrl = (url: string): string => {
   try {
     const urlParts = url.split('/');
     const fileName = urlParts[urlParts.length - 1];
-    // Remover timestamp si existe (formato: timestamp_filename)
     const cleanFileName = fileName.includes('_') ? fileName.split('_').slice(1).join('_') : fileName;
     return decodeURIComponent(cleanFileName);
   } catch {
@@ -103,16 +100,15 @@ export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
 
     const tipoDocumento = mapUIToTipo(documentoUI.titulo);
 
-    // Si hay un archivo o una URL (para POSTULACION), usar actualizarConvocatoria (FormData)
     if (archivo || (tipoDocumento === 'POSTULACION' && documentoUI.url)) {
       const formField = mapTipoToFormField(tipoDocumento);
       const updatePayload: ConvocatoriaUpdatePayload = {};
 
       if (tipoDocumento === 'POSTULACION') {
-        // Para POSTULACION, enviar la URL como string
+      
         (updatePayload as any)[formField] = documentoUI.url || '';
       } else {
-        // Para otros tipos, enviar el archivo
+       
         (updatePayload as any)[formField] = archivo;
       }
 
@@ -121,16 +117,14 @@ export const useDocumento = (documento: DocumentoUI): UseDocumentoReturn => {
       queryClient.invalidateQueries({ queryKey: ['convocatorias', convocatoriaId] });
       
       const documentoActualizado = response.documentos?.find(doc => doc.tipo === tipoDocumento);
-      
-      // Actualizar archivoNombre después de guardar exitosamente (solo para archivos)
+  
       if (documentoActualizado?.url && archivo) {
         setArchivoNombre(archivo.name);
       }
       
       return documentoActualizado?.url ?? null;
     }
-
-    // Si no hay archivo, solo configurar el estado (habilitado/deshabilitado)
+    
     const documentosActuales = await obtenerDocumentosConvocatoria(idNumerico);
 
     const payload = documentosActuales.map(doc => ({

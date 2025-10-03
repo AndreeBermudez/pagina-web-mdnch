@@ -9,7 +9,7 @@ import {
 	eliminarConsejo,
 } from '../../../../core/services/consejo';
 import type { Consejo } from '../../../../core/services/consejo';
-import ConfirmModal from '../../funcionarios-admin/components/ConfirmModal';
+import ConfirmModal from '../../consejo-admin/components/ConfirmModal';
 
 export default function ConsejoAd() {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -17,6 +17,7 @@ export default function ConsejoAd() {
 	const [consejos, setConsejos] = useState<Consejo[]>([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedConsejo, setSelectedConsejo] = useState<Consejo | null>(null);
+	const [consejoToEdit, setConsejoToEdit] = useState<Consejo | null>(null);
 	const [consejoToDelete, setConsejoToDelete] = useState<Consejo | null>(null);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -33,14 +34,6 @@ export default function ConsejoAd() {
 			consejo.area.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
-	const fetchConsejos = async () => {
-		try {
-			const lista = await getAllConsejos();
-			setConsejos(lista);
-		} catch (error) {
-			console.error('Error al obtener lista de consejos:', error);
-		}
-	};
 	const fetchConsejosLista = async () => {
 		try {
 			const listaBasica = await getAllConsejos();
@@ -56,6 +49,16 @@ export default function ConsejoAd() {
 		} catch (error) {
 			console.error('Error al obtener consejos con miembros:', error);
 		}
+	};
+
+	const handleEdit = (consejo: Consejo) => {
+		setConsejoToEdit(consejo);
+		setIsCreateModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsCreateModalOpen(false);
+		setConsejoToEdit(null);
 	};
 
 	const handleDeleteConfirm = async () => {
@@ -229,6 +232,7 @@ export default function ConsejoAd() {
 												<span>Miembros ({c.equipos?.length || 0})</span>
 											</button>
 											<button
+												onClick={() => handleEdit(c)}
 												className='p-2 transition-colors rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50'
 												title='Editar consejo'>
 												<Edit className='w-4 h-4' />
@@ -254,8 +258,9 @@ export default function ConsejoAd() {
 			{/* Modals */}
 			<CreateConsejoModal
 				isOpen={isCreateModalOpen}
-				onClose={() => setIsCreateModalOpen(false)}
-				onSave={() => fetchConsejos()}
+				onClose={handleCloseModal}
+				onSave={() => fetchConsejosLista()}
+				initialData={consejoToEdit}
 			/>
 
 			<TeamModal

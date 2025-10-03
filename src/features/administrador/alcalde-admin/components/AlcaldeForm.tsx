@@ -1,3 +1,4 @@
+import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { FormFileInput, FormInput, FormLabel, ImagePreview } from '../../../../core/components/common/form';
@@ -44,6 +45,7 @@ export const AlcaldeForm = ({ handleModal, alcaldeEditable }: AlcaldeModalProps)
 		setValue: setImageHookForm,
 		initialImage: alcaldeEditable?.direccionImagen,
 	});
+	const [descripcion, setDescripcion] = React.useState(alcaldeEditable?.descripcion || '');
 
 	function setImageHookForm(file: File | null) {
 		if (file) {
@@ -132,13 +134,22 @@ export const AlcaldeForm = ({ handleModal, alcaldeEditable }: AlcaldeModalProps)
 								</div>
 								<div>
 									<FormLabel label='Atención Ciudadana' required />
-									<FormInput {...register('atencionCiudadana')} placeholder='Ej: Excelente' />
+									<FormInput {...register('atencionCiudadana')} placeholder='Ej: 24/7' />
 								</div>
 							</div>
 							<div>
 								<FormLabel label='Descripción' required />
+								<div className="text-right text-xs text-slate-500 mb-1">
+									{descripcion.length}/170 caracteres
+								</div>
 								<FormTextArea
-									{...register('descripcion')}
+									value={descripcion}
+									onChange={e => {
+										if (e.target.value.length <= 170) {
+											setDescripcion(e.target.value);
+											setValue('descripcion', e.target.value, { shouldValidate: true });
+										}
+									}}
 									placeholder='Escriba la descripción del alcalde...'
 									rows={4}
 								/>

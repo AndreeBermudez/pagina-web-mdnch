@@ -10,6 +10,7 @@ import { PresupuestoForm } from '../components/PresupuestoForm';
 import { usePresupuestoQuery } from '../hooks/usePresupuestoQuery';
 import type { Presupuesto } from '../schemas/presupuesto.schema';
 import { usePresupuestoMutation } from '../hooks/usePresupuestoMutation';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function PresupuestoAdmin() {
     const { isModalOpen, handleModal } = useModal();
@@ -17,6 +18,8 @@ export default function PresupuestoAdmin() {
     const { presupuestos, isLoading, error: queryError } = usePresupuestoQuery();
     const { deletePresupuesto } = usePresupuestoMutation();
     const [presupuestoEdit, setPresupuestoEdit] = useState<Presupuesto | null>(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [presupuestoToDelete, setPresupuestoToDelete] = useState<Presupuesto | null>(null);
 
     const handleEdit = (presupuesto: Presupuesto) => {
         setPresupuestoEdit(presupuesto);
@@ -41,8 +44,13 @@ export default function PresupuestoAdmin() {
     };
 
     const handleDelete = (presupuesto: Presupuesto) => {
-        if (window.confirm('¿Estás seguro de que deseas eliminar este presupuesto?')) {
-            deletePresupuesto.mutate(presupuesto.presupuestoId, {
+        setPresupuestoToDelete(presupuesto);
+        setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+        if (presupuestoToDelete) {
+            deletePresupuesto.mutate(presupuestoToDelete.presupuestoId, {
                 onSuccess: () => {
                     success('Presupuesto eliminado exitosamente');
                 },
@@ -135,6 +143,17 @@ export default function PresupuestoAdmin() {
 
     return (
         <>
+            {isConfirmOpen && presupuestoToDelete && (
+                <ConfirmModal
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={confirmDelete}
+                    title="Eliminar registro"
+                    message={`¿Estás seguro de que deseas eliminar el presupuesto "${presupuestoToDelete.titulo}"?`}
+                    confirmText="Eliminar"
+                    cancelText="Cancelar"
+                />
+            )}
             <AdminDataTable
                 title='Gestión de Presupuesto'
                 description='Administra los documentos de presupuesto municipales'

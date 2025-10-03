@@ -189,7 +189,7 @@ type RemoteDocumento = {
   url: string | null;
 };
 
-// Función para extraer el nombre del archivo de una URL
+
 const extractFileNameFromUrl = (url: string): string => {
   try {
     const urlParts = url.split('/');
@@ -243,7 +243,7 @@ interface GrupoDocumentosProps {
 }
 
 export const GrupoDocumentos = ({ grupo, onToggleItem, onConfigure }: GrupoDocumentosProps) => {
-  // Validar que el grupo existe y tiene las propiedades necesarias
+  
   if (!grupo || !grupo.items) {
     console.error('GrupoDocumentos: grupo inválido', grupo);
     return null;
@@ -423,11 +423,9 @@ export const DocumentosForm = ({ convocatoriaId, codigoConvocatoria, nombreConvo
   const handleSaveConfig = (updatedItem: any) => {
     if (!configuracionAbierta) return;
 
-    // Ensure updatedItem has all DocumentoItem properties
-    // Mantener el tipo original del item en estado interno, no el tipo convertido
     const itemToSave: DocumentoItem = {
       id: updatedItem.id,
-      tipo: configuracionAbierta.item.tipo, // Usar el tipo original, no el convertido
+      tipo: configuracionAbierta.item.tipo, 
       titulo: updatedItem.titulo,
       descripcion: updatedItem.descripcion,
       habilitado: updatedItem.habilitado,

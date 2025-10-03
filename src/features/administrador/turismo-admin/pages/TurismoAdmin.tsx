@@ -10,6 +10,7 @@ import { TurismoForm } from '../components/TurismoForm';
 import { useTurismoMutations } from '../hooks/useTurismoMutations';
 import { useTurismoQuery } from '../hooks/useTurismoQuery';
 import type { Turismo } from '../schemas/turismo.schema';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function TurismoAdmin() {
     const { isModalOpen, handleModal } = useModal();
@@ -17,6 +18,8 @@ export default function TurismoAdmin() {
     const { turismo, isLoading, error: queryError } = useTurismoQuery();
     const { deleteTurismo } = useTurismoMutations();
     const [turismoEdit, setTurismoEdit] = useState<Turismo | null>(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [turismoToDelete, setTurismoToDelete] = useState<Turismo | null>(null);
 
     const handleEdit = (turismoItem: Turismo) => {
         setTurismoEdit(turismoItem);
@@ -29,8 +32,12 @@ export default function TurismoAdmin() {
     };
 
     const handleDelete = (turismoItem: Turismo) => {
-        if (window.confirm('¿Estás seguro de que deseas eliminar este elemento de turismo?')) {
-            deleteTurismo.mutate(turismoItem.turismoId, {
+        setTurismoToDelete(turismoItem);
+        setIsConfirmOpen(true);
+    };
+    const confirmDelete = () => {
+        if (turismoToDelete) {
+            deleteTurismo.mutate(turismoToDelete.turismoId, {
                 onSuccess: () => {
                     success('Elemento de turismo eliminado exitosamente');
                 },
@@ -135,6 +142,17 @@ export default function TurismoAdmin() {
 
     return (
         <>
+            {isConfirmOpen && turismoToDelete && (
+                <ConfirmModal
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={confirmDelete}
+                    title="Eliminar registro"
+                    message={`¿Estás seguro de que deseas eliminar el elemento de turismo "${turismoToDelete.titulo}"?`}
+                    confirmText="Eliminar"
+                    cancelText="Cancelar"
+                />
+            )}
             <AdminDataTable
                 title='Gestión de Turismo'
                 description='Administra los lugares turísticos municipales'
