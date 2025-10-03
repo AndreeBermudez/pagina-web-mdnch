@@ -10,6 +10,7 @@ import { PduForm } from '../components/PduForm';
 import { usePduMutations } from '../hooks/usePduMutations';
 import { usePduQuery } from '../hooks/usePduQuery';
 import type { Pdu } from '../schemas/pdu.schema';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function PduAdmin() {
     const { isModalOpen, handleModal } = useModal();
@@ -17,6 +18,8 @@ export default function PduAdmin() {
     const { pdus, isLoading, error: queryError } = usePduQuery();
     const { eliminarPdu } = usePduMutations();
     const [pduEdit, setPduEdit] = useState<Pdu | null>(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [pduToDelete, setPduToDelete] = useState<Pdu | null>(null);
 
     const handleEdit = (pdu: Pdu) => {
         setPduEdit(pdu);
@@ -29,8 +32,12 @@ export default function PduAdmin() {
     };
 
     const handleDelete = (pdu: Pdu) => {
-        if (window.confirm('¿Estás seguro de que deseas eliminar este PDU?')) {
-            eliminarPdu.mutate(pdu.pduId, {
+        setPduToDelete(pdu);
+        setIsConfirmOpen(true);
+    };
+    const confirmDelete = () => {
+        if (pduToDelete) {
+            eliminarPdu.mutate(pduToDelete.pduId, {
                 onSuccess: () => {
                     success('PDU eliminado exitosamente');
                 },
@@ -93,16 +100,7 @@ export default function PduAdmin() {
                 ),
                 enableSorting: false,
             },
-            {
-                accessorKey: 'responsable',
-                header: 'Responsable',
-                cell: ({ getValue }) => (
-                    <span className='inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 border border-slate-200'>
-                        {getValue() as string}
-                    </span>
-                ),
-                enableSorting: false,
-            },
+
         ],
         []
     );
@@ -125,6 +123,17 @@ export default function PduAdmin() {
 
     return (
         <>
+            {isConfirmOpen && pduToDelete && (
+                <ConfirmModal
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={confirmDelete}
+                    title="Eliminar registro"
+                    message={`¿Estás seguro de que deseas eliminar el PDU "${pduToDelete.titulo}"?`}
+                    confirmText="Eliminar"
+                    cancelText="Cancelar"
+                />
+            )}
             <AdminDataTable
                 title='Gestión de PDU'
                 description='Administra los documentos PDU municipales'

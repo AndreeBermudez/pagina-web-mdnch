@@ -6,63 +6,21 @@ import { DocumentosForm } from "../components/DocumentosForm";
 import { Modal } from "../../../../core/components/common/modal/Modal";
 import { useModal } from "../../../../core/hooks/useModal";
 import { ConvocatoriaForm } from "../components/ConvocatoriaForm";
+import ConfirmModal from "../components/ConfirmModal";
+import { useConvocatoriasQuery } from "../hooks/useConvocatoriaQueries";
+import { useConvocatoriaMutations } from "../hooks/useConvocatoriaMutations";
+import type { ConvocatoriaResponse } from "../services/types";
 
-interface ConvocatoriaRecord {
-  id: number;
-  codigo: string;
-  convocatoria: string;
-  area: string;
-  vacantes: number;
-  documentos: string;
-}
-
-const mockConvocatorias: ConvocatoriaRecord[] = [
-  {
-    id: 1,
-    codigo: "CAS-001-2025",
-    convocatoria: "Especialista en Gestion Documental",
-    area: "Secretaria General",
-    vacantes: 2,
-    documentos: "Bases_CAS_001_2025.pdf",
-  },
-  {
-    id: 2,
-    codigo: "CAS-002-2025",
-    convocatoria: "Analista de Sistemas",
-    area: "Tecnologias de la Informacion",
-    vacantes: 1,
-    documentos: "Bases_CAS_002_2025.pdf",
-  },
-  {
-    id: 3,
-    codigo: "CAS-003-2025",
-    convocatoria: "Asistente Social",
-    area: "Desarrollo Social",
-    vacantes: 3,
-    documentos: "Bases_CAS_003_2025.pdf",
-  },
-  {
-    id: 4,
-    codigo: "CAS-004-2025",
-    convocatoria: "Inspector de Obras",
-    area: "Infraestructura",
-    vacantes: 2,
-    documentos: "Bases_CAS_004_2025.pdf",
-  },
-  {
-    id: 5,
-    codigo: "CAS-005-2025",
-    convocatoria: "Coordinador de Programas Juveniles",
-    area: "Juventud y Deporte",
-    vacantes: 1,
-    documentos: "Bases_CAS_005_2025.pdf",
-  },
-];
+type ConvocatoriaRecord = ConvocatoriaResponse;
 
 export default function ConvocatoriaAdmin() {
   const { isModalOpen, handleModal } = useModal();
   const [convocatoriaEditable, setConvocatoriaEditable] = useState<ConvocatoriaRecord | null>(null);
   const [documentosOpen, setDocumentosOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [convocatoriaToDelete, setConvocatoriaToDelete] = useState<ConvocatoriaRecord | null>(null);
+  const { data: convocatorias, isLoading } = useConvocatoriasQuery();
+  const {eliminarConvocatoria } = useConvocatoriaMutations();
 
   const handleDocuments = (record: ConvocatoriaRecord) => {
     setConvocatoriaEditable(record);
@@ -80,7 +38,20 @@ export default function ConvocatoriaAdmin() {
   };
 
   const handleDelete = (record: ConvocatoriaRecord) => {
-    console.log("Eliminar convocatoria", record.codigo);
+    setConvocatoriaToDelete(record);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (convocatoriaToDelete) {
+      await eliminarConvocatoria.mutateAsync(convocatoriaToDelete.id);
+      setConvocatoriaToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setConvocatoriaToDelete(null);
   };
 
   const columns: ColumnDef<ConvocatoriaRecord>[] = useMemo(
@@ -154,10 +125,10 @@ export default function ConvocatoriaAdmin() {
         title="Gestion de Convocatorias CAS"
         description="Administra las convocatorias CAS del municipio"
         icon={ClipboardList}
-        data={mockConvocatorias}
+        data={convocatorias || []}
         columns={columns}
         actions={actions}
-        isLoading={false}
+        isLoading={isLoading}
         searchPlaceholder="Buscar por codigo, convocatoria o area"
         onNew={handleNew}
         newButtonText="Nueva convocatoria"
@@ -184,6 +155,7 @@ export default function ConvocatoriaAdmin() {
           size="xl"
         >
           <DocumentosForm
+            convocatoriaId={convocatoriaEditable.id}
             codigoConvocatoria={convocatoriaEditable.codigo}
             nombreConvocatoria={convocatoriaEditable.convocatoria}
             area={convocatoriaEditable.area}
@@ -194,6 +166,17 @@ export default function ConvocatoriaAdmin() {
           />
         </Modal>
       )}
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar Eliminación"
+        message={`¿Estás seguro de eliminar la convocatoria ${convocatoriaToDelete?.codigo}?`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="error"
+      />
     </>
   );
 }

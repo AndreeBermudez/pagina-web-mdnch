@@ -10,6 +10,7 @@ import { FuncionarioForm } from '../components/FuncionarioForm';
 import { useFuncionarioMutations } from '../hooks/useFuncionarioMutations';
 import { useFuncionarioQuery } from '../hooks/useFuncionarioQuery';
 import type { Funcionario } from '../schemas/funcionario.schema';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function FuncionariosAdmin() {
     const { isModalOpen, handleModal } = useModal();
@@ -17,6 +18,8 @@ export default function FuncionariosAdmin() {
     const { funcionarios, isLoading, error: queryError } = useFuncionarioQuery();
     const { eliminarFuncionario } = useFuncionarioMutations();
     const [funcionarioEdit, setFuncionarioEdit] = useState<Funcionario | null>(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [funcionarioToDelete, setFuncionarioToDelete] = useState<Funcionario | null>(null);
 
     const handleEdit = (funcionario: Funcionario) => {
         setFuncionarioEdit(funcionario);
@@ -29,8 +32,12 @@ export default function FuncionariosAdmin() {
     };
 
     const handleDelete = (funcionario: Funcionario) => {
-        if (window.confirm('¿Estás seguro de que deseas eliminar este funcionario?')) {
-            eliminarFuncionario.mutate(funcionario.funcionarioId, {
+        setFuncionarioToDelete(funcionario);
+        setIsConfirmOpen(true);
+    };
+    const confirmDelete = () => {
+        if (funcionarioToDelete) {
+            eliminarFuncionario.mutate(funcionarioToDelete.funcionarioId, {
                 onSuccess: () => {
                     success('Funcionario eliminado exitosamente');
                 },
@@ -144,7 +151,19 @@ export default function FuncionariosAdmin() {
     ];
 
     return (
+
         <>
+            {isConfirmOpen && funcionarioToDelete && (
+                <ConfirmModal
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={confirmDelete}
+                    title="Eliminar registro"
+                    message={`¿Estás seguro de que deseas eliminar al funcionario ${funcionarioToDelete.nombre} ${funcionarioToDelete.apellido}? Esta acción no se puede deshacer.`}
+                    confirmText="Eliminar"
+                    cancelText="Cancelar"
+                />
+            )}
             <AdminDataTable
                 title='Gestión de Funcionarios'
                 description='Administra la información de los funcionarios municipales'

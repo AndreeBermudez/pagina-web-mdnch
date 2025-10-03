@@ -14,3 +14,10 @@ export const usePduQuery = () => {
 		refetch: getAll.refetch,
 	};
 };
+
+export const usePduList = () => {
+	return useQuery({
+		queryKey: ['pdu-list'],
+		queryFn: () => listarPdu(),
+	});
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FileSearch, Calendar, Target, Award, Users } from 'lucide-react';
 import { obtenerAlcaldes } from '../../../../../../features/administrador/alcalde-admin/services/obtenerAlcaldes';
-import type { Alcalde } from '../../../../../../features/administrador/alcalde-admin/services/alcalde.interface';
+import type { Alcalde } from '../../../../../../features/administrador/alcalde-admin/schemas/alcalde.schema';
 
 const AlcaldeInfo: React.FC = () => {
 	const [alcalde, setAlcalde] = React.useState<Alcalde | null>(null);
@@ -34,22 +34,20 @@ const AlcaldeInfo: React.FC = () => {
 								/>
 								<div className='absolute inset-0 bg-gradient-to-t from-[#0a2158]/40 to-transparent lg:bg-none' />
 								<div className='absolute bottom-4 left-6 bg-yellow-500 text-[#0a2158] px-4 py-2 rounded-lg font-bold'>
-									Periodo {alcalde ? `${alcalde.periodo}` : '2023 - 2026'}
+									Periodo {alcalde?.periodo}
 								</div>
 							</div>
 							<div className='relative p-8 lg:col-span-7 md:p-10'>
 								<div className='pb-4 mb-6 border-b border-slate-600'>
 									<h2 className='mb-2 text-3xl font-bold text-white md:text-4xl uppercase'>
-										{alcalde ? `${alcalde.nombre} ${alcalde.apellido}` : 'Walter Jesús Soto Campos'}
+										{alcalde?.nombre} {alcalde?.apellido}
 									</h2>
 									<span className="text-amber-400 relative pl-4 before:absolute before:content-['-'] before:left-0 before:top-1/2 before:transform before:-translate-y-1/2 text-lg font-semibold">
 										Alcalde Distrital de Nuevo Chimbote
 									</span>
 								</div>
-								<p className='mb-8 text-base leading-relaxed text-slate-300 md:text-lg'>
-									{alcalde
-										? alcalde.descripcion
-										: 'Walter Jesús Soto Campos es un líder comprometido con el desarrollo de Nuevo Chimbote, enfocado en la transparencia, la participación ciudadana y la mejora continua de los servicios públicos.'}
+								<p className='mb-8 text-base leading-relaxed text-slate-300 md:text-lg break-words whitespace-normal'>
+									{alcalde?.descripcion}
 								</p>
 								<div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 bg-[#071b4d] p-4 rounded-lg'>
 									<div className='text-center'>
@@ -58,7 +56,7 @@ const AlcaldeInfo: React.FC = () => {
 									</div>
 									<div className='text-center'>
 										<div className='text-2xl font-bold text-yellow-500'>{alcalde?.presupuesto}M</div>
-										<div className='text-sm text-slate-300'>Presupuesto gestionado</div>
+										<div className='text-sm text-slate-300'>Presupuesto gestionado</div> 
 									</div>
 									<div className='text-center'>
 										<div className='text-2xl font-bold text-yellow-500'>{alcalde?.aprobacionCiudadana}%</div>
@@ -76,7 +74,7 @@ const AlcaldeInfo: React.FC = () => {
 									</button>
 									<button className='flex items-center gap-2 px-6 py-3 font-bold text-white transition-colors border-2 border-white rounded-lg shadow-md hover:bg-white/10'>
 										<Calendar className='w-5 h-5' />
-										Agenda del alcalde
+										<a href="./calendar">Agenda del alcalde</a>
 									</button>
 								</div>
 							</div>
