@@ -52,12 +52,14 @@ const SliderAdmin = lazy(() => import('../../features/administrador/slider-admin
 const FuncionariosAdmin = lazy(
 	() => import('../../features/administrador/funcionarios-admin/pages/FuncionariosAdmin')
 );
+const AlcaldeBannerAdmin = lazy(() => import('../../features/administrador/alcaldeBanner-admin/pages/AlcaldeBannerAdmin'));
 const ConsejoAdmin = lazy(() => import('../../features/administrador/consejo-admin/pages/ConsejosAdmin'));
 const NoticiasAdmin = lazy(() => import('../../features/administrador/noticias-admin/pages/NoticiasAdmin'));
 const EventosAdmin = lazy(() => import('../../features/administrador/eventos-admin/pages/EventosAdmin'));
 const OrganigramaAdmin = lazy(
 	() => import('../../features/administrador/organigrama-admin/pages/OrganigramaAdmin')
 );
+const ControlAdmin = lazy(() => import('../../features/administrador/controlInterno-admin/pages/ControlAdmin'));
 const AlcaldePageAdmin = lazy(() => import('../../features/administrador/alcalde-admin/pages/AlcaldeAdmin'));
 const AgendaPageAdmin = lazy(() => import('../../features/administrador/agenda-admin/pages/AgendaAdmin'));
 const PduAdmin = lazy(() => import('../../features/administrador/pdu-admin/pages/PduAdmin'));
@@ -483,44 +485,9 @@ export const routes = [
 			{
 				path: 'contenido/alcalde-banner',
 				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Banner Alcalde</h1>
-										<p className='mt-1 text-slate-600'>Administra el banner principal del alcalde</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>
-									El módulo de gestión de banner del alcalde estará disponible próximamente
-								</p>
-							</div>
-						</div>
-					</div>
+					<LazyWrapper>
+						<AlcaldeBannerAdmin />
+					</LazyWrapper>
 				),
 			},
 
@@ -576,45 +543,10 @@ export const routes = [
 			{
 				path: 'documentos/control-interno',
 				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 2.3-.59 4.35-1.73 6.06-3.29l-2.12-2.12A8.964 8.964 0 0112 17.5c-1.657 0-3.157-.672-4.243-1.757S6 13.157 6 11.5s.671-3.157 1.757-4.243S10.343 6 12 6s3.157.672 4.243 1.757S17.5 9.843 17.5 11.5'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Control Interno</h1>
-										<p className='mt-1 text-slate-600'>Administra los documentos de control interno municipal</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>
-									El módulo de gestión de control interno estará disponible próximamente
-								</p>
-							</div>
-						</div>
-					</div>
-				),
+					<LazyWrapper>
+						<ControlAdmin />
+					</LazyWrapper>
+				)
 			},
 			{
 				path: 'documentos/convocatoria-cas',

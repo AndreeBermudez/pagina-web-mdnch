@@ -1,8 +1,19 @@
 import { CalendarClock, MapPin, MoveRight, Target } from 'lucide-react';
+import { useEffect } from 'react';
+import { useTurismoQuery } from '../../../../../../features/administrador/turismo-admin/hooks/useTurismoQuery';
 import { CardCollapse } from './CardCollapse';
 import cityImage from '../../../../../../assets/imagen-plaza.webp';
 
 export const SectionPlaces = () => {
+	const { turismo, isLoading, refetch } = useTurismoQuery();
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
+
+	// Mostrar solo los primeros 5 para el home
+	const displayedLugares = turismo.slice(0, 5);
+
 	return (
 		<section className='py-16 bg-gray-100'>
 			<div className='container-municipalidad'>
@@ -67,43 +78,67 @@ export const SectionPlaces = () => {
 							Descubre los principales atractivos turísticos y recreativos de nuestra ciudad
 						</p>
 					</div>
-					<article className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'>
-						<CardCollapse
-							title='Plaza Mayor'
-							description='Espacio emblemático en el corazón de la ciudad, rodeado de edificios históricos y con hermosas áreas verdes para el disfrute de residentes y visitantes.'
-							Icon={Target}
-							imageSrc={cityImage}
-							altText='Plaza Mayor de Nuevo Chimbote'
-						/>
-						<CardCollapse
-							title='Teatro Municipal'
-							description='Centro cultural que alberga los principales eventos artísticos de la ciudad, con una arquitectura moderna y excelente acústica para disfrutar de espectáculos de primer nivel.'
-							Icon={Target}
-							imageSrc={cityImage}
-							altText='Teatro Municipal de Nuevo Chimbote'
-						/>
-						<CardCollapse
-							title='Polideportivo'
-							description='Complejo deportivo con instalaciones de primer nivel para la práctica de diversas disciplinas, sede de importantes competencias y punto de encuentro para deportistas locales.'
-							Icon={Target}
-							imageSrc={cityImage}
-							altText='Polideportivo de Nuevo Chimbote'
-						/>
-						<CardCollapse
-							title='Catedral de Nuevo Chimbote'
-							description='Imponente obra arquitectónica religiosa que representa la fe de los chimbotanos, con hermosos vitrales y un diseño que combina lo tradicional con lo contemporáneo.'
-							Icon={Target}
-							imageSrc={cityImage}
-							altText='Catedral de Nuevo Chimbote'
-						/>
-						<CardCollapse
-							title='Malecón Grau'
-							description='Paseo costero con una impresionante vista al océano Pacífico, ideal para caminatas al atardecer y disfrutar de la gastronomía local en sus diversos restaurantes.'
-							Icon={Target}
-							imageSrc={cityImage}
-							altText='Malecón Grau de Nuevo Chimbote'
-						/>
-					</article>
+					{isLoading ? (
+						<div className="flex justify-center items-center py-10">
+							<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-800"></div>
+						</div>
+					) : (
+						<article className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'>
+							{displayedLugares.length > 0 
+								? displayedLugares.map((lugar) => (
+									<CardCollapse
+										key={lugar.turismoId}
+										title={lugar.titulo}
+										description={lugar.descripcion}
+										Icon={Target}
+										imageSrc={lugar.direccionImagen || cityImage}
+										altText={lugar.titulo}
+										locationUrl={lugar.ubicacion}
+									/>
+								))
+								: (
+									// Fallback con cards por defecto si no hay datos
+									<>
+										<CardCollapse
+											title='Plaza Mayor'
+											description='Espacio emblemático en el corazón de la ciudad, rodeado de edificios históricos y con hermosas áreas verdes para el disfrute de residentes y visitantes.'
+											Icon={Target}
+											imageSrc={cityImage}
+											altText='Plaza Mayor de Nuevo Chimbote'
+										/>
+										<CardCollapse
+											title='Teatro Municipal'
+											description='Centro cultural que alberga los principales eventos artísticos de la ciudad, con una arquitectura moderna y excelente acústica para disfrutar de espectáculos de primer nivel.'
+											Icon={Target}
+											imageSrc={cityImage}
+											altText='Teatro Municipal de Nuevo Chimbote'
+										/>
+										<CardCollapse
+											title='Polideportivo'
+											description='Complejo deportivo con instalaciones de primer nivel para la práctica de diversas disciplinas, sede de importantes competencias y punto de encuentro para deportistas locales.'
+											Icon={Target}
+											imageSrc={cityImage}
+											altText='Polideportivo de Nuevo Chimbote'
+										/>
+										<CardCollapse
+											title='Catedral de Nuevo Chimbote'
+											description='Imponente obra arquitectónica religiosa que representa la fe de los chimbotanos, con hermosos vitrales y un diseño que combina lo tradicional con lo contemporáneo.'
+											Icon={Target}
+											imageSrc={cityImage}
+											altText='Catedral de Nuevo Chimbote'
+										/>
+										<CardCollapse
+											title='Malecón Grau'
+											description='Paseo costero con una impresionante vista al océano Pacífico, ideal para caminatas al atardecer y disfrutar de la gastronomía local en sus diversos restaurantes.'
+											Icon={Target}
+											imageSrc={cityImage}
+											altText='Malecón Grau de Nuevo Chimbote'
+										/>
+									</>
+								)
+							}
+						</article>
+					)}
 				</div>
 			</div>
 		</section>

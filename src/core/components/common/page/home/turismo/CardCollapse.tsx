@@ -6,6 +6,8 @@ interface CardCollapseProps {
 	Icon?: LucideIcon;
 	imageSrc: string;
 	altText?: string;
+	locationUrl?: string;
+	showReadMore?: boolean;
 }
 
 export const CardCollapse = ({
@@ -14,6 +16,8 @@ export const CardCollapse = ({
 	Icon,
 	imageSrc,
 	altText = 'Imagen descriptiva',
+	locationUrl,
+	showReadMore = true,
 }: CardCollapseProps) => {
 	return (
 		<article className='relative shadow-lg h-80 w-full overflow-hidden group'>
@@ -30,13 +34,17 @@ export const CardCollapse = ({
 					<p className='text-center max-h-0 group-hover:max-h-24 opacity-0 group-hover:opacity-100 text-blue-700 overflow-hidden transition-all duration-400 ease-in-out'>
 						{description}
 					</p>
-					<div className='mt-2 opacity-0 group-hover:opacity-100 transition-all duration-400 ease-in-out'>
-						<a
-							href='#'
-							className='inline-flex items-center text-blue-900 border border-blue-900 px-4 py-2 text-sm font-medium rounded-md hover:bg-blue-900 hover:text-white transition-colors duration-400'>
-							Leer mas <MoveRight className='w-4 h-4 ml-2' />
-						</a>
-					</div>
+					{showReadMore && (
+						<div className='mt-2 opacity-0 group-hover:opacity-100 transition-all duration-400 ease-in-out'>
+							<a
+								href={locationUrl || '#'}
+								target={locationUrl ? '_blank' : '_self'}
+								rel={locationUrl ? 'noopener noreferrer' : undefined}
+								className='inline-flex items-center text-blue-900 border border-blue-900 px-4 py-2 text-sm font-medium rounded-md hover:bg-blue-900 hover:text-white transition-colors duration-400'>
+								{locationUrl ? 'Quiero ir !' : 'Leer mas'} <MoveRight className='w-4 h-4 ml-2' />
+							</a>
+						</div>
+					)}
 				</div>
 			</div>
 		</article>
