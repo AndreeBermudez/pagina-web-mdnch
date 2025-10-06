@@ -1,8 +1,21 @@
 import { Award, Target, Users } from 'lucide-react';
+import { useEffect } from 'react';
 import { WaveDivider } from '../../../../ui/WaveDivider';
-import alcaldeImage from '../../../../../../assets/walter_soto.avif';
+import { useAlcaldeBannerQuery } from '../../../../../../features/administrador/alcaldeBanner-admin/hooks/useAlcaldeBannerQuery';
 
 export const AlcaldeSection = () => {
+	const { alcaldesBanner, refetch } = useAlcaldeBannerQuery();
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
+
+	const alcaldeBanner = alcaldesBanner.length > 0 ? alcaldesBanner[0] : null;
+	const alcaldeNombre = alcaldeBanner ? `${alcaldeBanner.nombre} ${alcaldeBanner.apellido}` : '';
+	const alcaldeTitulo = alcaldeBanner?.tituloBannerPage;
+	const alcaldeDescripcion = alcaldeBanner?.descripcionBannerPage;
+	const alcaldeImagen = alcaldeBanner?.direccionImagen; 
+
 	return (
 		<>
 			<section className='relative w-full overflow-hidden bg-[#0a2158] px-4 sm:px-6 lg:px-8'>
@@ -12,23 +25,12 @@ export const AlcaldeSection = () => {
 						<div className='order-2 mt-8 space-y-6 md:space-y-8 lg:order-1 lg:mt-0'>
 							<div className='space-y-4'>
 								<h2 className='text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl'>
-									Comprometidos con el{' '}
-									<span className='relative inline-block text-yellow-400'>
-										desarrollo
-										<svg
-											className='absolute left-0 w-full -bottom-2'
-											viewBox='0 0 100 10'
-											preserveAspectRatio='none'>
-											<path d='M0,5 Q50,10 100,5' stroke='currentColor' fill='none'></path>
-										</svg>
-									</span>{' '}
-									y bienestar de nuestra comunidad
+									{alcaldeTitulo}
 								</h2>
 							</div>
 
 							<p className='text-lg text-white/80'>
-								Nuestra visión es convertir nuestro distrito en un modelo de desarrollo sostenible, donde cada
-								familia pueda prosperar en un entorno seguro, limpio y con oportunidades para todos.
+								{alcaldeDescripcion}
 							</p>
 
 							<div className='grid gap-4 pt-4 md:grid-cols-2'>
@@ -60,13 +62,13 @@ export const AlcaldeSection = () => {
 								</div>
 								<div className='relative overflow-hidden border-2 shadow-xl rounded-xl md:rounded-2xl md:border-4 border-white/20 md:shadow-2xl'>
 									<img
-										src={alcaldeImage}
-										alt='Walter Soto Reyna - Alcalde Distrital de Nuevo Chimbote'
+										src={alcaldeImagen}
+										alt='Foto - Alcalde Distrital de Nuevo Chimbote'
 										className='alcalde-image object-cover w-full h-auto max-h-[300px] sm:max-h-[400px] md:max-h-[450px] lg:max-h-[500px]'
 									/>
 								</div>
 								<div className='absolute w-4/5 px-4 py-2 transition-all duration-300 transform -translate-x-1/2 bg-white border-l-4 border-blue-700 rounded-lg shadow-lg -bottom-4 md:-bottom-6 left-1/2 md:py-3 md:px-6 md:shadow-xl hover:shadow-2xl'>
-									<h3 className='text-base font-bold text-blue-900 md:text-lg'>Walter Soto Reyna</h3>
+									<h3 className='text-base font-bold text-blue-900 md:text-lg'>{alcaldeNombre}</h3>
 									<p className='text-xs font-semibold text-blue-700 md:text-sm'>
 										Alcalde Distrital de Nuevo Chimbote
 									</p>

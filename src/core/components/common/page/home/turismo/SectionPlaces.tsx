@@ -1,17 +1,35 @@
 import { CalendarClock, MapPin, MoveRight, Target } from 'lucide-react';
 import { useEffect } from 'react';
 import { useTurismoQuery } from '../../../../../../features/administrador/turismo-admin/hooks/useTurismoQuery';
+import { useDestinosQuery } from '../../../../../../features/administrador/destinoTuristico-admin/hooks/useDestinosQuery';
 import { CardCollapse } from './CardCollapse';
 import cityImage from '../../../../../../assets/imagen-plaza.webp';
 
 export const SectionPlaces = () => {
 	const { turismo, isLoading, refetch } = useTurismoQuery();
+	const { destinos, isLoading: isLoadingDestinos } = useDestinosQuery();
 
 	useEffect(() => {
 		refetch();
 	}, [refetch]);
 
-	// Mostrar solo los primeros 5 para el home
+	const getYouTubeEmbedUrl = (url: string) => {
+		try {
+		
+			const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+			if (videoIdMatch && videoIdMatch[1]) {
+				return `https://www.youtube.com/embed/${videoIdMatch[1]}?si=FOvz1kH7qn6mUxNW&controls=0`;
+			}
+			return url; 
+		} catch (error) {
+			return 'https://www.youtube.com/embed/gWUKFK62igA?si=FOvz1kH7qn6mUxNW&controls=0'; // Fallback
+		}
+	};
+
+	const videoUrl = destinos && destinos.length > 0 && destinos[0]?.video 
+		? getYouTubeEmbedUrl(destinos[0].video)
+		: 'https://www.youtube.com/embed/gWUKFK62igA?si=FOvz1kH7qn6mUxNW&controls=0';
+		
 	const displayedLugares = turismo.slice(0, 5);
 
 	return (
@@ -26,15 +44,22 @@ export const SectionPlaces = () => {
 						<h2 className='mb-6 text-3xl font-bold text-blue-900 md:text-4xl'>Bienvenido a Nuevo Chimbote</h2>
 						<div className='grid items-center grid-cols-1 gap-8 md:grid-cols-2 h-80'>
 							<div className='relative h-full overflow-hidden border-transparent shadow-xl rounded-xl'>
-								<iframe
-									width='100%'
-									height='100%'
-									src='https://www.youtube.com/embed/gWUKFK62igA?si=FOvz1kH7qn6mUxNW&controls=0'
-									title='YouTube video player'
-									frameBorder='0'
-									allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-									allowFullScreen
-									className='w-full h-full rounded-xl'></iframe>
+								{isLoadingDestinos ? (
+									<div className="flex items-center justify-center w-full h-full bg-gray-200 rounded-xl">
+										<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+									</div>
+								) : (
+									<iframe
+										width='100%'
+										height='100%'
+										src={videoUrl}
+										title='Video promocional de Nuevo Chimbote'
+										frameBorder='0'
+										allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+										allowFullScreen
+										className='w-full h-full rounded-xl'
+									></iframe>
+								)}
 							</div>
 							<div className='space-y-6'>
 								<p className='leading-relaxed text-gray-600'>

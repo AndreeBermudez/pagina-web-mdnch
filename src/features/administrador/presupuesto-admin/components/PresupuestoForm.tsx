@@ -86,12 +86,12 @@ export const PresupuestoForm = ({ handleModal, presupuestoEditable }: Presupuest
 									<FormLabel label='Tipo' required />
 									<FormSelect {...register('tipo')}>
 										<option value=''>Seleccionar tipo</option>
-										<option value='Anual'>Anual</option>
-										<option value='Trimestral'>Trimestral</option>
-										<option value='Mensual'>Mensual</option>
-										<option value='Extraordinario'>Extraordinario</option>
-										<option value='Inversión'>Inversión</option>
-										<option value='Operativo'>Operativo</option>
+										<option value='Ordenanza'>Ordenanza</option>
+										<option value='Reglamento'>Reglamento</option>
+										<option value='Formulario'>Formulario</option>
+										<option value='Decreto'>Decreto</option>
+										<option value='Convocatoria'>Convocatoria</option>
+										<option value='Guia'>Guia</option>
 									</FormSelect>
 								</div>
 							</div>

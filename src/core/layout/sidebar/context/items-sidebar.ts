@@ -69,6 +69,12 @@ export const menuItems: MenuItem[] = [
                 icon: Calendar,
                 isActive: false,
             },
+             {
+                titulo: 'Destino Turistico',
+                link: '/admin/contenido/destino-turistico',
+                icon: Calendar,
+                isActive: false,
+            },
             {
                 titulo: 'Agenda',
                 link: '/admin/contenido/agenda',

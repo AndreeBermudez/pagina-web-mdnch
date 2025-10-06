@@ -111,16 +111,7 @@ export default function PresupuestoAdmin() {
                 ),
                 enableSorting: false,
             },
-            {
-                accessorKey: 'responsable',
-                header: 'Responsable',
-                cell: ({ getValue }) => (
-                    <span className='inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 border border-slate-200'>
-                        {getValue() as string}
-                    </span>
-                ),
-                enableSorting: false,
-            },
+         
         ],
         []
     );

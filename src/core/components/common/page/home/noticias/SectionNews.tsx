@@ -30,17 +30,6 @@ export const SectionNews = () => {
 			<section className='relative bg-gradient-to-b from-gray-50 to-gray-100'>
 				<div className='container-municipalidad'>
 					<div className='w-full'>
-						<div className='grid grid-cols-1 gap-8 mb-12 transition-transform duration-300 hover:scale-[1.01]'>
-							<div className='overflow-hidden transition-all duration-300 shadow-lg rounded-xl hover:shadow-xl'>
-								<MainNews
-									category='Infraestructura'
-									title='Nuevo alumbrado público en zona residencial'
-									resumen='La municipalidad ha instalado 200 nuevas luminarias LED en el barrio Las Flores, mejorando la seguridad vial y peatonal.'
-									date='09 de abril de 2025'
-									image={cityImage}
-								/>
-							</div>
-						</div>
 						<div>
 							<div className='flex items-center justify-between mb-8'>
 								<h2 className="text-2xl font-bold text-blue-900 relative after:content-[''] after:absolute after:left-0 after:bottom-[-8px] after:h-1 after:w-16 after:bg-blue-600 after:rounded-full">

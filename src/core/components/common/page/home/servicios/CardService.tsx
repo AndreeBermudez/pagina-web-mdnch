@@ -12,6 +12,7 @@ interface Props {
 		to: string;
 	};
 	tag?: string;
+	link?: string;
 }
 
 const icons = {
@@ -30,6 +31,7 @@ export const CardService = ({
 	bgLightColor = 'white',
 	gradientColor,
 	tag = 'Servicios',
+	link,
 }: Props) => {
 	const IconComponent: LucideIcon = icons[icon] || UserCircle;
 
@@ -56,14 +58,30 @@ export const CardService = ({
 			</div>
 			{/* Parte secundaria */}
 			<div style={gradientStyle} className='p-4'>
-				<div className='flex items-center text-white group cursor-pointer pt-3'>
-					<span className='text-base font-medium'>Acceder</span>
-					<MoveRight
-						size={18}
-						strokeWidth={2}
-						className='ml-2 group-hover:translate-x-1 transition-transform duration-300'
-					/>
-				</div>
+				{link ? (
+					<a 
+						href={link} 
+						target='_blank' 
+						rel='noopener noreferrer'
+						className='flex items-center text-white group cursor-pointer pt-3 hover:opacity-90 transition-opacity'
+					>
+						<span className='text-base font-medium'>Acceder</span>
+						<MoveRight
+							size={18}
+							strokeWidth={2}
+							className='ml-2 group-hover:translate-x-1 transition-transform duration-300'
+						/>
+					</a>
+				) : (
+					<div className='flex items-center text-white group cursor-pointer pt-3'>
+						<span className='text-base font-medium'>Acceder</span>
+						<MoveRight
+							size={18}
+							strokeWidth={2}
+							className='ml-2 group-hover:translate-x-1 transition-transform duration-300'
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	);
