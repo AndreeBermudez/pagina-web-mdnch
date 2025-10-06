@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import { AdminLayout } from '../layout/AdminLayout';
 import { LazyWrapper } from './components/LazyWrapper';
 import { PrivateGuard } from './guard/PrivateGuard';
@@ -68,10 +68,15 @@ const TurismoAdmin = lazy(() => import('../../features/administrador/turismo-adm
 const PresupuestoAdmin = lazy(
 	() => import('../../features/administrador/presupuesto-admin/pages/PresupuestoAdmin')
 );
+const PopupAdmin = lazy(() => import('../../features/administrador/popup-admin/page/PopupAdmin'));
+const DefensaCivilAdmin = lazy(() => import('../../features/administrador/defensaCivil-admin/pages/DefensaCivilAdmin'));
 const DestinoTuristicoAdmin = lazy(() => import('../../features/administrador/destinoTuristico-admin/page/DestinoTuristicoAdmin'));
 const PagesAdmin = lazy(() => import('../../features/administrador/paginas-admin/pages/PagesAdmin'));
 const MenuAdmin = lazy(() => import('../../features/administrador/menus-admin/pages/MenuAdmin'));
 const ConvocatoriaAdmin = lazy(() => import('../../features/administrador/convocatoriaCas-admin/pages/ConvocatoriaAdmin'));
+
+//* Auth - Lazy loading
+const LoginPage = lazy(() => import('../../pages/auth/LoginPage').then((module) => ({ default: module.LoginPage })));
 
 export const routes = [
 	// Ruta principal
@@ -342,12 +347,29 @@ export const routes = [
 		),
 	},
 
+	// Auth
+	{
+		path: '/admin/login',
+		element: (
+			<LazyWrapper>
+				<LoginPage />
+			</LazyWrapper>
+		),
+	},
+
 	// Admin
 	{
 		path: '/admin',
-		element: <AdminLayout />,
-		loader: PrivateGuard,
+		element: (
+			<PrivateGuard>
+				<AdminLayout />
+			</PrivateGuard>
+		),
 		children: [
+			{
+				index: true,
+				element: <Navigate to="/admin/contenido/slider" replace />
+			},
 			{
 				path: 'contenido/funcionarios',
 				element: (
@@ -389,6 +411,14 @@ export const routes = [
 				),
 			},
 			{
+				path: 'contenido/defensa-civil',
+				element: (
+					<LazyWrapper>
+						<DefensaCivilAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
 				path: 'contenido/turismo',
 				element: (
 					<LazyWrapper>
@@ -412,6 +442,7 @@ export const routes = [
 					</LazyWrapper>
 				),
 			},
+			
 			{
 				path: 'documentos/presupuesto',
 				element: (
@@ -460,6 +491,14 @@ export const routes = [
 						<DestinoTuristicoAdmin />
 					</LazyWrapper>
 				),
+			},
+			{
+				path: 'contenido/popup-admin',
+				element: (
+					<LazyWrapper>
+						<PopupAdmin />
+					</LazyWrapper>
+				)
 			},
 
 			{

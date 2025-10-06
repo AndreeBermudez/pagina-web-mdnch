@@ -1,10 +1,13 @@
-import { Building, FileText, MinusCircleIcon, PlusCircleIcon, Users } from 'lucide-react';
+import { Building, FileText, MinusCircleIcon, PlusCircleIcon, Users, AlertCircle, Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { convocatoriasData } from './data-convocatoria';
+import { useConvocatoriasPublicas } from '../../../../../hooks/useConvocatoriasPublicas';
+import type { ConvocatoriaPublica } from '../../../../../services/convocatoria/obtenerConvocatoriasPublicas';
 import { ExpandedRowConvocatoria } from './ExpandedRowConvocatoria';
 
 export const TableConvocatoria = () => {
 	const [expandedRows, setExpandedRows] = useState<string[]>([]);
+	const { data: convocatorias, isLoading, error } = useConvocatoriasPublicas();
+	const year = new Date().getFullYear();
 
 	const toggleRow = (codigo: string) => {
 		setExpandedRows((prev) =>
@@ -12,11 +15,62 @@ export const TableConvocatoria = () => {
 		);
 	};
 
+	// Loading state
+	if (isLoading) {
+		return (
+			<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
+				<div className='px-6 py-4 border-b border-gray-200'>
+					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS {year}</h3>
+					<p className='text-sm text-gray-500 mt-1'>Cargando convocatorias...</p>
+				</div>
+				<div className='flex items-center justify-center py-12'>
+					<Loader2 className='w-8 h-8 animate-spin text-blue-600' />
+					<span className='ml-3 text-gray-600'>Cargando convocatorias...</span>
+				</div>
+			</div>
+		);
+	}
+
+	// Error state
+	if (error) {
+		return (
+			<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
+				<div className='px-6 py-4 border-b border-gray-200'>
+					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS 2025</h3>
+					<p className='text-sm text-red-500 mt-1'>Error al cargar convocatorias</p>
+				</div>
+				<div className='flex items-center justify-center py-12'>
+					<AlertCircle className='w-8 h-8 text-red-500' />
+					<span className='ml-3 text-gray-600'>No se pudieron cargar las convocatorias</span>
+				</div>
+			</div>
+		);
+	}
+
+	// No data state
+	if (!convocatorias || convocatorias.length === 0) {
+		return (
+			<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
+				<div className='px-6 py-4 border-b border-gray-200'>
+					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS 2025</h3>
+					<p className='text-sm text-gray-500 mt-1'>No hay convocatorias disponibles</p>
+				</div>
+				<div className='flex items-center justify-center py-12'>
+					<FileText className='w-8 h-8 text-gray-400' />
+					<span className='ml-3 text-gray-600'>No hay convocatorias publicadas</span>
+				</div>
+			</div>
+		);
+	}
+
+	// Filter only active convocatorias
+	const convocatoriasActivas = convocatorias.filter((conv: ConvocatoriaPublica) => conv.estado);
+
 	return (
 		<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
 			<div className='px-6 py-4 border-b border-gray-200'>
 				<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS 2025</h3>
-				<p className='text-sm text-gray-500 mt-1'>{convocatoriasData.length} Convocatorias</p>
+				<p className='text-sm text-gray-500 mt-1'>{convocatoriasActivas.length} Convocatorias</p>
 			</div>
 
 			<div className='overflow-x-auto rounded-2xl'>
@@ -41,11 +95,9 @@ export const TableConvocatoria = () => {
 						</tr>
 					</thead>
 					<tbody className='bg-white divide-y divide-gray-200'>
-						{convocatoriasData.map((convocatoria, index) => {
-							const { codigo, convocatoria: puesto, area, vacantes } = convocatoria;
-							const isExpanded = expandedRows.includes(codigo);
-
-							return (
+					{convocatoriasActivas.map((convocatoria: ConvocatoriaPublica, index: number) => {
+						const { codigo, convocatoria: puesto, area, vacantes } = convocatoria;
+						const isExpanded = expandedRows.includes(codigo);							return (
 								<>
 									<tr
 										key={codigo}

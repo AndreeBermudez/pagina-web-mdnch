@@ -22,6 +22,8 @@ import {
     UserCog,
     Users,
     Wrench,
+    HardHat,
+    BellRing,
     type LucideIcon
 } from 'lucide-react';
 
@@ -72,7 +74,13 @@ export const menuItems: MenuItem[] = [
              {
                 titulo: 'Destino Turistico',
                 link: '/admin/contenido/destino-turistico',
-                icon: Calendar,
+                icon: Map,
+                isActive: false,
+            },
+            {
+                titulo: 'Defensa Civil',
+                link: '/admin/contenido/defensa-civil',
+                icon: HardHat,
                 isActive: false,
             },
             {
@@ -115,6 +123,12 @@ export const menuItems: MenuItem[] = [
                 titulo: 'Organigrama',
                 link: '/admin/contenido/organigrama',
                 icon: Network,
+                isActive: false,
+            },
+             {
+                titulo: 'Popup Inicio',
+                link: '/admin/contenido/popup-admin',
+                icon: BellRing,
                 isActive: false,
             },
         ],

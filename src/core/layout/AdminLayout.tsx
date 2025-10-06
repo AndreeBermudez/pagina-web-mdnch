@@ -2,14 +2,16 @@ import { LogOutIcon, Menu } from 'lucide-react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Sidebar } from './sidebar';
 import { SidebarProvider, useSidebarContext } from './sidebar/context/SidebarContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const AdminLayoutContent: React.FC = () => {
 	const { handleMenuClick } = useSidebarContext();
+	const { logout: authLogout } = useAuth();
 	const navigate = useNavigate();
-	const logout = () => {
-		localStorage.removeItem('authToken');
-		localStorage.removeItem('user');
-		navigate('/login');
+	
+	const handleLogout = () => {
+		authLogout();
+		navigate('/admin/login');
 	};
 
 	return (
@@ -27,8 +29,8 @@ const AdminLayoutContent: React.FC = () => {
 						</div>
 						<div className='flex items-center space-x-3'>
 							<div
-								className='flex items-center justify-center px-4 py-2 space-x-4 text-gray-600 rounded-lg hover:bg-gray-100'
-								onClick={logout}>
+								className='flex items-center justify-center px-4 py-2 space-x-4 text-gray-600 rounded-lg hover:bg-gray-100 cursor-pointer'
+								onClick={handleLogout}>
 								<span className='text-sm text-gray-600'>Salir</span>
 								<LogOutIcon size={20} />
 							</div>

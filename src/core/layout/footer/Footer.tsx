@@ -42,7 +42,7 @@ export const Footer = () => {
 								<Clock className='w-5 h-5 text-yellow-500 mr-3 mt-1 flex-shrink-0' />
 								<div>
 									<h4 className='font-bold text-white text-sm'>Horario de atención:</h4>
-									<p>Lun - Vie: 08:30am - 05:15pm</p>
+									<p>Lun - Vie: 08:00am - 04:00pm</p>
 								</div>
 							</div>
 
@@ -51,18 +51,18 @@ export const Footer = () => {
 								<div>
 									<h4 className='font-bold text-white text-sm'>Dirección:</h4>
 									<p>Centro Cívico S/N - Nuevo Chimbote</p>
-									<p className='mt-1'>Jr. Enrique Palacios 343</p>
+									<p className='mt-1'>Urb. José Carlos Mariátegui</p>
 								</div>
 							</div>
 
-							<div className='flex items-start'>
+							{/* <div className='flex items-start'>
 								<Phone className='w-5 h-5 text-yellow-500 mr-3 mt-1 flex-shrink-0' />
 								<div>
 									<h4 className='font-bold text-white text-sm'>Teléfono:</h4>
 									<p>043-313000</p>
 									<p>043-321331</p>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					</div>
 
@@ -77,23 +77,16 @@ export const Footer = () => {
 								<h4 className='font-bold text-white text-sm mb-1'>Serenazgo</h4>
 								<p className='flex items-center'>
 									<Phone className='w-4 h-4 text-yellow-500 mr-2' />
-									(043) 635544
+									(043) 313000
 								</p>
-								<p className='flex items-center'>
-									<Phone className='w-4 h-4 text-yellow-500 mr-2' />
-									914782543
-								</p>
-								<p className='flex items-center'>
-									<Phone className='w-4 h-4 text-yellow-500 mr-2' />
-									914782677
-								</p>
+								
 							</div>
 
 							<div className='p-3 bg-gray-800 rounded-lg'>
 								<h4 className='font-bold text-white text-sm mb-1'>Policía Chimbote</h4>
 								<p className='flex items-center'>
 									<Phone className='w-4 h-4 text-yellow-500 mr-2' />
-									(043) 323380
+									(043) 312010
 								</p>
 							</div>
 
@@ -101,17 +94,11 @@ export const Footer = () => {
 								<h4 className='font-bold text-white text-sm mb-1'>Bomberos Chimbote</h4>
 								<p className='flex items-center'>
 									<Phone className='w-4 h-4 text-yellow-500 mr-2' />
-									(043) 341569
+									(043) 313333
 								</p>
 							</div>
 
-							<div className='p-3 bg-gray-800 rounded-lg'>
-								<h4 className='font-bold text-white text-sm mb-1'>Emergencia de Seguridad</h4>
-								<p className='flex items-center'>
-									<Phone className='w-4 h-4 text-yellow-500 mr-2' />
-									+51 932321527 (WhatsApp)
-								</p>
-							</div>
+							
 						</div>
 					</div>
 
