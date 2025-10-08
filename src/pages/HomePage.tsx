@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { AlcaldeSection } from '../core/components/common/page/home/alcalde/AlcaldeSection';
 
 import { SectionNews } from '../core/components/common/page/home/noticias/SectionNews';
@@ -10,28 +9,12 @@ import { Footer } from '../core/layout/footer/Footer';
 import { HeroSection } from '../core/layout/hero/HeroSection';
 import { NavbarSection } from '../core/layout/navbar/NavbarSection';
 import EmergencyPopup from '../core/components/common/EmergencyPopup';
+import { usePopupControl } from '../core/hooks/usePopupControl';
 
 export const HomePage = () => {
-	const [showEmergencyPopup, setShowEmergencyPopup] = useState(false);
-
-	useEffect(() => {
-		// Mostrar el popup solo si es la primera visita en esta sesión
-		const hasSeenPopup = sessionStorage.getItem('emergencyPopupSeen');
-		if (!hasSeenPopup) {
-			// Mostrar el popup después de un pequeño delay para mejor UX
-			const timer = setTimeout(() => {
-				setShowEmergencyPopup(true);
-			}, 1000);
-
-			return () => clearTimeout(timer);
-		}
-	}, []);
-
-	const handleClosePopup = () => {
-		setShowEmergencyPopup(false);
-		// Marcar que ya se vio el popup en esta sesión
-		sessionStorage.setItem('emergencyPopupSeen', 'true');
-	};
+	const { isPopupOpen, closePopup } = usePopupControl();
+	
+	console.log('HomePage - isPopupOpen:', isPopupOpen);
 
 	return (
 		<body className='bg-gray-100'>
@@ -47,8 +30,8 @@ export const HomePage = () => {
 			
 			{/* Popup de emergencia */}
 			<EmergencyPopup 
-				isOpen={showEmergencyPopup} 
-				onClose={handleClosePopup}
+				isOpen={isPopupOpen} 
+				onClose={closePopup}
 			/>
 		</body>
 	);

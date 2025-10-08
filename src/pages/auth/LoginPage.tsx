@@ -8,7 +8,6 @@ export const LoginPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Si ya está autenticado, redirigir al admin
   if (isAuthenticated) {
     return <Navigate to="/admin/contenido/slider" replace />;
   }

@@ -1,6 +1,13 @@
 import { Phone, Shield, AlertTriangle } from 'lucide-react';
+import { useNumeroEmergenciaPublico } from '../../../../../hooks/useNumeroEmergenciaPublico';
 
 export default function DenunciaCorrupcionPage() {
+	const { obtenerNumeroCorrupcion, isLoading } = useNumeroEmergenciaPublico();
+	const numeroCorrupcion = obtenerNumeroCorrupcion();
+	
+	const numeroTelefono = numeroCorrupcion?.numero || '970385757';
+
+	const tituloCorrupcion = numeroCorrupcion?.titulo || 'Denuncia contra la Corrupción';
 	return (
 		<section className='py-12 px-4 '>
 			<div className='max-w-4xl mx-auto'>
@@ -27,21 +34,41 @@ export default function DenunciaCorrupcionPage() {
 							<p className='text-xl font-semibold text-gray-800 mb-4'>LLAMANDO AL</p>
 							<div className='flex justify-center items-center gap-3'>
 								<Phone className='h-6 w-6 text-blue-600' />
-								<a
-									href='tel:970385757'
-									className='text-3xl md:text-4xl font-bold text-blue-600 hover:text-blue-800 transition-colors duration-200'>
-									970 385 757
-								</a>
+								{isLoading ? (
+									<div className='text-3xl md:text-4xl font-bold text-gray-400 animate-pulse'>
+										Cargando...
+									</div>
+								) : (
+									<a
+										href={`tel:${numeroTelefono}`}
+										className='text-3xl md:text-4xl font-bold text-blue-600 hover:text-blue-800 transition-colors duration-200'>
+										{numeroTelefono}
+									</a>
+								)}
 							</div>
+							{numeroCorrupcion && (
+								<p className='text-sm text-gray-600 mt-2'>
+									{tituloCorrupcion}
+								</p>
+							)}
 						</div>
 
 						{/* Call to action button */}
-						<a
-							href='tel:970385757'
-							className='inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded transition-colors duration-200'>
-							<Phone className='mr-2 h-5 w-5' />
-							Llamar Ahora
-						</a>
+						{isLoading ? (
+							<button
+								disabled
+								className='inline-flex items-center bg-gray-400 text-white px-8 py-3 text-lg font-semibold rounded cursor-not-allowed'>
+								<Phone className='mr-2 h-5 w-5' />
+								Cargando...
+							</button>
+						) : (
+							<a
+								href={`tel:${numeroTelefono}`}
+								className='inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded transition-colors duration-200'>
+								<Phone className='mr-2 h-5 w-5' />
+								Llamar Ahora
+							</a>
+						)}
 
 						{/* Additional information */}
 						<div className='mt-8 pt-6 border-t border-gray-200'>

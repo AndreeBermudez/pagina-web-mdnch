@@ -24,6 +24,7 @@ import {
     Wrench,
     HardHat,
     BellRing,
+    BadgeAlert,
     type LucideIcon
 } from 'lucide-react';
 
@@ -129,6 +130,12 @@ export const menuItems: MenuItem[] = [
                 titulo: 'Popup Inicio',
                 link: '/admin/contenido/popup-admin',
                 icon: BellRing,
+                isActive: false,
+            },
+             {
+                titulo: 'Número de Emergencia',
+                link: '/admin/contenido/numero-emergencia',
+                icon: BadgeAlert,
                 isActive: false,
             },
         ],

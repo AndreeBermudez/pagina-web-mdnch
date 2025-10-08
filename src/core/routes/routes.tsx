@@ -59,6 +59,7 @@ const EventosAdmin = lazy(() => import('../../features/administrador/eventos-adm
 const OrganigramaAdmin = lazy(
 	() => import('../../features/administrador/organigrama-admin/pages/OrganigramaAdmin')
 );
+const NumeroEmergenciaAdmin = lazy(() => import('../../features/administrador/numeroEmergencia-admin/pages/NumeroEmergenciaAdmin'));
 const ServiciosAdmin = lazy(() => import('../../features/administrador/servicios-admin/pages/ServiciosAdmin'));
 const ControlAdmin = lazy(() => import('../../features/administrador/controlInterno-admin/pages/ControlAdmin'));
 const AlcaldePageAdmin = lazy(() => import('../../features/administrador/alcalde-admin/pages/AlcaldeAdmin'));
@@ -489,6 +490,14 @@ export const routes = [
 				element: (
 					<LazyWrapper>
 						<DestinoTuristicoAdmin />
+					</LazyWrapper>
+				),
+			},
+				{
+				path: 'contenido/numero-emergencia',
+				element: (
+					<LazyWrapper>
+						<NumeroEmergenciaAdmin />
 					</LazyWrapper>
 				),
 			},
