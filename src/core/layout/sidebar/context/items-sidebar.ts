@@ -177,25 +177,25 @@ export const menuItems: MenuItem[] = [
             },
         ],
     },
-    {
-        titulo: 'Frontend',
-        icon: Monitor,
-        isActive: false,
-        subMenu: [
-            {
-                titulo: 'Paginas',
-                link: '/admin/frontend/paginas',
-                icon: Layout,
-                isActive: false,
-            },
-            {
-                titulo: 'Menu y Submenu',
-                link: '/admin/frontend/menu',
-                icon: Menu,
-                isActive: false,
-            },
-        ],
-    },
+    // {
+    //     titulo: 'Frontend',
+    //     icon: Monitor,
+    //     isActive: false,
+    //     subMenu: [
+    //         {
+    //             titulo: 'Paginas',
+    //             link: '/admin/frontend/paginas',
+    //             icon: Layout,
+    //             isActive: false,
+    //         },
+    //         {
+    //             titulo: 'Menu y Submenu',
+    //             link: '/admin/frontend/menu',
+    //             icon: Menu,
+    //             isActive: false,
+    //         },
+    //     ],
+    // },
     {
         titulo: 'Configuración',
         icon: Settings,
