@@ -70,7 +70,7 @@ export const YearSection = ({ year, data, documentId }: YearSectionProps) => {
 							<div className='flex-shrink-0'>
 								{item.link ? (
 									<a
-										href={item.link}
+										href={`http://localhost:8080/${item.link}`}
 										target='_blank'
 										rel='noopener noreferrer'
 										className={`inline-flex items-center justify-center w-10 h-10 ${colors.button} text-white rounded-xl transition-all duration-200 group shadow-sm hover:shadow-md`}>

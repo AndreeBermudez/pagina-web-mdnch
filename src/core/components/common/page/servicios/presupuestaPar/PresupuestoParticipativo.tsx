@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
+import { Search } from 'lucide-react';
 import { usePresupuestoQuery } from '../../../../../hooks/usePresupuestoQuery';
 import { getColorClasses } from './colorUtils';
 
@@ -28,6 +30,15 @@ const formatDate = (dateString: string): string => {
 
 const PresupuestoParticipativo = () => {
 	const { data: presupuestos = [], isLoading, error } = usePresupuestoQuery();
+	const [filtroAnio, setFiltroAnio] = useState('');
+
+	// Filtrar presupuestos por año
+	const presupuestosFiltrados = presupuestos.filter((presupuesto) => {
+		if (!filtroAnio) return true;
+		const fechaPresupuesto = new Date(presupuesto.fechaCreacion);
+		const anioPresupuesto = fechaPresupuesto.getFullYear().toString();
+		return anioPresupuesto.includes(filtroAnio);
+	});
 
 	if (isLoading) {
 		return (
@@ -55,11 +66,49 @@ const PresupuestoParticipativo = () => {
 
 	return (
 		<div>
+			{/* Filtro por año */}
+			<section className='px-4 py-8 '>
+				<div className='container mx-auto max-w-6xl'>
+					<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+						<div className='flex-1 max-w-md'>
+							<label htmlFor='filtro-anio' className='block text-sm font-medium text-gray-700 mb-2'>
+								Filtrar por año
+							</label>
+							<div className='relative'>
+								<Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+								<input
+									id='filtro-anio'
+									type='text'
+									placeholder='Ej: 2024, 2025...'
+									value={filtroAnio}
+									onChange={(e) => setFiltroAnio(e.target.value)}
+									className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors'
+								/>
+							</div>
+						</div>
+						<div className='flex items-center gap-2 text-sm text-gray-600'>
+							<span className='font-medium'>{presupuestosFiltrados.length}</span>
+							<span>documento{presupuestosFiltrados.length !== 1 ? 's' : ''} encontrado{presupuestosFiltrados.length !== 1 ? 's' : ''}</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			{/* Documents Grid */}
 			<section className=' px-4'>
 				<div className='container mx-auto max-w-6xl'>
-					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-						{presupuestos.map((documento) => {
+					{presupuestosFiltrados.length === 0 ? (
+						<div className='flex flex-col items-center justify-center py-20'>
+							<div className='text-lg text-gray-600 mb-2'>No se encontraron documentos para el año "{filtroAnio}"</div>
+							<button
+								onClick={() => setFiltroAnio('')}
+								className='text-blue-600 hover:text-blue-700 underline text-sm'>
+								Limpiar filtro
+							</button>
+						</div>
+					) : (
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+							{presupuestosFiltrados.map((documento) => {
 							const color = getColorByType(documento.tipo);
 							const colorClasses = getColorClasses(color);
 							return (
@@ -96,7 +145,8 @@ const PresupuestoParticipativo = () => {
 								</div>
 							);
 						})}
-					</div>
+						</div>
+					)}
 				</div>
 			</section>
 		</div>

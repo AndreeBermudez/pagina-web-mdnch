@@ -3,6 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { AdminLayout } from '../layout/AdminLayout';
 import { LazyWrapper } from './components/LazyWrapper';
 import { PrivateGuard } from './guard/PrivateGuard';
+import { RoleGuard } from './guard/RoleGuard';
 
 //* Home - Lazy loading
 const HomePage = lazy(() => import('../../pages/HomePage').then((module) => ({ default: module.HomePage })));
@@ -69,6 +70,11 @@ const TurismoAdmin = lazy(() => import('../../features/administrador/turismo-adm
 const PresupuestoAdmin = lazy(
 	() => import('../../features/administrador/presupuesto-admin/pages/PresupuestoAdmin')
 );
+const TransparenciaAdmin = lazy(
+	() => import('../../features/administrador/transparencia-admin/pages/TransparenciaAdmin')
+);
+const RolesAdmin = lazy(() => import('../../features/administrador/roles-admin/pages/RolesAdmin'));
+const UsuarioAdmin = lazy(	() => import('../../features/administrador/usuarios-admin/pages/UsuarioAdmin'));
 const PopupAdmin = lazy(() => import('../../features/administrador/popup-admin/page/PopupAdmin'));
 const DefensaCivilAdmin = lazy(() => import('../../features/administrador/defensaCivil-admin/pages/DefensaCivilAdmin'));
 const DestinoTuristicoAdmin = lazy(() => import('../../features/administrador/destinoTuristico-admin/page/DestinoTuristicoAdmin'));
@@ -513,50 +519,9 @@ export const routes = [
 			{
 				path: 'documentos/transparencia',
 				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-											/>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Transparencia</h1>
-										<p className='mt-1 text-slate-600'>Administra los documentos de transparencia municipal</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>
-									El módulo de gestión de transparencia estará disponible próximamente
-								</p>
-							</div>
-						</div>
-					</div>
+					<LazyWrapper>
+						<TransparenciaAdmin />
+					</LazyWrapper>
 				),
 			},
 			{
@@ -596,83 +561,17 @@ export const routes = [
 			{
 				path: 'configuracion/usuarios',
 				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Usuarios</h1>
-										<p className='mt-1 text-slate-600'>Administra los usuarios del sistema</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>El módulo de gestión de usuarios estará disponible próximamente</p>
-							</div>
-						</div>
-					</div>
+					<LazyWrapper>
+						<UsuarioAdmin />
+					</LazyWrapper>
 				),
 			},
 			{
 				path: 'configuracion/roles',
 				element: (
-					<div className='space-y-6'>
-						<div className='bg-white border shadow-sm rounded-xl border-slate-200'>
-							<div className='p-6 border-b border-slate-200'>
-								<div className='flex items-center space-x-3'>
-									<div className='p-2 rounded-lg bg-blue-50'>
-										<svg className='w-6 h-6 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth={2}
-												d='M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z'
-											/>
-										</svg>
-									</div>
-									<div>
-										<h1 className='text-2xl font-bold text-slate-900'>Gestión de Roles</h1>
-										<p className='mt-1 text-slate-600'>Administra los roles y permisos del sistema</p>
-									</div>
-								</div>
-							</div>
-							<div className='p-6 text-center'>
-								<div className='flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100'>
-									<svg className='w-8 h-8 text-slate-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth={2}
-											d='M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-										/>
-									</svg>
-								</div>
-								<h3 className='mb-2 text-lg font-medium text-slate-900'>Módulo en Desarrollo</h3>
-								<p className='text-slate-500'>El módulo de gestión de roles estará disponible próximamente</p>
-							</div>
-						</div>
-					</div>
+					<LazyWrapper>
+						<RolesAdmin />
+					</LazyWrapper>
 				),
 			},
 		],

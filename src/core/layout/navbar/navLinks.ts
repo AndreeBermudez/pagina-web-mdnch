@@ -50,14 +50,21 @@ export const navLinks: NavLink[] = [
 		hasDropdown: true,
 		dropdownItems: [
 			{ href: '/tramites/defensa-civil', label: 'Defensa Civil' },
-			{ href: '/tramites/transparencia', label: 'Transparencia' },
-			{ href: '/tramites/control-interno', label: 'Control Interno' },
 			{ href: '/tramites/registro-civil', label: 'Registro Civil' },
 			{ href: '/tramites/licencia-funcionamiento', label: 'Licencia de Funcionamiento' },
 			{ href: '/tramites/licencia-edificacion', label: 'Licencia de Edificación' },
 			{ href: '/tramites/convocatorias', label: 'CONVOCATORIAS CAS 2025' },
 			{ href: '/tramites/denuncia', label: 'DENUNCIA CONTRA LA CORRUPCION' },
-			{ href: '/tramites', label: 'Ver Todos los trámites' },
+		
+		],
+	},
+	{
+		label: 'Portal de Transparencia',
+		hasDropdown: true,
+		dropdownItems: [
+			{ href: '/tramites/transparencia', label: 'Contratacion de Bienes y Servicios' },
+			{ href: '/tramites/control-interno', label: 'Control Interno' },
+			
 		],
 	},
 ];

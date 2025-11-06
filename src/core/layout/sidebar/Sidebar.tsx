@@ -2,6 +2,9 @@ import logoMunicipalidad from '../../../assets/logo.webp';
 import { ButtonSidebarCollapsed } from './ButtonSidebarCollapsed';
 import { useSidebarContext } from './context/SidebarContext';
 import { menuItems } from './context/items-sidebar';
+import { useAuth } from '../../contexts/AuthContext';
+import { filterMenuByPermissions } from '../../utils/rolePermissions';
+import { useMemo } from 'react';
 
 export const Sidebar: React.FC = () => {
 	const {
@@ -13,6 +16,14 @@ export const Sidebar: React.FC = () => {
 		toggleDropdown,
 		isDropdownOpen,
 	} = useSidebarContext();
+	
+	const { userRole } = useAuth();
+	
+	// Filtrar el menú según los permisos del rol
+	const filteredMenuItems = useMemo(() => {
+		return filterMenuByPermissions(userRole, menuItems);
+	}, [userRole]);
+	
 	return (
 		<>
 			<div
@@ -31,7 +42,7 @@ export const Sidebar: React.FC = () => {
 						</span>
 					</div>
 					<div className='flex flex-col w-full px-3 flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30 scrollbar-thumb-rounded-full'>
-						{menuItems.map((item) => (
+						{filteredMenuItems.map((item) => (
 							<ButtonSidebarCollapsed
 								key={item.titulo}
 								titulo={item.titulo}

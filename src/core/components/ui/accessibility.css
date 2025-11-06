@@ -1,0 +1,64 @@
+/* Alto contraste */
+body.high-contrast {
+    filter: contrast(150%);
+}
+
+/* Contraste negativo */
+body.negative-contrast {
+    filter: invert(100%);
+}
+
+/* Modo claro */
+body.light-mode {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.light-mode * {
+    background-color: inherit;
+    color: inherit;
+}
+
+/* Modo oscuro */
+body.dark-mode {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode section,
+body.dark-mode div:not(.bg-blue-600):not(.bg-red-600):not(.bg-yellow-400):not(.bg-green-600) {
+    background-color: #2d2d2d !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode li {
+    color: #ffffff !important;
+}
+
+body.dark-mode .bg-white {
+    background-color: #2d2d2d !important;
+}
+
+body.dark-mode .bg-gray-50,
+body.dark-mode .bg-gray-100 {
+    background-color: #3d3d3d !important;
+}
+
+body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-700,
+body.dark-mode .text-gray-800,
+body.dark-mode .text-gray-900 {
+    color: #e5e5e5 !important;
+}
+
+body.dark-mode .border-gray-200,
+body.dark-mode .border-gray-300 {
+    border-color: #4d4d4d !important;
+}

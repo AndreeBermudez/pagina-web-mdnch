@@ -12,7 +12,7 @@ export const obtenerPeriodos = async (): Promise<PeriodoResponse[]> => {
 		}
 		return [];
 	} catch (error) {
-		console.error('Error al obtener periodos:', error);
+		console.error('Error al obtener períodos:', error);
 		return [];
 	}
 };

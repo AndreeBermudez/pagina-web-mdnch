@@ -38,16 +38,22 @@ export const AlcaldeSection = () => {
 									<Target className='w-8 h-8 text-yellow-400' />
 									<span className='font-medium text-white'>Desarrollo Sostenible</span>
 								</div>
-								<a
-									href='/alcalde'
-									className='flex items-center gap-3 p-4 transition-all duration-300 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/15'>
+								<div className='flex items-center gap-3 p-4 transition-all duration-300 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/15'>
 									<Users className='w-8 h-8 text-yellow-400' />
 									<span className='font-medium text-white'>Bienestar Social</span>
-								</a>
+								</div>
 							</div>
-						</div>
 
-						<div className='relative flex items-center justify-center order-1 h-full lg:order-2'>
+						{/* Botón para ver más información */}
+						<div className='text-center'>
+							<a
+								href='../nosotros/alcalde'
+								className='inline-flex items-center gap-2 px-8 py-4 text-lg font-bold text-blue-900 transition-all duration-300 bg-yellow-400 rounded-lg shadow-lg hover:bg-yellow-500 hover:shadow-xl hover:scale-105 transform'>
+								
+								<span>Conocer Más</span>
+							</a>
+						</div>
+					</div>						<div className='relative flex items-center justify-center order-1 h-full lg:order-2'>
 							{/* Paralelogramo con animación infinita */}
 							<div
 								className='absolute w-[120%] h-[120%] bg-blue-700/20 z-0 animate-float'

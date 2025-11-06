@@ -29,7 +29,7 @@ export const Navbar = ({ isHomePage, scrolled, mobileMenuOpen, setMobileMenuOpen
 							<Link to='/' replace><img src={logo} alt='Logo' className='h-14 lg:h-12 w-auto' /></Link>
 							<div className='hidden lg:flex lg:flex-col '>
 								<span className={`font-bold text-base ${textClasses}`}>Municipalidad Distrital</span>
-								<span className={`font-semibold text-sm ${subtextClasses}`}>Nuevo Chimbote</span>
+								<span className={`font-bold text-base ${textClasses}`}>Nuevo Chimbote</span>
 							</div>
 						</div>
 						{/* Navegación desktop */}

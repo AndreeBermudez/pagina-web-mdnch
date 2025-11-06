@@ -5,7 +5,7 @@ export const eliminarTransparencia = async (id: number): Promise<boolean> => {
 		await axiosWithoutMultipart.delete(`transparencia/${id}`);
 		return true;
 	} catch (error) {
-		console.error('Error al eliminar presupuesto:', error);
+		console.error('Error al eliminar transparencia:', error);
 		return false;
 	}
 };

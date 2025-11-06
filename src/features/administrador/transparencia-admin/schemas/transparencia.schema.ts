@@ -7,16 +7,11 @@ export const transparenciaSchemaBase = z.object({
 export const periodoRequest = z.object({
 	transparenciaId: z.number(),
 	año: z.string().min(1, { message: 'El año no puede estar vacío' }),
+	responsable: z.string().min(1, { message: 'El responsable no puede estar vacío' }),
 	trimestre1: z.instanceof(File, { message: 'Debe seleccionar un documento para el trimestre 1' }).optional(),
 	trimestre2: z.instanceof(File, { message: 'Debe seleccionar un documento para el trimestre 2' }).optional(),
 	trimestre3: z.instanceof(File, { message: 'Debe seleccionar un documento para el trimestre 3' }).optional(),
 	trimestre4: z.instanceof(File, { message: 'Debe seleccionar un documento para el trimestre 4' }).optional(),
-});
-
-export const transparenciaResponse = transparenciaSchemaBase.extend({
-	transparenciaId: z.number(),
-	fechaCreacion: z.string(),
-	fechaModificacion: z.string(),
 });
 
 export const periodoResponse = periodoRequest.omit({
@@ -45,6 +40,13 @@ export const periodoResponse = periodoRequest.omit({
 		.optional(),
 	fechaCreacion: z.string(),
 	fechaActualizacion: z.string(),
+});
+
+export const transparenciaResponse = transparenciaSchemaBase.extend({
+	transparenciaId: z.number(),
+	fechaCreacion: z.string(),
+	fechaModificacion: z.string(),
+	periodos: z.array(periodoResponse).optional(),
 });
 
 export type TransparenciaRequest = z.infer<typeof transparenciaSchemaBase>;

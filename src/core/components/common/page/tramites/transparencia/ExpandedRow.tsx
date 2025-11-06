@@ -8,13 +8,14 @@ interface YearData {
 
 interface ExpandedRowProps {
 	documentId: number;
-	datos2023: YearData[];
-	datos2024: YearData[];
+	periodosPorAño: Record<string, YearData[]>;
 }
 
-export const ExpandedRow = ({ documentId, datos2023, datos2024 }: ExpandedRowProps) => {
-	const hasData2024 = datos2024.length > 0;
-	const hasData2023 = datos2023.length > 0;
+export const ExpandedRow = ({ documentId, periodosPorAño }: ExpandedRowProps) => {
+	// Obtener los años ordenados de mayor a menor
+	const años = Object.keys(periodosPorAño).sort((a, b) => parseInt(b) - parseInt(a));
+	const totalDocumentos = años.reduce((acc, año) => acc + periodosPorAño[año].length, 0);
+	const hasData = años.length > 0;
 
 	return (
 		<tr>
@@ -29,19 +30,25 @@ export const ExpandedRow = ({ documentId, datos2023, datos2024 }: ExpandedRowPro
 							Documentos disponibles por periodo
 							<div className='flex-1 h-px bg-blue-200'></div>
 							<span className='text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded-full font-medium'>
-								{datos2024.length + datos2023.length} total
+								{totalDocumentos} total
 							</span>
 						</h3>
 					</div>
 
-					<div className={`grid gap-8 ${hasData2024 && hasData2023 ? 'lg:grid-cols-2' : 'grid-cols-1'}`}>
-						{hasData2024 && <YearSection year={2024} data={datos2024} documentId={documentId} />}
-						{hasData2023 && <YearSection year={2023} data={datos2023} documentId={documentId} />}
-					</div>
-
-					{!hasData2024 && !hasData2023 && (
+					{hasData ? (
+						<div className={`grid gap-8 ${años.length > 1 ? 'lg:grid-cols-2' : 'grid-cols-1'}`}>
+							{años.map((año) => (
+								<YearSection 
+									key={año}
+									year={parseInt(año)} 
+									data={periodosPorAño[año]} 
+									documentId={documentId} 
+								/>
+							))}
+						</div>
+					) : (
 						<div className='text-center py-12 bg-white rounded-xl border-2 border-dashed border-gray-300'>
-							<File />
+							<File className='mx-auto h-12 w-12 text-gray-400' />
 							<h3 className='text-lg font-medium text-gray-900 mb-2'>No hay documentos disponibles</h3>
 							<p className='text-sm text-gray-500'>
 								No se encontraron documentos para este concepto en ningún periodo.

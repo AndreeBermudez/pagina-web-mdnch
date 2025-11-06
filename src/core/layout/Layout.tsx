@@ -1,5 +1,6 @@
 import { Footer } from './footer/Footer';
 import { NavbarSection } from './navbar/NavbarSection';
+import { AccessibilityMenu } from '../components/ui/Accessibility';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
 	return (
 		<>
+			<AccessibilityMenu />
 			<NavbarSection />
 			{children}
 			<Footer />

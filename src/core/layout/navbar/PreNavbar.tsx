@@ -1,4 +1,4 @@
-import { Book, Mail } from "lucide-react"
+import { Book, Mail,BookOpenText } from "lucide-react"
 import logopte from '../../../assets/logo_ptewhite.png';
 
 interface Props {
@@ -16,6 +16,12 @@ export const PreNavbar = ({isHomePage, scrolled}:Props) => {
     >
       <div className="container-navbar">
         <div className="w-full flex justify-end gap-4 text-sm mt-1 items-center">
+           
+          <a href="https://reclamos.servicios.gob.pe/?institution_id=1311" className="flex items-center gap-1 hover:text-blue-200">
+            <BookOpenText size={20} />
+            <span className="hidden lg:flex ">Libro de reclamaciones</span>
+          </a>
+          <span className="text-gray-400">|</span>
           <a href="https://webmail.muninuevochimbote.gob.pe/" className="flex items-center gap-1 hover:text-blue-200">
             <Mail size={20} />
             <span className="hidden lg:flex ">Web Email</span>
@@ -26,7 +32,7 @@ export const PreNavbar = ({isHomePage, scrolled}:Props) => {
             <span className="hidden lg:flex ">Mesa de Partes</span>
           </a>
           <span className="text-gray-400">|</span>
-          <a href="https://www.transparencia.gob.pe/" className="flex items-center gap-1 hover:text-blue-200">
+          <a href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11154&id_tema=1&ver=D#.WTcThJI1_IX" className="flex items-center gap-1 hover:text-blue-200">
             <img className="h-8 w-8" src={logopte} alt="Transparencia" />
             <span className="hidden lg:flex ">Portal de Transparencia</span>
           </a>

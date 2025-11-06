@@ -1,31 +1,40 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Trash2, FileText } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Modal } from '../../../../core/components/common/modal/Modal';
+import ConfirmModal from '../components/ConfirmModal';
 import { AdminDataTable, type TableAction } from '../../../../core/components/common/table/AdminDataTable';
 import { useModal } from '../../../../core/hooks/useModal';
 import { useNotifications } from '../../../../core/hooks/useNotifications';
-import { formatDate } from '../../../../core/utils/formatDate';
 import { useTransparenciaMutation } from '../hooks/useTransparenciaMutation';
 import { useTransparenciaQuery } from '../hooks/useTransparenciaQuery';
+import { useTransparenciaByIdQuery } from '../hooks/useTransparenciaByIdQuery';
 import type { TransparenciaResponse } from '../schemas/transparencia.schema';
+import { AgregarConceptoModal } from '../components/AgregarConceptoModal';
+import { EditarConceptoModal } from '../components/EditarConceptoModal';
 
 export default function TransparenciaAdmin() {
 	const { isModalOpen, handleModal } = useModal();
 	const { success, error } = useNotifications();
 	const { transparencias, isLoading, error: queryError } = useTransparenciaQuery();
 	const { deleteTransparencia } = useTransparenciaMutation();
-	const [transparenciaEdit, setTransparenciaEdit] = useState<TransparenciaResponse | null>(null);
+	const [selectedTransparenciaId, setSelectedTransparenciaId] = useState<number | null>(null);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	const [itemToDelete, setItemToDelete] = useState<TransparenciaResponse | null>(null);
+	const [modalType, setModalType] = useState<'add' | 'edit'>('add');
+
+	// Obtener detalles de la transparencia con períodos
+	const { data: transparenciaDetalle, isLoading: isLoadingDetalle } = useTransparenciaByIdQuery(selectedTransparenciaId);
 
 	const handleEdit = (transparencia: TransparenciaResponse) => {
-		setTransparenciaEdit(transparencia);
+		setSelectedTransparenciaId(transparencia.transparenciaId);
+		setModalType('edit');
 		handleModal();
 	};
 
 	const handleNew = () => {
-		setTransparenciaEdit(null);
+		setSelectedTransparenciaId(null);
+		setModalType('add');
 		handleModal();
 	};
 
@@ -57,97 +66,60 @@ export default function TransparenciaAdmin() {
 	const columns: ColumnDef<TransparenciaResponse>[] = useMemo(
 		() => [
 			{
-				accessorKey: 'fechaCreacion',
-				header: 'Fecha',
+				accessorKey: 'transparenciaId',
+				header: 'ID',
 				cell: ({ getValue }) => (
 					<div className='text-sm font-medium text-slate-900 whitespace-nowrap'>
-						{formatDate(getValue() as string)}
+						#{getValue() as number}
 					</div>
 				),
-				enableColumnFilter: true,
+				enableColumnFilter: false,
 			},
 			{
 				accessorKey: 'concepto',
 				header: 'Concepto',
 				cell: ({ getValue }) => (
-					<div className='max-w-xs'>
+					<div className='max-w-md'>
 						<p className='text-sm font-medium text-slate-900 line-clamp-2'>{getValue() as string}</p>
 					</div>
 				),
 				enableSorting: false,
 			},
-			{
-				accessorKey: 'responsable',
-				header: 'Responsable',
-				cell: ({ getValue }) => (
-					<div className='max-w-xs'>
-						<span className='inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200'>
-							{getValue() as string}
-						</span>
-					</div>
-				),
-				enableSorting: false,
-			},
-			{
-				accessorKey: 'linkDocumento',
-				header: 'Documento',
-				cell: ({ getValue }) => (
-					<div className='max-w-xs'>
-						<a
-							href={getValue() as string}
-							target='_blank'
-							rel='noopener noreferrer'
-							className='text-sm text-blue-600 underline hover:text-blue-800 line-clamp-2'>
-							Ver documento
-						</a>
-					</div>
-				),
-				enableSorting: false,
-			},
-			{
-				accessorKey: 'responsable',
-				header: 'Responsable',
-				cell: ({ getValue }) => (
-					<span className='inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 border border-slate-200'>
-						{getValue() as string}
-					</span>
-				),
-				enableSorting: false,
-			},
+			
 		],
 		[]
 	);
 
-	const actions: TableAction<Presupuesto>[] = [
+	const actions: TableAction<TransparenciaResponse>[] = [
 		{
 			icon: Edit,
-			label: 'Editar presupuesto',
+			label: 'Editar transparencia',
 			onClick: handleEdit,
 			variant: 'edit',
 		},
 		{
 			icon: Trash2,
-			label: 'Eliminar presupuesto',
-			onClick: handleDelete,
+			label: 'Eliminar transparencia',
+			onClick: openDeleteConfirm,
 			variant: 'delete',
-			disabled: () => deletePresupuesto.isPending,
+			disabled: () => deleteTransparencia.isPending,
 		},
 	];
 
 	return (
 		<>
 			<AdminDataTable
-				title='Gestión de Presupuesto'
-				description='Administra los documentos de presupuesto municipales'
-				icon={DollarSign}
-				data={presupuestos || []}
+				title='Gestión de Transparencia'
+				description='Administra los registros de transparencia municipal'
+				icon={FileText}
+				data={transparencias || []}
 				columns={columns}
 				actions={actions}
 				isLoading={isLoading}
 				error={queryError}
-				searchPlaceholder='Buscar por título, tipo...'
+				searchPlaceholder='Buscar por concepto...'
 				onNew={handleNew}
-				newButtonText='Nuevo presupuesto'
+				newButtonText='Nuevo registro'
 				enablePagination={true}
 				initialPageSize={10}
 			/>
@@ -155,9 +127,32 @@ export default function TransparenciaAdmin() {
 				<Modal
 					isOpen={isModalOpen}
 					onClose={handleModal}
-					title={presupuestoEdit ? 'Editar Presupuesto' : 'Nuevo Presupuesto'}>
-					<PresupuestoForm handleModal={handleModal} presupuestoEditable={presupuestoEdit} />
+					title={modalType === 'add' ? 'Nuevo Concepto' : 'Editar Concepto'}
+					size={modalType === 'edit' ? 'xl' : 'sm'}
+				>
+					{modalType === 'add' ? (
+						<AgregarConceptoModal handleModal={handleModal} />
+					) : isLoadingDetalle ? (
+						<div className='flex justify-center items-center h-48'>
+							<p className='text-gray-500'>Cargando...</p>
+						</div>
+					) : transparenciaDetalle ? (
+						<EditarConceptoModal handleModal={handleModal} transparencia={transparenciaDetalle} />
+					) : (
+						<div className='flex justify-center items-center h-48'>
+							<p className='text-red-500'>Error al cargar los datos</p>
+						</div>
+					)}
 				</Modal>
+			)}
+			{showConfirmDelete && (
+				<ConfirmModal
+					isOpen={showConfirmDelete}
+					onClose={closeDeleteConfirm}
+					onConfirm={handleDelete}
+					title='Eliminar Registro'
+					message='¿Estás seguro de que deseas eliminar este registro de transparencia? Esta acción no se puede deshacer.'
+				/>
 			)}
 		</>
 	);

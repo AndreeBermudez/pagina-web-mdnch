@@ -225,7 +225,7 @@ export default function Noticia() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
                 <div className="absolute bottom-0 left-0 p-8 text-white">
-                  <span className="bg-green-600 px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-blue-600 px-3 py-1 rounded-full text-sm font-medium">
                     {noticia.categoria}
                   </span>
                   <h2 className="text-4xl font-bold mt-4 mb-2">
@@ -237,7 +237,7 @@ export default function Noticia() {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => setSelectedNoticia(noticia)}
-                      className="bg-white text-black px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition-colors"
+                      className="bg-white text-black px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
                     >
                       Leer más
                     </button>
@@ -297,7 +297,7 @@ export default function Noticia() {
           ) : (
             <>
               {paginatedNoticias.map((noticia) => (
-                <div key={noticia.id} className="rounded-lg overflow-hidden shadow-lg flex flex-col h-[500px] bg-transparent">
+                <div key={noticia.id} className="rounded-lg overflow-hidden shadow-lg flex flex-col h-[500px] bg-white">
                   <div className="h-48 overflow-hidden">
                     <img
                       src={noticia.imagen}
@@ -307,7 +307,7 @@ export default function Noticia() {
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <div>
-                      <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                         {noticia.categoria}
                       </span>
                     </div>
@@ -320,7 +320,7 @@ export default function Noticia() {
                     <div className="flex items-center justify-between mt-2 pt-3 border-t border-gray-100">
                       <button
                         onClick={() => setSelectedNoticia(noticia)}
-                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                       >
                         Leer más
                       </button>
@@ -348,7 +348,7 @@ export default function Noticia() {
                       onClick={() => setCurrentPage(page)}
                       className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                         currentPage === page
-                          ? 'bg-green-600 text-white'
+                          ? 'bg-blue-600 text-white'
                           : 'border border-gray-300 hover:bg-gray-100'
                       }`}
                     >

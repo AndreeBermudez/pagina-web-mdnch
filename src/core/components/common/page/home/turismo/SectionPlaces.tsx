@@ -89,7 +89,7 @@ export const SectionPlaces = () => {
 									</div>
 								</div>
 								<a
-									href='/turismo'
+									href='../tudistrito/turismo'
 									className='inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-colors'>
 									Descubrir más
 									<MoveRight className='w-4 h-4' />
@@ -98,7 +98,7 @@ export const SectionPlaces = () => {
 						</div>
 					</div>
 					<div className='mb-10 text-center'>
-						<h2 className='mb-3 text-2xl font-bold text-blue-900 md:text-3xl'>Lugares de interés</h2>
+						<h2 className='mb-3 text-2xl font-bold text-blue-900 md:text-3xl'>Lugares de turisticos</h2>
 						<p className='max-w-2xl mx-auto text-gray-600'>
 							Descubre los principales atractivos turísticos y recreativos de nuestra ciudad
 						</p>

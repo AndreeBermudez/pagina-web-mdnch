@@ -6,7 +6,7 @@ import type { TransparenciaRequest } from '../schemas/transparencia.schema';
 
 interface UpdateTransparenciaParams {
 	id: number;
-	data: FormData | Partial<TransparenciaRequest>;
+	data: Partial<TransparenciaRequest>;
 }
 
 export const useTransparenciaMutation = () => {
@@ -16,7 +16,7 @@ export const useTransparenciaMutation = () => {
 	};
 
 	const createTransparencia = useMutation({
-		mutationFn: (data: FormData | TransparenciaRequest) => crearTransparencia(data),
+		mutationFn: (data: TransparenciaRequest) => crearTransparencia(data),
 		onSuccess: invalidateTransparencias,
 	});
 

@@ -70,8 +70,23 @@ const CalendarSection = () => {
 		return eventos.filter((ev) => ev.fecha === fechaStr && ev.titulo.toLowerCase().includes(busqueda.toLowerCase()));
 	};
 
+	// Función para obtener eventos próximos (desde hoy en adelante)
+	const obtenerEventosProximos = () => {
+		const hoy = new Date();
+		hoy.setHours(0, 0, 0, 0);
+		
+		return eventos
+			.filter((evento) => {
+				const fechaEvento = new Date(evento.fecha);
+				return fechaEvento >= hoy && evento.titulo.toLowerCase().includes(busqueda.toLowerCase());
+			})
+			.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
+			.slice(0, 10); // Mostrar máximo 10 eventos próximos
+	};
+
 	const diasCalendario = obtenerDiasDelCalendario();
 	const eventosDelDia = diaSeleccionado ? filtrarEventosPorFecha(diaSeleccionado) : [];
+	const eventosProximos = obtenerEventosProximos();
 
 	return (
 		<div className='max-w-[1200px] mx-auto'>
@@ -102,12 +117,17 @@ const CalendarSection = () => {
 						<div className='flex items-center gap-2 mb-4'>
 							<HiViewGrid className='w-5 h-5 text-blue-500' />
 							<h3 className='text-lg font-bold text-transparent uppercase bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text'>
-								Agenda para el {diaSeleccionado?.toLocaleDateString('es-PE') ?? 'día'}
+								{diaSeleccionado 
+									? `Agenda para el ${diaSeleccionado.toLocaleDateString('es-PE')}`
+									: 'Próximos Eventos'
+								}
 							</h3>
 						</div>
 						<PanelEventos
 							eventoSeleccionado={eventoSeleccionado}
 							eventosFiltrados={eventosDelDia}
+							eventosProximos={eventosProximos}
+							diaSeleccionado={diaSeleccionado}
 							seleccionarEvento={(id) => setEventoSeleccionado(eventos.find(e => e.agendaId === id) || null)}
 							mesActual={mesActual}
 						/>

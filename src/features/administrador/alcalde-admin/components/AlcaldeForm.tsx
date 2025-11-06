@@ -140,12 +140,12 @@ export const AlcaldeForm = ({ handleModal, alcaldeEditable }: AlcaldeModalProps)
 							<div>
 								<FormLabel label='Descripción' required />
 								<div className="text-right text-xs text-slate-500 mb-1">
-									{descripcion.length}/170 caracteres
+									{descripcion.length}/600 caracteres
 								</div>
 								<FormTextArea
 									value={descripcion}
 									onChange={e => {
-										if (e.target.value.length <= 170) {
+										if (e.target.value.length <= 600) {
 											setDescripcion(e.target.value);
 											setValue('descripcion', e.target.value, { shouldValidate: true });
 										}

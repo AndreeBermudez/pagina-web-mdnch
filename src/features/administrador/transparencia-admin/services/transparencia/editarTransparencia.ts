@@ -1,16 +1,12 @@
-import { axiosInstance, axiosWithoutMultipart } from '../../../../../core/api/axiosInstance';
+import { axiosWithoutMultipart } from '../../../../../core/api/axiosInstance';
 import type { TransparenciaRequest } from '../../schemas/transparencia.schema';
 
 export const editarTransparencia = async (
 	id: number,
-	data: FormData | Partial<TransparenciaRequest>
+	data: Partial<TransparenciaRequest>
 ): Promise<boolean> => {
 	try {
-		if (data instanceof FormData) {
-			await axiosInstance.patch(`transparenciaedit/${id}`, data);
-		} else {
-			await axiosWithoutMultipart.patch(`transparenciaedit/${id}`, data);
-		}
+		await axiosWithoutMultipart.put(`transparencia/${id}`, data);
 		return true;
 	} catch (error) {
 		console.error('Error al editar transparencia:', error);

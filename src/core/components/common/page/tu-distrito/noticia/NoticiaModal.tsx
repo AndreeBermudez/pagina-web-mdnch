@@ -35,7 +35,7 @@ export default function NoticiaModal({ noticia, onClose }: NoticiaModalProps) {
           />
           <div className="p-6">
             <div className="flex items-center gap-4 mb-4">
-              <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                 {noticia.categoria}
               </span>
               <div className="flex items-center text-sm text-gray-500">
