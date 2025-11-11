@@ -1,0 +1,20 @@
+{
+    "accessibility": "Apayninchik",
+    "increase_text": "Qillqakunata jatunchay",
+    "decrease_text": "Qillqakunata uchuychay",
+    "high_contrast": "Kallpachasqa qhawariy",
+    "light_bg": "Q’anchisqa qhipa",
+    "negative_contrast": "T’iqsi kallpachasqa",
+    "dark_mode": "Tuta kaynin",
+    "grayscale": "Yuraq yanañiqi",
+    "legible_font": "Qillqana alli qhawasqa",
+    "dyslexia_font": "Qillqana dislexiapaq",
+    "big_cursor": "Hatun watukuq",
+    "underline_links": "T’iksisqa t’inkikuna",
+    "pause_animations": "K’achachayta sayachiy",
+    "tab_reader": "Tabniyuq ñawiriy",
+    "reset": "Qallariy",
+    "language": "Simi",
+    "spanish": "Español",
+    "quechua": "Qhichwa"
+}

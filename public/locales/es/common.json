@@ -1,0 +1,20 @@
+{
+    "accessibility": "Accesibilidad",
+    "increase_text": "Aumentar texto",
+    "decrease_text": "Reducir texto",
+    "high_contrast": "Alto contraste",
+    "light_bg": "Fondo claro",
+    "negative_contrast": "Contraste negativo",
+    "dark_mode": "Modo oscuro",
+    "grayscale": "Escala de grises",
+    "legible_font": "Fuente legible",
+    "dyslexia_font": "Fuente dislexia",
+    "big_cursor": "Cursor grande",
+    "underline_links": "Subrayar enlaces",
+    "pause_animations": "Pausar animaciones",
+    "tab_reader": "Lectura con Tab",
+    "reset": "Restablecer",
+    "language": "Idioma",
+    "spanish": "Español",
+    "quechua": "Qhichwa"
+}

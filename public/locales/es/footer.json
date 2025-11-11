@@ -1,0 +1,31 @@
+{
+    "entityName": "Municipalidad de Nuevo Chimbote",
+    "logoAlt": "Logo Municipalidad de Nuevo Chimbote",
+    "slogan": "Trabajando por el desarrollo",
+    "contact": {
+        "title": "Contacto",
+        "hoursLabel": "Horario de atención:",
+        "hoursValue": "Lun - Vie: 08:00am - 04:00pm",
+        "addressLabel": "Dirección:",
+        "addressLine1": "Centro Cívico S/N - Nuevo Chimbote",
+        "addressLine2": "Urb. José Carlos Mariátegui"
+    },
+    "emergency": {
+        "title": "Emergencias",
+        "serenazgo": "Serenazgo",
+        "serenazgoPhone": "(043) 313000",
+        "policia": "Policía Chimbote",
+        "policiaPhone": "(043) 312010",
+        "bomberos": "Bomberos Chimbote",
+        "bomberosPhone": "(043) 313333"
+    },
+    "normsTitle": "Normas y documentos",
+    "norms": [
+        "Documentos de Gestión",
+        "Normas y Documentos Legales",
+        "Informes y Publicaciones"
+    ],
+    "followUs": "SÍGUENOS EN:",
+    "copyright": "© Copyright 2025 - GAMBARU | Todos los derechos reservados.",
+    "builtWithLove": "Desarrollado con ❤️ para los ciudadanos"
+}

@@ -1,0 +1,31 @@
+{
+    "entityName": "Municipalidad de Nuevo Chimbote",
+    "logoAlt": "Municipalidad de Nuevo Chimbote unancha",
+    "slogan": "Llank’achispa wiñariypaq",
+    "contact": {
+        "title": "Rimanakuy",
+        "hoursLabel": "Ruwakuy pacha:",
+        "hoursValue": "Lunes–Viernes: 08:00am – 04:00pm",
+        "addressLabel": "Maypi tiyarin:",
+        "addressLine1": "Centro Cívico s/n – Nuevo Chimbote",
+        "addressLine2": "Urb. José Carlos Mariátegui"
+    },
+    "emergency": {
+        "title": "Ñawpaq yanapana",
+        "serenazgo": "Serenazgo",
+        "serenazgoPhone": "(043) 313000",
+        "policia": "Policía Chimbote",
+        "policiaPhone": "(043) 312010",
+        "bomberos": "Bomberos Chimbote",
+        "bomberosPhone": "(043) 313333"
+    },
+    "normsTitle": "Kamachikuykunaq qillqakuna",
+    "norms": [
+        "Kamachikuy qillqakuna (Gestión)",
+        "Kamachiy t’aqakuna huk qellqaykuna",
+        "Willaykuna chaywan qellqaykuna"
+    ],
+    "followUs": "Ñuqanchikta qatiy:",
+    "copyright": "© Copyright 2025 - GAMBARU | Lliw derechosqa waqaychasqa.",
+    "builtWithLove": "Llaqta runakunapaq ❤️wan ruwasqa"
+}
