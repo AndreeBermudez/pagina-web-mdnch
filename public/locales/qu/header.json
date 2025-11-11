@@ -1,0 +1,54 @@
+{
+    "brand": {
+        "line1": "Distritu Munisipyu",
+        "line2": "Nuevo Chimbote",
+        "logoAlt": "Municipalidad de Nuevo Chimbote unancha"
+    },
+    "topbar": {
+        "claimsBook": "Qillqakuy p’askuriy",
+        "webmail": "Correo web nisqa",
+        "mesaPartes": "Documento Chaskina Wasi",
+        "pte": "Transparencia nisqa portal",
+        "pteAlt": "Transparencia nisqa"
+    },
+    "mobile": {
+        "webmail": "Web Email",
+        "mesaPartes": "Documento Chaskina Wasi",
+        "pte": "Transparencia nisqa portal",
+        "toggleMenu": "Qhichariy menú",
+        "closeMenu": "Wichq’ay menú"
+    },
+    "nav": {
+        "contactUs": "Rimanakuy",
+        "home": "Qallarini",
+        "about": "Ñuqanchikpaq",
+        "district": "Disrittu kanki",
+        "services": "Servisiokuna",
+        "procedures": "Formalidades nisqakuna",
+        "transparencyPortal": "Transparencia nisqa portal",
+        "agenda": "Agenda nisqa",
+        "staffDirectory": "Trabajadonqakunapa rikhuy",
+        "mayor": "Llaqta wasi",
+        "council": "Conseju municipal",
+        "orgChart": "Organización nisqamanta tabla",
+        "map": "Mapa",
+        "tourism": "Turismu",
+        "pdu": "PDU",
+        "missionVision": "Misión hinallataq visión",
+        "history": "Suyupi willakuy (reseña histórica)",
+        "anthem": "Himnu",
+        "shieldFlag": "Unanchawan wiphalan",
+        "news": "Willakuykuna",
+        "claimsBook": "Qillqakuy p’askuriy",
+        "participatoryBudget": "Participacionpa presupueston",
+        "library": "Biblioteca municipal nisqa",
+        "civilDefense": "Defensa civil nisqamanta",
+        "civilRegistry": "Registro Civil nisqa",
+        "businessLicense": "Funcionamientopa licencia",
+        "buildingLicense": "Edificaciónpa licencia",
+        "casCalls": "CAS 2025 LLAMAYKUNA SOLICITANKUNAPAQ",
+        "antiCorruption": "Q’aqchasqaman qillqakuy (anticorrupción)",
+        "procurement": "Rantsikuy: bieneswan servicios",
+        "internalControl": "Ukhupi kamachiy"
+    }
+}

@@ -1,40 +1,50 @@
-import { Book, Mail,BookOpenText } from "lucide-react"
+import { Book, Mail, BookOpenText } from 'lucide-react';
 import logopte from '../../../assets/logo_ptewhite.png';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
-    isHomePage: boolean,
-    scrolled: boolean
+  isHomePage: boolean;
+  scrolled: boolean;
 }
 
-export const PreNavbar = ({isHomePage, scrolled}:Props) => {
+export const PreNavbar = ({ isHomePage, scrolled }: Props) => {
+  const { t } = useTranslation('header');
   if (!isHomePage) return null;
+
   return (
-    <div 
-      className={`hidden bg-transparent text-white py-2 md:block fixed w-full z-50 top-0 transition-transform duration-300 ${
-        scrolled ? '-translate-y-full' : ''
-      }`}
+    <div
+      className={`hidden bg-transparent text-white py-2 md:block fixed w-full z-50 top-0 transition-transform duration-300 ${scrolled ? '-translate-y-full' : ''
+        }`}
     >
       <div className="container-navbar">
         <div className="w-full flex justify-end gap-4 text-sm mt-1 items-center">
-           
-          <a href="https://reclamos.servicios.gob.pe/?institution_id=1311" className="flex items-center gap-1 hover:text-blue-200">
+          <a
+            href="https://reclamos.servicios.gob.pe/?institution_id=1311"
+            className="flex items-center gap-1 hover:text-blue-200"
+          >
             <BookOpenText size={20} />
-            <span className="hidden lg:flex ">Libro de reclamaciones</span>
+            <span className="hidden lg:flex">{t('topbar.claimsBook')}</span>
           </a>
           <span className="text-gray-400">|</span>
-          <a href="https://webmail.muninuevochimbote.gob.pe/" className="flex items-center gap-1 hover:text-blue-200">
+          <a
+            href="https://webmail.muninuevochimbote.gob.pe/"
+            className="flex items-center gap-1 hover:text-blue-200"
+          >
             <Mail size={20} />
-            <span className="hidden lg:flex ">Web Email</span>
+            <span className="hidden lg:flex">{t('topbar.webmail')}</span>
           </a>
           <span className="text-gray-400">|</span>
           <a href="https://facilita.gob.pe/t/4220" className="flex items-center gap-1 hover:text-blue-200">
             <Book size={20} />
-            <span className="hidden lg:flex ">Mesa de Partes</span>
+            <span className="hidden lg:flex">{t('topbar.mesaPartes')}</span>
           </a>
           <span className="text-gray-400">|</span>
-          <a href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11154&id_tema=1&ver=D#.WTcThJI1_IX" className="flex items-center gap-1 hover:text-blue-200">
-            <img className="h-8 w-8" src={logopte} alt="Transparencia" />
-            <span className="hidden lg:flex ">Portal de Transparencia</span>
+          <a
+            href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11154&id_tema=1&ver=D#.WTcThJI1_IX"
+            className="flex items-center gap-1 hover:text-blue-200"
+          >
+            <img className="h-8 w-8" src={logopte} alt={t('topbar.pteAlt')} />
+            <span className="hidden lg:flex">{t('topbar.pte')}</span>
           </a>
         </div>
       </div>

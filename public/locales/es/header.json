@@ -1,0 +1,54 @@
+{
+    "brand": {
+        "line1": "Municipalidad Distrital",
+        "line2": "Nuevo Chimbote",
+        "logoAlt": "Logo Municipalidad de Nuevo Chimbote"
+    },
+    "topbar": {
+        "claimsBook": "Libro de reclamaciones",
+        "webmail": "Web Email",
+        "mesaPartes": "Mesa de Partes",
+        "pte": "Portal de Transparencia",
+        "pteAlt": "Transparencia"
+    },
+    "mobile": {
+        "webmail": "Web Email",
+        "mesaPartes": "Mesa de Partes",
+        "pte": "Portal de Transparencia",
+        "toggleMenu": "Abrir menú",
+        "closeMenu": "Cerrar menú"
+    },
+    "nav": {
+        "contactUs": "Contáctanos",
+        "home": "Inicio",
+        "about": "Nosotros",
+        "district": "Tu Distrito",
+        "services": "Servicios",
+        "procedures": "Trámites",
+        "transparencyPortal": "Portal de Transparencia",
+        "agenda": "Agenda",
+        "staffDirectory": "Directorio de Funcionarios",
+        "mayor": "Alcaldía",
+        "council": "Consejo Municipal",
+        "orgChart": "Organigrama",
+        "map": "Mapa",
+        "tourism": "Turismo",
+        "pdu": "PDU",
+        "missionVision": "Misión y Visión",
+        "history": "Reseña Histórica",
+        "anthem": "Himno",
+        "shieldFlag": "Escudo y bandera",
+        "news": "Noticias",
+        "claimsBook": "Libro de Reclamaciones",
+        "participatoryBudget": "Presupuesto Participativo",
+        "library": "Biblioteca Municipal",
+        "civilDefense": "Defensa Civil",
+        "civilRegistry": "Registro Civil",
+        "businessLicense": "Licencia de Funcionamiento",
+        "buildingLicense": "Licencia de Edificación",
+        "casCalls": "CONVOCATORIAS CAS 2025",
+        "antiCorruption": "DENUNCIA CONTRA LA CORRUPCIÓN",
+        "procurement": "Contratación de Bienes y Servicios",
+        "internalControl": "Control Interno"
+    }
+}
