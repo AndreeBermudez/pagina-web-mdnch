@@ -8,7 +8,7 @@ export const AccessibilityMenu = () => {
 
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Idioma
+    // Idioma (ES / QU / EN vía i18next)
     const [lang, setLang] = useState(() => {
         return localStorage.getItem('accessibility-lang') || i18n.language || 'es';
     });
@@ -16,7 +16,7 @@ export const AccessibilityMenu = () => {
     useEffect(() => {
         i18n.changeLanguage(lang);
         localStorage.setItem('accessibility-lang', lang);
-        document.documentElement.lang = lang.startsWith('qu') ? 'qu' : 'es';
+        document.documentElement.lang = lang.startsWith('qu') ? 'qu' : lang.startsWith('en') ? 'en' : 'es';
     }, [lang, i18n]);
 
     // Preferencias de accesibilidad
@@ -127,15 +127,29 @@ export const AccessibilityMenu = () => {
                     if (target.tagName === 'IMG') {
                         text = target.getAttribute('alt') || (lang.startsWith('qu') ? 'Rikch’akuq mana qillqasqachu' : 'Imagen sin descripción');
                     } else if (target.tagName === 'A') {
-                        text = (lang.startsWith('qu') ? 'T’inki: ' : 'Enlace: ') + (target.textContent?.trim() || target.getAttribute('aria-label') || (lang.startsWith('qu') ? 'T’inki' : 'Enlace'));
+                        text = (lang.startsWith('qu') ? 'T’inki: ' : lang.startsWith('en') ? 'Link: ' : 'Enlace: ') +
+                            (target.textContent?.trim() || target.getAttribute('aria-label') || (lang.startsWith('qu') ? 'T’inki' : lang.startsWith('en') ? 'Link' : 'Enlace'));
                     } else if (target.tagName === 'BUTTON') {
-                        text = (lang.startsWith('qu') ? 'B’utun: ' : 'Botón: ') + (target.textContent?.trim() || target.getAttribute('aria-label') || (lang.startsWith('qu') ? 'B’utun' : 'Botón'));
+                        text = (lang.startsWith('qu') ? 'B’utun: ' : lang.startsWith('en') ? 'Button: ' : 'Botón: ') +
+                            (target.textContent?.trim() || target.getAttribute('aria-label') || (lang.startsWith('qu') ? 'B’utun' : lang.startsWith('en') ? 'Button' : 'Botón'));
                     } else if (target.tagName === 'INPUT') {
                         const inputType = target.getAttribute('type') || 'text';
                         const label = target.getAttribute('placeholder') || target.getAttribute('aria-label') || '';
-                        text = (lang.startsWith('qu') ? 'Chimpu ' : 'Campo de ') + `${inputType}: ${label}`;
+                        if (lang.startsWith('qu')) {
+                            text = `Chimpu ${inputType}: ${label}`;
+                        } else if (lang.startsWith('en')) {
+                            text = `Input ${inputType}: ${label}`;
+                        } else {
+                            text = `Campo de ${inputType}: ${label}`;
+                        }
                     } else if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(target.tagName)) {
-                        text = (lang.startsWith('qu') ? 'Umalliq: ' : 'Encabezado: ') + (target.textContent?.trim() || '');
+                        if (lang.startsWith('qu')) {
+                            text = 'Umalliq: ' + (target.textContent?.trim() || '');
+                        } else if (lang.startsWith('en')) {
+                            text = 'Heading: ' + (target.textContent?.trim() || '');
+                        } else {
+                            text = 'Encabezado: ' + (target.textContent?.trim() || '');
+                        }
                     } else {
                         text = target.textContent?.trim() ||
                             target.getAttribute('aria-label') ||
@@ -143,9 +157,16 @@ export const AccessibilityMenu = () => {
                     }
                     if (text && text.length > 0) {
                         const maxLength = 200;
-                        if (text.length > maxLength) text = text.substring(0, maxLength) + (lang.startsWith('qu') ? ' ... qhapa pisiq qillqa' : ' ... texto largo');
+                        if (text.length > maxLength) {
+                            text = text.substring(0, maxLength) +
+                                (lang.startsWith('qu') ? ' ... qhapa pisiq qillqa' :
+                                    lang.startsWith('en') ? ' ... long text' :
+                                        ' ... texto largo');
+                        }
                         const utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = lang.startsWith('qu') ? 'qu' : 'es-ES';
+                        if (lang.startsWith('qu')) utterance.lang = 'qu';
+                        else if (lang.startsWith('en')) utterance.lang = 'en-US';
+                        else utterance.lang = 'es-ES';
                         utterance.rate = 0.9;
                         utterance.volume = 1;
                         window.speechSynthesis.cancel();
@@ -183,9 +204,9 @@ export const AccessibilityMenu = () => {
 
     useEffect(() => {
         if (legibleFont) document.body.style.fontFamily = 'Arial, Helvetica, sans-serif';
-        else document.body.style.fontFamily = '';
+        else if (!dyslexiaFont) document.body.style.fontFamily = '';
         localStorage.setItem('accessibility-legibleFont', legibleFont.toString());
-    }, [legibleFont]);
+    }, [legibleFont, dyslexiaFont]);
 
     useEffect(() => {
         const style = document.getElementById('accessibility-links-style');
@@ -248,9 +269,15 @@ export const AccessibilityMenu = () => {
 
     return (
         <div className='fixed top-48 right-2 z-[9999]' style={{ position: 'fixed' }}>
-            <div className={`bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200 transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-16'}`}>
+            <div
+                className={`bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200 transition-all duration-300 ease-in-out ${isExpanded ? 'w-80' : 'w-16'
+                    }`}
+            >
                 {/* Header */}
-                <div className='flex items-center cursor-pointer bg-purple-600 hover:bg-purple-700 transition-colors' onClick={toggleExpand}>
+                <div
+                    className='flex items-center cursor-pointer bg-purple-600 hover:bg-purple-700 transition-colors'
+                    onClick={toggleExpand}
+                >
                     <div className='flex items-center justify-center p-3'>
                         <div className='w-10 h-10 rounded-full bg-purple-500/30 flex items-center justify-center'>
                             <Accessibility className='text-white' size={24} />
@@ -265,24 +292,33 @@ export const AccessibilityMenu = () => {
 
                 {/* Menu */}
                 {isExpanded && (
-                    <div className='p-2 space-y-1 max-h-[320px] overflow-y-auto'>
+                    <div className='p-3 space-y-1 max-h-[420px] overflow-y-auto'>
                         {/* Idioma */}
-                        <div className='pt-1'>
-                            <div className='text-[11px] font-semibold text-gray-600 px-2 mb-1'>
+                        <div className="pt-1">
+                            <div className="text-[11px] font-semibold text-gray-600 px-2 mb-1">
                                 {t('language')}
                             </div>
-                            <div className='grid grid-cols-2 gap-2'>
+
+                            {/* Fila: idiomas de la web (i18next) */}
+                            <div className="grid grid-cols-2 gap-2 mb-2">
                                 <button
                                     onClick={() => setLang('es')}
                                     aria-pressed={lang.startsWith('es')}
-                                    className={`w-full p-2 rounded-md border text-xs ${lang.startsWith('es') ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                                    className={`w-full p-2 rounded-md border text-xs ${lang.startsWith('es')
+                                        ? 'bg-blue-50 border-blue-500'
+                                        : 'border-gray-300 hover:bg-gray-50'
+                                        }`}
                                 >
                                     {t('spanish')}
                                 </button>
+
                                 <button
                                     onClick={() => setLang('qu')}
                                     aria-pressed={lang.startsWith('qu')}
-                                    className={`w-full p-2 rounded-md border text-xs ${lang.startsWith('qu') ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                                    className={`w-full p-2 rounded-md border text-xs ${lang.startsWith('qu')
+                                        ? 'bg-blue-50 border-blue-500'
+                                        : 'border-gray-300 hover:bg-gray-50'
+                                        }`}
                                 >
                                     {t('quechua')}
                                 </button>
@@ -290,12 +326,18 @@ export const AccessibilityMenu = () => {
                         </div>
 
                         {/* Aumentar/Reducir texto */}
-                        <button onClick={increaseFontSize} className='w-full flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-xs'>
+                        <button
+                            onClick={increaseFontSize}
+                            className='w-full flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-xs'
+                        >
                             <Plus size={16} />
                             <span className='font-medium'>{t('increase_text')}</span>
                         </button>
 
-                        <button onClick={decreaseFontSize} className='w-full flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-xs'>
+                        <button
+                            onClick={decreaseFontSize}
+                            className='w-full flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-xs'
+                        >
                             <Minus size={16} />
                             <span className='font-medium'>{t('decrease_text')}</span>
                         </button>
@@ -303,7 +345,8 @@ export const AccessibilityMenu = () => {
                         {/* Alto contraste */}
                         <button
                             onClick={() => setContrast(contrast === 'high' ? 'normal' : 'high')}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${contrast === 'high' ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${contrast === 'high' ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Circle size={16} className={contrast === 'high' ? 'fill-black' : ''} />
                             <span className='font-medium'>{t('high_contrast')}</span>
@@ -312,7 +355,8 @@ export const AccessibilityMenu = () => {
                         {/* Fondo claro */}
                         <button
                             onClick={() => setContrast(contrast === 'light' ? 'normal' : 'light')}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${contrast === 'light' ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${contrast === 'light' ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Sun size={16} />
                             <span className='font-medium'>{t('light_bg')}</span>
@@ -321,7 +365,8 @@ export const AccessibilityMenu = () => {
                         {/* Contraste negativo */}
                         <button
                             onClick={() => setContrast(contrast === 'negative' ? 'normal' : 'negative')}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${contrast === 'negative' ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${contrast === 'negative' ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Circle size={16} className='fill-current' />
                             <span className='font-medium'>{t('negative_contrast')}</span>
@@ -330,7 +375,8 @@ export const AccessibilityMenu = () => {
                         {/* Modo oscuro */}
                         <button
                             onClick={() => setDarkMode(!darkMode)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${darkMode ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${darkMode ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Moon size={16} />
                             <span className='font-medium'>{t('dark_mode')}</span>
@@ -339,7 +385,8 @@ export const AccessibilityMenu = () => {
                         {/* Escala de grises */}
                         <button
                             onClick={() => setGrayscale(!grayscale)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${grayscale ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${grayscale ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Eye size={16} className={grayscale ? 'opacity-50' : ''} />
                             <span className='font-medium'>{t('grayscale')}</span>
@@ -348,7 +395,8 @@ export const AccessibilityMenu = () => {
                         {/* Fuente legible */}
                         <button
                             onClick={() => setLegibleFont(!legibleFont)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${legibleFont ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${legibleFont ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Book size={16} />
                             <span className='font-medium'>{t('legible_font')}</span>
@@ -357,25 +405,42 @@ export const AccessibilityMenu = () => {
                         {/* Fuente dislexia */}
                         <button
                             onClick={() => setDyslexiaFont(!dyslexiaFont)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${dyslexiaFont ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${dyslexiaFont ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    strokeWidth={2}
+                                    d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
+                                />
+                            </svg>
                             <span className='font-medium'>{t('dyslexia_font')}</span>
                         </button>
 
                         {/* Cursor grande */}
                         <button
                             onClick={() => setBigCursor(!bigCursor)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${bigCursor ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${bigCursor ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+                            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    strokeWidth={2}
+                                    d='M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122'
+                                />
+                            </svg>
                             <span className='font-medium'>{t('big_cursor')}</span>
                         </button>
 
                         {/* Subrayar enlaces */}
                         <button
                             onClick={() => setUnderlineLinks(!underlineLinks)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${underlineLinks ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${underlineLinks ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Link size={16} />
                             <span className='font-medium'>{t('underline_links')}</span>
@@ -384,19 +449,28 @@ export const AccessibilityMenu = () => {
                         {/* Pausar animaciones */}
                         <button
                             onClick={() => setPauseAnimations(!pauseAnimations)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${pauseAnimations ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${pauseAnimations ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
                             <Pause size={16} />
                             <span className='font-medium'>{t('pause_animations')}</span>
                         </button>
 
-                        {/* Lectura con Tab */}
+                        {/* Lectura con TAB (lector de voz) */}
                         <button
                             onClick={() => setScreenReader(!screenReader)}
-                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${screenReader ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'}`}
+                            className={`w-full flex items-center gap-2 p-2 rounded-md border transition-colors text-xs ${screenReader ? 'bg-blue-50 border-blue-500' : 'border-gray-300 hover:bg-gray-50'
+                                }`}
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                            <span className='font-medium'>{t('tab_reader')}</span>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                                />
+                            </svg>
+                            <span className="font-medium">{t('tab_reader')}</span>
                         </button>
 
                         {/* Restablecer */}
