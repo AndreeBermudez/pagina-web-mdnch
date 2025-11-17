@@ -37,7 +37,7 @@ export const HomePage = () => {
 				onClose={closePopup}
 			/>
 			{/* Banner de encuesta */}
-			<SurveyBanner surveyUrl="https://example.com/survey" />
+			<SurveyBanner surveyUrl="https://satisfaccion.servicios.gob.pe/encuestas/wmz3h0" />
 		</body>
 	);
 };
