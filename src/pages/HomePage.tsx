@@ -11,6 +11,7 @@ import { HeroSection } from '../core/layout/hero/HeroSection';
 import { NavbarSection } from '../core/layout/navbar/NavbarSection';
 import EmergencyPopup from '../core/components/common/EmergencyPopup';
 import { usePopupControl } from '../core/hooks/usePopupControl';
+import { SurveyBanner } from '../core/components/ui/SurveyBanner'; // Banner de encuesta
 
 export const HomePage = () => {
 	const { isPopupOpen, closePopup } = usePopupControl();
@@ -35,6 +36,8 @@ export const HomePage = () => {
 				isOpen={isPopupOpen} 
 				onClose={closePopup}
 			/>
+			{/* Banner de encuesta */}
+			<SurveyBanner surveyUrl="https://example.com/survey" />
 		</body>
 	);
 };
