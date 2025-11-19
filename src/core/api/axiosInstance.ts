@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-	baseURL: 'http://localhost:8080/api/authentication/',
+	baseURL: 'http://167.99.169.248:8080/api/authentication/',
 	headers: {
 		'Content-Type': 'multipart/form-data',
 	},
 });
 
 export const axiosWithoutMultipart = axios.create({
-	baseURL: 'http://localhost:8080/api/authentication/',
+	baseURL: 'http://167.99.169.248:8080/api/authentication/',
 	headers: {
 		'Content-Type': 'application/json',
 	},
