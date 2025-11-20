@@ -1,14 +1,17 @@
 import axios from 'axios';
 
+// Obtener la URL base de las variables de entorno
+const API_URL = import.meta.env.VITE_API_URL || 'http://167.99.169.248:8080';
+
 export const axiosInstance = axios.create({
-	baseURL: 'http://167.99.169.248:8080/api/authentication/',
+	baseURL: `${API_URL}/api/authentication/`,
 	headers: {
 		'Content-Type': 'multipart/form-data',
 	},
 });
 
 export const axiosWithoutMultipart = axios.create({
-	baseURL: 'http://167.99.169.248:8080/api/authentication/',
+	baseURL: `${API_URL}/api/authentication/`,
 	headers: {
 		'Content-Type': 'application/json',
 	},
