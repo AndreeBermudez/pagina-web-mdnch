@@ -32,6 +32,7 @@ const PresupuestoParticipativoPage = lazy(() => import('../../pages/servicios/Pr
 //* Trámites - Lazy loading
 const ControlInternoPage = lazy(() => import('../../pages/tramites/ControlInternoPage'));
 const ConvocatoriaPage = lazy(() => import('../../pages/tramites/ConvocatoriaPage'));
+const NombramientoPage = lazy(() => import('../../pages/tramites/NombramientoPage'));
 const DefensaCivilPage = lazy(() => import('../../pages/tramites/DefensaCivilPage'));
 const DenunciaCorrupcionPage = lazy(() => import('../../pages/tramites/DenunciaCorrupcionPage'));
 const LicenciaEdificacionPage = lazy(() => import('../../pages/tramites/LicenciaEdificacionPage'));
@@ -81,6 +82,7 @@ const DestinoTuristicoAdmin = lazy(() => import('../../features/administrador/de
 const PagesAdmin = lazy(() => import('../../features/administrador/paginas-admin/pages/PagesAdmin'));
 const MenuAdmin = lazy(() => import('../../features/administrador/menus-admin/pages/MenuAdmin'));
 const ConvocatoriaAdmin = lazy(() => import('../../features/administrador/convocatoriaCas-admin/pages/ConvocatoriaAdmin'));
+const NombramientoAdmin = lazy(() => import('../../features/administrador/nombramiento-admin/pages/NombramientoAdmin'));
 
 //* Auth - Lazy loading
 const LoginPage = lazy(() => import('../../pages/auth/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -320,6 +322,14 @@ export const routes = [
 				),
 			},
 			{
+				path: 'nombramientos',
+				element: (
+					<LazyWrapper>
+						<NombramientoPage />
+					</LazyWrapper>
+				),
+			},
+			{
 				path: 'denuncia',
 				element: (
 					<LazyWrapper>
@@ -537,6 +547,14 @@ export const routes = [
 				element: (
 					<LazyWrapper>
 						<ConvocatoriaAdmin />
+					</LazyWrapper>
+				),
+			},
+			{
+				path: 'documentos/nombramientos',
+				element: (
+					<LazyWrapper>
+						<NombramientoAdmin />
 					</LazyWrapper>
 				),
 			},

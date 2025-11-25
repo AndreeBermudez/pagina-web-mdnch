@@ -73,6 +73,7 @@ export const navLinks: NavLink[] = [
 			{ href: '/tramites/licencia-funcionamiento', label: 'Licencia de Funcionamiento', i18nKey: 'nav.businessLicense' },
 			{ href: '/tramites/licencia-edificacion', label: 'Licencia de Edificación', i18nKey: 'nav.buildingLicense' },
 			{ href: '/tramites/convocatorias', label: 'CONVOCATORIAS CAS 2025', i18nKey: 'nav.casCalls' },
+			{ href: '/tramites/nombramientos', label: 'NOMBRAMIENTOS'},
 			{ href: '/tramites/denuncia', label: 'DENUNCIA CONTRA LA CORRUPCION', i18nKey: 'nav.antiCorruption' }
 		]
 	},

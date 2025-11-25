@@ -28,6 +28,7 @@ export const MODULES = {
   TRANSPARENCIA: '/admin/documentos/transparencia',
   CONTROL_INTERNO: '/admin/documentos/control-interno',
   CONVOCATORIA_CAS: '/admin/documentos/convocatoria-cas',
+  NOMBRAMIENTO: '/admin/documentos/nombramientos',
   
   // Configuración
   USUARIOS: '/admin/configuracion/usuarios',

@@ -175,6 +175,12 @@ export const menuItems: MenuItem[] = [
                 icon: Briefcase,
                 isActive: false,
             },
+            {
+                titulo: 'Nombramientos',
+                link: '/admin/documentos/nombramientos',
+                icon: ClipboardList,
+                isActive: false,
+            },
         ],
     },
     // {
