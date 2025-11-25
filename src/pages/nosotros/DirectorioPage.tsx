@@ -10,7 +10,7 @@ export const DirectorioPage = () => {
 						<h1 className='text-4xl font-bold text-gray-800'>DIRECTORIO FUNCIONARIOS</h1>
 						<div className='w-24 h-1 bg-blue-500 mx-auto mt-4' />
 					</div>
-					<DirectorioCards cardsPerPage={6} />
+					<DirectorioCards cardsPerPage={9} />
 				</div>
 			</main>
 		</Layout>

@@ -28,7 +28,6 @@ export const Footer = () => {
 					{t('entityName')}
 				</h2>
 				<div className="h-1 w-20 bg-blue-700 mt-3 mb-2" aria-hidden="true" />
-				<p className="text-gray-400 text-sm md:text-base">{t('slogan')}</p>
 			</div>
 
 			<div className="h-px bg-gray-700 mb-10" aria-hidden="true" />

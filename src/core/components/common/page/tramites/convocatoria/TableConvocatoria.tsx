@@ -36,7 +36,7 @@ export const TableConvocatoria = () => {
 		return (
 			<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
 				<div className='px-6 py-4 border-b border-gray-200'>
-					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS 2025</h3>
+					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS {year}</h3>
 					<p className='text-sm text-red-500 mt-1'>Error al cargar convocatorias</p>
 				</div>
 				<div className='flex items-center justify-center py-12'>
@@ -52,7 +52,7 @@ export const TableConvocatoria = () => {
 		return (
 			<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
 				<div className='px-6 py-4 border-b border-gray-200'>
-					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS 2025</h3>
+					<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS {year}</h3>
 					<p className='text-sm text-gray-500 mt-1'>No hay convocatorias disponibles</p>
 				</div>
 				<div className='flex items-center justify-center py-12'>
@@ -69,7 +69,7 @@ export const TableConvocatoria = () => {
 	return (
 		<div className='bg-white shadow-sm rounded-lg border border-gray-200'>
 			<div className='px-6 py-4 border-b border-gray-200'>
-				<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS 2025</h3>
+				<h3 className='text-lg font-semibold text-gray-900'>Convocatorias CAS {year}</h3>
 				<p className='text-sm text-gray-500 mt-1'>{convocatoriasActivas.length} Convocatorias</p>
 			</div>
 

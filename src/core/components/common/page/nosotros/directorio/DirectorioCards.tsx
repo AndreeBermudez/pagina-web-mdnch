@@ -42,7 +42,7 @@ export default function DirectorioCards({ cardsPerPage }: DirectorioCardsProps) 
 									{funcionario.direccionImagen ? (
 										<img
 											src={funcionario.direccionImagen}
-											alt={funcionario.nombre}
+											alt={funcionario.nombre + funcionario.apellido}
 											className='relative object-cover w-32 h-32 rounded-full'
 										/>
 									) : (
@@ -51,14 +51,14 @@ export default function DirectorioCards({ cardsPerPage }: DirectorioCardsProps) 
 										</div>
 									)}
 								</div>
-								<h3 className='text-xl font-semibold text-center text-gray-800'>{funcionario.nombre}</h3>
+								<h3 className='text-xl font-semibold text-center text-gray-800'>{funcionario.nombre + ' ' + funcionario.apellido}</h3>
 								<p className='p-1 mt-2 text-sm text-center text-gray-500 rounded-lg'>{funcionario.cargo}</p>
 								<div className='w-24 h-2 mx-auto bg-blue-800 rounded-lg' />
 							</div>
 
 							{/* Reverso */}
 							<div className='absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden] bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-xl p-8 flex flex-col justify-between text-white'>
-								<h3 className='mb-4 text-2xl font-bold text-center'>{funcionario.nombre}</h3>
+								<h3 className='mb-4 text-2xl font-bold text-center'>{funcionario.nombre + ' ' + funcionario.apellido}</h3>
 								<div className='space-y-4'>
 									<div>
 										<p className='text-xs tracking-widest text-blue-200 uppercase'>Cargo</p>

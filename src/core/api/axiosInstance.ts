@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Obtener la URL base de las variables de entorno
-const API_URL = import.meta.env.VITE_API_URL || 'http://167.99.169.248:8080';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 export const axiosInstance = axios.create({
 	baseURL: `${API_URL}/api/authentication/`,
