@@ -1,6 +1,6 @@
 import { TableConvocatoria } from '../../core/components/common/page/tramites/convocatoria/TableConvocatoria';
 import { Layout } from '../../core/layout/Layout';
-
+// Panel
 export default function ConvocatoriaPage() {
 	const year = new Date().getFullYear();
 	return (
